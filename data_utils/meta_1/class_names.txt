@@ -1,0 +1,4 @@
+ground
+vegetatation
+building
+water
