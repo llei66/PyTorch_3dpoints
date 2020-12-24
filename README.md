@@ -1,7 +1,7 @@
 # Pytorch Implementation of PointNet and PointNet++ with Geodata
 
 
-##Installation
+## Installation
 - Clone this repo:
 ```buildoutcfg
 git clone git@github.com:llei66/Geodata_pointnet2_pytorch.git
