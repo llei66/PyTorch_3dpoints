@@ -28,7 +28,7 @@ Pytorch >= 11.5.1+cu92
 ### Download LAStools and comppile
 ```buildoutcfg
 wget http://lastools.github.io/download/LAStools.zip
-unzip LAStools.zip
+unzip LAStools.zip; cd LAStools; make -j8
 ```
 
 ### Download .laz data from ERDA samples or official website
