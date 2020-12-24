@@ -1,5 +1,8 @@
 # Pytorch Implementation of PointNet and PointNet++ with Geodata
 
+## Colab running or linux running
+> If you use Colab, go Google drver and [GeoData_training](https://colab.research.google.com/drive/1cpAzWEQn3T408g6yM97IEwiQx8mLQoP8?authuser=1#scrollTo=ruN3V-x_r-SV)
+> If you use linux, you can refer to the following
 
 ## Installation
 - Clone this repo:
@@ -7,21 +10,20 @@
 git clone git@github.com:llei66/Geodata_pointnet2_pytorch.git
 cd Geodata_pointnet2_pytorch
 ```
+
+#### Some Choices
+1. If you want to process the original .laz data, please step by step
+2. If you want to train directly with samples, go [Semantic Segmentation](#jump)
+
 #### Environments:
 ```
 Ubuntu 16.04 
 Python 3.6.7 
 Pytorch >= 11.5.1+cu92
 ```
-#### Choice
-1. If you want to process the original .laz data, please step by step
-2. If you want to train directly with samples, go [Semantic Segmentation](#jump)
-3. If you use Colab, go Google drver and [GeoData_training](https://colab.research.google.com/drive/1cpAzWEQn3T408g6yM97IEwiQx8mLQoP8?authuser=1#scrollTo=ruN3V-x_r-SV)
-
 
 
 ## Predata with Geodata
-
 
 ### Download LAStools and comppile
 ```buildoutcfg
