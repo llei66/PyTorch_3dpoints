@@ -94,21 +94,9 @@ def main(args):
     # root = 'data/De_1/'
     # test_root = 'data/De_1/'
 
-    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201127/PUNKTSKY_621_51_TIF_UTM32-ETRS89_npy_test'
-    # test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201127/PUNKTSKY_621_51_TIF_UTM32-ETRS89_npy_test'
-    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201127/PUNKTSKY_621_51_TIF_UTM32-ETRS89_npy_test_clear'
-    # test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201127/PUNKTSKY_621_51_TIF_UTM32-ETRS89_npy_test_clear'
+    root = './data/train_test_whole_class_200m/test_sub_areas'
+    test_root = './data/train_test_whole_class_200m/train_sub_areas'
 
-    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201127/PUNKTSKY_621_51_TIF_UTM32-ETRS89_clear_npy'
-    # test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201127/PUNKTSKY_621_51_TIF_UTM32-ETRS89_clear_npy_test'
-    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_whole_class_1km/'
-    # test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/test_whole_class_1km'
-
-    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/sub_areas/'
-    # root = '/home/SENSETIME/lilei/DEEPCROP/origin_ground_vegetataion_building_water/sub_areas_1'
-    root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/test_one_area_1'
-    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_whole_class_200m/test_one_area'
-    test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/test_one_area_1'
     NUM_CLASSES = 4
     NUM_POINT = args.npoint
     BATCH_SIZE = args.batch_size
@@ -116,10 +104,8 @@ def main(args):
     # NUM_POINT
 
     print("start loading training data ...")
-#TRAIN_DATASET = S3DISDataset(split='train', data_root=root, num_point=NUM_POINT, test_area=args.test_area, block_size=1.0, sample_rate=1.0, transform=None)
     TRAIN_DATASET = GeoData_crop_1(split='train', data_root=root, num_point=NUM_POINT,  block_size=Block_size, sample_rate=1.0, transform=None)
     print("start loading test data ...")
-#TEST_DATASET = S3DISDataset(split='test', data_root=root, num_point=NUM_POINT, test_area=args.test_area, block_size=1.0, sample_rate=1.0, transform=None)
     TEST_DATASET = GeoData_crop_1(split='test', data_root=test_root, num_point=NUM_POINT,  block_size=Block_size, sample_rate=1.0, transform=None)
     trainDataLoader = torch.utils.data.DataLoader(TRAIN_DATASET, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, pin_memory=True, drop_last=True, worker_init_fn = lambda x: np.random.seed(x+int(time.time())))
     testDataLoader = torch.utils.data.DataLoader(TEST_DATASET, batch_size=BATCH_SIZE, shuffle=False, num_workers=4, pin_memory=True, drop_last=True)
@@ -217,6 +203,7 @@ def main(args):
             total_correct += correct
             total_seen += (BATCH_SIZE * NUM_POINT)
             loss_sum += loss
+            #pdb.set_trace()
         log_string('Training mean loss: %f' % (loss_sum / num_batches))
         log_string('Training accuracy: %f' % (total_correct / float(total_seen)))
 

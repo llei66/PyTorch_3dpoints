@@ -1,18 +1,41 @@
-# Pytorch Implementation of PointNet and PointNet++ 
-
-This repo is implementation for [PointNet](http://openaccess.thecvf.com/content_cvpr_2017/papers/Qi_PointNet_Deep_Learning_CVPR_2017_paper.pdf) and [PointNet++](http://papers.nips.cc/paper/7095-pointnet-deep-hierarchical-feature-learning-on-point-sets-in-a-metric-space.pdf) in pytorch.
+# Pytorch Implementation of PointNet and PointNet++ with Geodata
 
 
-## Environments
-Ubuntu 16.04 <br>
-Python 3.6.7 <br>
-Pytorch 1.1.0
+##Installation
+- Clone this repo:
+```buildoutcfg
+git clone git@github.com:llei66/Geodata_pointnet2_pytorch.git
+cd Geodata_pointnet2_pytorch
+```
+#### Environments:
+```
+Ubuntu 16.04 
+Python 3.6.7 
+Pytorch >= 11.5.1+cu92
+```
+#### Choice
+1. If you want to process the original .laz data, please step by step
+2. If you want to train directly with samples, go [Semantic Segmentation](#jump)
+3. If you use Colab, go Google drver and [GeoData_training](https://colab.research.google.com/drive/1cpAzWEQn3T408g6yM97IEwiQx8mLQoP8?authuser=1#scrollTo=ruN3V-x_r-SV)
+
+
 
 ## Predata with Geodata
-### convert to TXT data
+
+
+### Download LAStools and comppile
 ```buildoutcfg
-cd LAStools
-sh las2txt.sh .laz .txt
+wget http://lastools.github.io/download/LAStools.zip
+unzip LAStools.zip
+```
+
+### Download .laz data from ERDA samples or official website
+- [ERDA samples](https://erda.dk/wsgi-bin/fileman.py?path=DeepCrop/)
+  > ./DeepCrop/Datasets/GeoData/train_test_whole_class_1km/
+- [Offical Website](https://download.kortforsyningen.dk/content/dhmpunktsky)
+### Use LAStools to convert .txt data
+```buildoutcfg
+sh LAStools/bin/las2txt.sh ${.laz} ${.txt}
 ```
 ### clear and crop Geodata
 
@@ -20,16 +43,15 @@ sh las2txt.sh .laz .txt
 ```buildoutcfg
 cd data_utils/pre_utils_data
 python clear_geodata_1.py
-
 ```
 
-#### clear and crop Geodata
-```buildoutcfg
-cd data_utils/pre_utils_data
-python crop_geodata_1.py
+## <a name='jump'> Semantic Segmentation </a>
 
+### Dowdload train and test sample from Erda
 ```
-## Semantic Segmentation (with Geodata)
+wget https://sid.erda.dk/share_redirect/dJxtJ4Kysc
+unzip train_test_whole_class_200m.zip -d ./data/
+```
 ### Run
 
 #### run with 250m * 250m subares
@@ -53,10 +75,7 @@ python test_vis_Geodata_crop_1.py
 [charlesq34/PointNet++](https://github.com/charlesq34/pointnet2) <br>
 [yanx27/Pointnet_Pointnet2_pytorch](https://github.com/yanx27/Pointnet_Pointnet2_pytorch)
 
-## Environments
-Ubuntu 16.04 <br>
-Python 3.6.7 <br>
-Pytorch 1.1.0
+
 
 ## based 
 ./scripts_config/README.md.config
