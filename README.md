@@ -1,7 +1,7 @@
 # Pytorch Implementation of PointNet and PointNet++ with Geodata
 
 ## Colab running or linux running
-> If you use Colab, go Google drver and [GeoData_training](https://colab.research.google.com/drive/1cpAzWEQn3T408g6yM97IEwiQx8mLQoP8?authuser=1#scrollTo=ruN3V-x_r-SV)
+> If you use Colab, go Google drver and [GeoData_training](https://colab.research.google.com/drive/1cpAzWEQn3T408g6yM97IEwiQx8mLQoP8?usp=sharing)
 > If you use linux, you can refer to the following
 
 ## Installation
