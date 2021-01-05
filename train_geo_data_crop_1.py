@@ -94,9 +94,11 @@ def main(args):
     # root = 'data/De_1/'
     # test_root = 'data/De_1/'
 
-    root = './data/train_test_whole_class_200m/test_sub_areas'
-    test_root = './data/train_test_whole_class_200m/train_sub_areas'
+    # root = './data/train_test_whole_class_200m/test_sub_areas'
+    # test_root = './data/train_test_whole_class_200m/train_sub_areas'
 
+    root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/test_one_area_1'
+    test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/test_one_area_1'
     NUM_CLASSES = 4
     NUM_POINT = args.npoint
     BATCH_SIZE = args.batch_size

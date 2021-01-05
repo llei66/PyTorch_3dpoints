@@ -1,0 +1,2195 @@
+2021-01-05 14:29:30,012 - Model - INFO - PARAMETER ...
+2021-01-05 14:29:30,012 - Model - INFO - Namespace(batch_size=4, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_crop_3', lr_decay=0.7, model='pointnet2_sem_seg_msg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-05 14:30:16,851 - Model - INFO - The number of training data is: 900
+2021-01-05 14:30:16,852 - Model - INFO - The number of test data is: 218
+2021-01-05 14:30:17,268 - Model - INFO - No existing model, starting training from scratch...
+2021-01-05 14:30:17,320 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-05 14:30:17,321 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:02:02,654 - Model - INFO - PARAMETER ...
+2021-01-05 15:02:02,654 - Model - INFO - Namespace(batch_size=4, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_crop_3', lr_decay=0.7, model='pointnet2_sem_seg_msg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-05 15:02:16,940 - Model - INFO - PARAMETER ...
+2021-01-05 15:02:16,940 - Model - INFO - Namespace(batch_size=4, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_crop_3', lr_decay=0.7, model='pointnet2_sem_seg_msg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-05 15:02:32,841 - Model - INFO - The number of training data is: 218
+2021-01-05 15:02:32,841 - Model - INFO - The number of test data is: 218
+2021-01-05 15:02:32,881 - Model - INFO - No existing model, starting training from scratch...
+2021-01-05 15:02:32,883 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-05 15:02:32,883 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:03:06,656 - Model - INFO - Training mean loss: 0.850078
+2021-01-05 15:03:06,656 - Model - INFO - Training accuracy: 0.656418
+2021-01-05 15:03:06,657 - Model - INFO - Save model...
+2021-01-05 15:03:06,657 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:03:06,721 - Model - INFO - Saving model....
+2021-01-05 15:03:06,725 - Model - INFO - ---- EPOCH 001 EVALUATION ----
+2021-01-05 15:03:38,099 - Model - INFO - eval mean loss: 0.778658
+2021-01-05 15:03:38,099 - Model - INFO - eval point avg class IoU: 0.307094
+2021-01-05 15:03:38,099 - Model - INFO - eval point accuracy: 0.739331
+2021-01-05 15:03:38,099 - Model - INFO - eval point avg class acc: 0.400213
+2021-01-05 15:03:38,099 - Model - INFO - ------- IoU --------
+class ground         weight: 0.374, IoU: 0.579 
+class vegetatation   weight: 0.564, IoU: 0.649 
+class building       weight: 0.062, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:03:38,099 - Model - INFO - Eval mean loss: 0.778658
+2021-01-05 15:03:38,099 - Model - INFO - Eval accuracy: 0.739331
+2021-01-05 15:03:38,099 - Model - INFO - Save model...
+2021-01-05 15:03:38,099 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 15:03:38,131 - Model - INFO - Saving model....
+2021-01-05 15:03:38,131 - Model - INFO - Best mIoU: 0.307094
+2021-01-05 15:03:38,131 - Model - INFO - **** Epoch 2 (2/128) ****
+2021-01-05 15:03:38,131 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:04:11,585 - Model - INFO - Training mean loss: 0.765108
+2021-01-05 15:04:11,585 - Model - INFO - Training accuracy: 0.668098
+2021-01-05 15:04:11,591 - Model - INFO - ---- EPOCH 002 EVALUATION ----
+2021-01-05 15:04:43,439 - Model - INFO - eval mean loss: 0.674480
+2021-01-05 15:04:43,439 - Model - INFO - eval point avg class IoU: 0.275846
+2021-01-05 15:04:43,439 - Model - INFO - eval point accuracy: 0.712173
+2021-01-05 15:04:43,439 - Model - INFO - eval point avg class acc: 0.356689
+2021-01-05 15:04:43,439 - Model - INFO - ------- IoU --------
+class ground         weight: 0.424, IoU: 0.487 
+class vegetatation   weight: 0.557, IoU: 0.616 
+class building       weight: 0.019, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:04:43,439 - Model - INFO - Eval mean loss: 0.674480
+2021-01-05 15:04:43,439 - Model - INFO - Eval accuracy: 0.712173
+2021-01-05 15:04:43,439 - Model - INFO - Best mIoU: 0.307094
+2021-01-05 15:04:43,439 - Model - INFO - **** Epoch 3 (3/128) ****
+2021-01-05 15:04:43,439 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:05:17,143 - Model - INFO - Training mean loss: 0.780895
+2021-01-05 15:05:17,143 - Model - INFO - Training accuracy: 0.673895
+2021-01-05 15:05:17,148 - Model - INFO - ---- EPOCH 003 EVALUATION ----
+2021-01-05 15:05:48,582 - Model - INFO - eval mean loss: 1.134703
+2021-01-05 15:05:48,583 - Model - INFO - eval point avg class IoU: 0.285807
+2021-01-05 15:05:48,583 - Model - INFO - eval point accuracy: 0.710179
+2021-01-05 15:05:48,583 - Model - INFO - eval point avg class acc: 0.378808
+2021-01-05 15:05:48,583 - Model - INFO - ------- IoU --------
+class ground         weight: 0.415, IoU: 0.558 
+class vegetatation   weight: 0.539, IoU: 0.585 
+class building       weight: 0.047, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:05:48,583 - Model - INFO - Eval mean loss: 1.134703
+2021-01-05 15:05:48,583 - Model - INFO - Eval accuracy: 0.710179
+2021-01-05 15:05:48,583 - Model - INFO - Best mIoU: 0.307094
+2021-01-05 15:05:48,583 - Model - INFO - **** Epoch 4 (4/128) ****
+2021-01-05 15:05:48,583 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:06:22,340 - Model - INFO - Training mean loss: 0.695036
+2021-01-05 15:06:22,340 - Model - INFO - Training accuracy: 0.705135
+2021-01-05 15:06:22,344 - Model - INFO - ---- EPOCH 004 EVALUATION ----
+2021-01-05 15:06:53,307 - Model - INFO - eval mean loss: 0.805098
+2021-01-05 15:06:53,307 - Model - INFO - eval point avg class IoU: 0.238349
+2021-01-05 15:06:53,307 - Model - INFO - eval point accuracy: 0.630798
+2021-01-05 15:06:53,307 - Model - INFO - eval point avg class acc: 0.333740
+2021-01-05 15:06:53,307 - Model - INFO - ------- IoU --------
+class ground         weight: 0.379, IoU: 0.405 
+class vegetatation   weight: 0.549, IoU: 0.549 
+class building       weight: 0.072, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:06:53,307 - Model - INFO - Eval mean loss: 0.805098
+2021-01-05 15:06:53,307 - Model - INFO - Eval accuracy: 0.630798
+2021-01-05 15:06:53,307 - Model - INFO - Best mIoU: 0.307094
+2021-01-05 15:06:53,307 - Model - INFO - **** Epoch 5 (5/128) ****
+2021-01-05 15:06:53,307 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:07:26,658 - Model - INFO - Training mean loss: 0.738681
+2021-01-05 15:07:26,658 - Model - INFO - Training accuracy: 0.697149
+2021-01-05 15:07:26,663 - Model - INFO - ---- EPOCH 005 EVALUATION ----
+2021-01-05 15:07:57,438 - Model - INFO - eval mean loss: 0.726224
+2021-01-05 15:07:57,438 - Model - INFO - eval point avg class IoU: 0.290441
+2021-01-05 15:07:57,438 - Model - INFO - eval point accuracy: 0.707843
+2021-01-05 15:07:57,438 - Model - INFO - eval point avg class acc: 0.382414
+2021-01-05 15:07:57,438 - Model - INFO - ------- IoU --------
+class ground         weight: 0.409, IoU: 0.548 
+class vegetatation   weight: 0.508, IoU: 0.614 
+class building       weight: 0.083, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:07:57,438 - Model - INFO - Eval mean loss: 0.726224
+2021-01-05 15:07:57,438 - Model - INFO - Eval accuracy: 0.707843
+2021-01-05 15:07:57,438 - Model - INFO - Best mIoU: 0.307094
+2021-01-05 15:07:57,438 - Model - INFO - **** Epoch 6 (6/128) ****
+2021-01-05 15:07:57,438 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:08:30,769 - Model - INFO - Training mean loss: 0.720769
+2021-01-05 15:08:30,769 - Model - INFO - Training accuracy: 0.679382
+2021-01-05 15:08:30,769 - Model - INFO - Save model...
+2021-01-05 15:08:30,769 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:08:30,813 - Model - INFO - Saving model....
+2021-01-05 15:08:30,819 - Model - INFO - ---- EPOCH 006 EVALUATION ----
+2021-01-05 15:09:01,867 - Model - INFO - eval mean loss: 0.924985
+2021-01-05 15:09:01,867 - Model - INFO - eval point avg class IoU: 0.249162
+2021-01-05 15:09:01,867 - Model - INFO - eval point accuracy: 0.639749
+2021-01-05 15:09:01,867 - Model - INFO - eval point avg class acc: 0.347354
+2021-01-05 15:09:01,867 - Model - INFO - ------- IoU --------
+class ground         weight: 0.417, IoU: 0.476 
+class vegetatation   weight: 0.503, IoU: 0.521 
+class building       weight: 0.080, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:09:01,867 - Model - INFO - Eval mean loss: 0.924985
+2021-01-05 15:09:01,867 - Model - INFO - Eval accuracy: 0.639749
+2021-01-05 15:09:01,867 - Model - INFO - Best mIoU: 0.307094
+2021-01-05 15:09:01,867 - Model - INFO - **** Epoch 7 (7/128) ****
+2021-01-05 15:09:01,868 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:09:35,236 - Model - INFO - Training mean loss: 0.670258
+2021-01-05 15:09:35,236 - Model - INFO - Training accuracy: 0.690374
+2021-01-05 15:09:35,241 - Model - INFO - ---- EPOCH 007 EVALUATION ----
+2021-01-05 15:10:06,731 - Model - INFO - eval mean loss: 0.765534
+2021-01-05 15:10:06,731 - Model - INFO - eval point avg class IoU: 0.295252
+2021-01-05 15:10:06,731 - Model - INFO - eval point accuracy: 0.726791
+2021-01-05 15:10:06,731 - Model - INFO - eval point avg class acc: 0.391909
+2021-01-05 15:10:06,731 - Model - INFO - ------- IoU --------
+class ground         weight: 0.390, IoU: 0.576 
+class vegetatation   weight: 0.568, IoU: 0.605 
+class building       weight: 0.042, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:10:06,731 - Model - INFO - Eval mean loss: 0.765534
+2021-01-05 15:10:06,731 - Model - INFO - Eval accuracy: 0.726791
+2021-01-05 15:10:06,731 - Model - INFO - Best mIoU: 0.307094
+2021-01-05 15:10:06,731 - Model - INFO - **** Epoch 8 (8/128) ****
+2021-01-05 15:10:06,731 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:10:40,727 - Model - INFO - Training mean loss: 0.699004
+2021-01-05 15:10:40,727 - Model - INFO - Training accuracy: 0.703748
+2021-01-05 15:10:40,732 - Model - INFO - ---- EPOCH 008 EVALUATION ----
+2021-01-05 15:11:11,960 - Model - INFO - eval mean loss: 0.611101
+2021-01-05 15:11:11,960 - Model - INFO - eval point avg class IoU: 0.321992
+2021-01-05 15:11:11,960 - Model - INFO - eval point accuracy: 0.759859
+2021-01-05 15:11:11,960 - Model - INFO - eval point avg class acc: 0.404393
+2021-01-05 15:11:11,961 - Model - INFO - ------- IoU --------
+class ground         weight: 0.458, IoU: 0.631 
+class vegetatation   weight: 0.484, IoU: 0.657 
+class building       weight: 0.059, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:11:11,961 - Model - INFO - Eval mean loss: 0.611101
+2021-01-05 15:11:11,961 - Model - INFO - Eval accuracy: 0.759859
+2021-01-05 15:11:11,961 - Model - INFO - Save model...
+2021-01-05 15:11:11,961 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 15:11:11,996 - Model - INFO - Saving model....
+2021-01-05 15:11:11,996 - Model - INFO - Best mIoU: 0.321992
+2021-01-05 15:11:11,996 - Model - INFO - **** Epoch 9 (9/128) ****
+2021-01-05 15:11:11,996 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:11:45,418 - Model - INFO - Training mean loss: 0.672101
+2021-01-05 15:11:45,418 - Model - INFO - Training accuracy: 0.730557
+2021-01-05 15:11:45,423 - Model - INFO - ---- EPOCH 009 EVALUATION ----
+2021-01-05 15:12:16,840 - Model - INFO - eval mean loss: 0.577414
+2021-01-05 15:12:16,840 - Model - INFO - eval point avg class IoU: 0.317255
+2021-01-05 15:12:16,840 - Model - INFO - eval point accuracy: 0.772256
+2021-01-05 15:12:16,840 - Model - INFO - eval point avg class acc: 0.391427
+2021-01-05 15:12:16,840 - Model - INFO - ------- IoU --------
+class ground         weight: 0.390, IoU: 0.565 
+class vegetatation   weight: 0.570, IoU: 0.704 
+class building       weight: 0.039, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:12:16,840 - Model - INFO - Eval mean loss: 0.577414
+2021-01-05 15:12:16,840 - Model - INFO - Eval accuracy: 0.772256
+2021-01-05 15:12:16,840 - Model - INFO - Best mIoU: 0.321992
+2021-01-05 15:12:16,840 - Model - INFO - **** Epoch 10 (10/128) ****
+2021-01-05 15:12:16,840 - Model - INFO - Learning rate:0.001000
+2021-01-05 15:12:50,429 - Model - INFO - Training mean loss: 0.689509
+2021-01-05 15:12:50,429 - Model - INFO - Training accuracy: 0.718379
+2021-01-05 15:12:50,435 - Model - INFO - ---- EPOCH 010 EVALUATION ----
+2021-01-05 15:13:21,584 - Model - INFO - eval mean loss: 0.719680
+2021-01-05 15:13:21,584 - Model - INFO - eval point avg class IoU: 0.266071
+2021-01-05 15:13:21,584 - Model - INFO - eval point accuracy: 0.679359
+2021-01-05 15:13:21,584 - Model - INFO - eval point avg class acc: 0.359440
+2021-01-05 15:13:21,585 - Model - INFO - ------- IoU --------
+class ground         weight: 0.364, IoU: 0.436 
+class vegetatation   weight: 0.553, IoU: 0.628 
+class building       weight: 0.084, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:13:21,585 - Model - INFO - Eval mean loss: 0.719680
+2021-01-05 15:13:21,585 - Model - INFO - Eval accuracy: 0.679359
+2021-01-05 15:13:21,585 - Model - INFO - Best mIoU: 0.321992
+2021-01-05 15:13:21,585 - Model - INFO - **** Epoch 11 (11/128) ****
+2021-01-05 15:13:21,585 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:13:54,786 - Model - INFO - Training mean loss: 0.618347
+2021-01-05 15:13:54,787 - Model - INFO - Training accuracy: 0.756370
+2021-01-05 15:13:54,787 - Model - INFO - Save model...
+2021-01-05 15:13:54,787 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:13:54,829 - Model - INFO - Saving model....
+2021-01-05 15:13:54,835 - Model - INFO - ---- EPOCH 011 EVALUATION ----
+2021-01-05 15:14:26,070 - Model - INFO - eval mean loss: 0.750925
+2021-01-05 15:14:26,070 - Model - INFO - eval point avg class IoU: 0.289863
+2021-01-05 15:14:26,070 - Model - INFO - eval point accuracy: 0.706489
+2021-01-05 15:14:26,071 - Model - INFO - eval point avg class acc: 0.388705
+2021-01-05 15:14:26,071 - Model - INFO - ------- IoU --------
+class ground         weight: 0.331, IoU: 0.503 
+class vegetatation   weight: 0.565, IoU: 0.657 
+class building       weight: 0.105, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:14:26,071 - Model - INFO - Eval mean loss: 0.750925
+2021-01-05 15:14:26,071 - Model - INFO - Eval accuracy: 0.706489
+2021-01-05 15:14:26,071 - Model - INFO - Best mIoU: 0.321992
+2021-01-05 15:14:26,071 - Model - INFO - **** Epoch 12 (12/128) ****
+2021-01-05 15:14:26,071 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:14:59,466 - Model - INFO - Training mean loss: 0.632029
+2021-01-05 15:14:59,466 - Model - INFO - Training accuracy: 0.740519
+2021-01-05 15:14:59,472 - Model - INFO - ---- EPOCH 012 EVALUATION ----
+2021-01-05 15:15:31,044 - Model - INFO - eval mean loss: 0.544101
+2021-01-05 15:15:31,044 - Model - INFO - eval point avg class IoU: 0.345953
+2021-01-05 15:15:31,044 - Model - INFO - eval point accuracy: 0.793868
+2021-01-05 15:15:31,044 - Model - INFO - eval point avg class acc: 0.422391
+2021-01-05 15:15:31,044 - Model - INFO - ------- IoU --------
+class ground         weight: 0.437, IoU: 0.689 
+class vegetatation   weight: 0.504, IoU: 0.695 
+class building       weight: 0.059, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:15:31,044 - Model - INFO - Eval mean loss: 0.544101
+2021-01-05 15:15:31,044 - Model - INFO - Eval accuracy: 0.793868
+2021-01-05 15:15:31,044 - Model - INFO - Save model...
+2021-01-05 15:15:31,045 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 15:15:31,081 - Model - INFO - Saving model....
+2021-01-05 15:15:31,081 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:15:31,081 - Model - INFO - **** Epoch 13 (13/128) ****
+2021-01-05 15:15:31,081 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:16:04,864 - Model - INFO - Training mean loss: 0.642713
+2021-01-05 15:16:04,864 - Model - INFO - Training accuracy: 0.726003
+2021-01-05 15:16:04,870 - Model - INFO - ---- EPOCH 013 EVALUATION ----
+2021-01-05 15:16:35,524 - Model - INFO - eval mean loss: 0.544301
+2021-01-05 15:16:35,524 - Model - INFO - eval point avg class IoU: 0.328843
+2021-01-05 15:16:35,524 - Model - INFO - eval point accuracy: 0.775475
+2021-01-05 15:16:35,524 - Model - INFO - eval point avg class acc: 0.405780
+2021-01-05 15:16:35,524 - Model - INFO - ------- IoU --------
+class ground         weight: 0.467, IoU: 0.653 
+class vegetatation   weight: 0.487, IoU: 0.662 
+class building       weight: 0.046, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:16:35,524 - Model - INFO - Eval mean loss: 0.544301
+2021-01-05 15:16:35,524 - Model - INFO - Eval accuracy: 0.775475
+2021-01-05 15:16:35,524 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:16:35,525 - Model - INFO - **** Epoch 14 (14/128) ****
+2021-01-05 15:16:35,525 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:17:09,744 - Model - INFO - Training mean loss: 0.634649
+2021-01-05 15:17:09,745 - Model - INFO - Training accuracy: 0.746336
+2021-01-05 15:17:09,750 - Model - INFO - ---- EPOCH 014 EVALUATION ----
+2021-01-05 15:17:41,896 - Model - INFO - eval mean loss: 0.578587
+2021-01-05 15:17:41,896 - Model - INFO - eval point avg class IoU: 0.294114
+2021-01-05 15:17:41,896 - Model - INFO - eval point accuracy: 0.708744
+2021-01-05 15:17:41,896 - Model - INFO - eval point avg class acc: 0.386580
+2021-01-05 15:17:41,896 - Model - INFO - ------- IoU --------
+class ground         weight: 0.397, IoU: 0.564 
+class vegetatation   weight: 0.507, IoU: 0.613 
+class building       weight: 0.096, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:17:41,896 - Model - INFO - Eval mean loss: 0.578587
+2021-01-05 15:17:41,896 - Model - INFO - Eval accuracy: 0.708744
+2021-01-05 15:17:41,896 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:17:41,896 - Model - INFO - **** Epoch 15 (15/128) ****
+2021-01-05 15:17:41,897 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:18:15,324 - Model - INFO - Training mean loss: 0.630385
+2021-01-05 15:18:15,324 - Model - INFO - Training accuracy: 0.752294
+2021-01-05 15:18:15,331 - Model - INFO - ---- EPOCH 015 EVALUATION ----
+2021-01-05 15:18:46,871 - Model - INFO - eval mean loss: 0.865676
+2021-01-05 15:18:46,871 - Model - INFO - eval point avg class IoU: 0.200586
+2021-01-05 15:18:46,871 - Model - INFO - eval point accuracy: 0.556591
+2021-01-05 15:18:46,872 - Model - INFO - eval point avg class acc: 0.299042
+2021-01-05 15:18:46,872 - Model - INFO - ------- IoU --------
+class ground         weight: 0.434, IoU: 0.356 
+class vegetatation   weight: 0.485, IoU: 0.446 
+class building       weight: 0.080, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:18:46,872 - Model - INFO - Eval mean loss: 0.865676
+2021-01-05 15:18:46,872 - Model - INFO - Eval accuracy: 0.556591
+2021-01-05 15:18:46,872 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:18:46,872 - Model - INFO - **** Epoch 16 (16/128) ****
+2021-01-05 15:18:46,872 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:19:20,329 - Model - INFO - Training mean loss: 0.684874
+2021-01-05 15:19:20,330 - Model - INFO - Training accuracy: 0.716055
+2021-01-05 15:19:20,330 - Model - INFO - Save model...
+2021-01-05 15:19:20,330 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:19:20,373 - Model - INFO - Saving model....
+2021-01-05 15:19:20,378 - Model - INFO - ---- EPOCH 016 EVALUATION ----
+2021-01-05 15:19:51,506 - Model - INFO - eval mean loss: 0.486100
+2021-01-05 15:19:51,506 - Model - INFO - eval point avg class IoU: 0.323929
+2021-01-05 15:19:51,506 - Model - INFO - eval point accuracy: 0.781656
+2021-01-05 15:19:51,506 - Model - INFO - eval point avg class acc: 0.401012
+2021-01-05 15:19:51,506 - Model - INFO - ------- IoU --------
+class ground         weight: 0.375, IoU: 0.599 
+class vegetatation   weight: 0.599, IoU: 0.697 
+class building       weight: 0.026, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:19:51,506 - Model - INFO - Eval mean loss: 0.486100
+2021-01-05 15:19:51,506 - Model - INFO - Eval accuracy: 0.781656
+2021-01-05 15:19:51,506 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:19:51,506 - Model - INFO - **** Epoch 17 (17/128) ****
+2021-01-05 15:19:51,506 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:20:25,383 - Model - INFO - Training mean loss: 0.630948
+2021-01-05 15:20:25,383 - Model - INFO - Training accuracy: 0.745861
+2021-01-05 15:20:25,388 - Model - INFO - ---- EPOCH 017 EVALUATION ----
+2021-01-05 15:20:56,609 - Model - INFO - eval mean loss: 0.645956
+2021-01-05 15:20:56,610 - Model - INFO - eval point avg class IoU: 0.281854
+2021-01-05 15:20:56,610 - Model - INFO - eval point accuracy: 0.705794
+2021-01-05 15:20:56,610 - Model - INFO - eval point avg class acc: 0.369262
+2021-01-05 15:20:56,610 - Model - INFO - ------- IoU --------
+class ground         weight: 0.383, IoU: 0.502 
+class vegetatation   weight: 0.545, IoU: 0.623 
+class building       weight: 0.072, IoU: 0.002 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:20:56,610 - Model - INFO - Eval mean loss: 0.645956
+2021-01-05 15:20:56,610 - Model - INFO - Eval accuracy: 0.705794
+2021-01-05 15:20:56,610 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:20:56,610 - Model - INFO - **** Epoch 18 (18/128) ****
+2021-01-05 15:20:56,610 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:21:30,137 - Model - INFO - Training mean loss: 0.633727
+2021-01-05 15:21:30,137 - Model - INFO - Training accuracy: 0.757173
+2021-01-05 15:21:30,143 - Model - INFO - ---- EPOCH 018 EVALUATION ----
+2021-01-05 15:22:01,445 - Model - INFO - eval mean loss: 0.589422
+2021-01-05 15:22:01,446 - Model - INFO - eval point avg class IoU: 0.305355
+2021-01-05 15:22:01,446 - Model - INFO - eval point accuracy: 0.748283
+2021-01-05 15:22:01,446 - Model - INFO - eval point avg class acc: 0.387911
+2021-01-05 15:22:01,446 - Model - INFO - ------- IoU --------
+class ground         weight: 0.355, IoU: 0.532 
+class vegetatation   weight: 0.583, IoU: 0.689 
+class building       weight: 0.061, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:22:01,446 - Model - INFO - Eval mean loss: 0.589422
+2021-01-05 15:22:01,446 - Model - INFO - Eval accuracy: 0.748283
+2021-01-05 15:22:01,446 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:22:01,446 - Model - INFO - **** Epoch 19 (19/128) ****
+2021-01-05 15:22:01,446 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:22:34,813 - Model - INFO - Training mean loss: 0.559984
+2021-01-05 15:22:34,813 - Model - INFO - Training accuracy: 0.776770
+2021-01-05 15:22:34,818 - Model - INFO - ---- EPOCH 019 EVALUATION ----
+2021-01-05 15:23:06,220 - Model - INFO - eval mean loss: 0.896700
+2021-01-05 15:23:06,220 - Model - INFO - eval point avg class IoU: 0.172883
+2021-01-05 15:23:06,220 - Model - INFO - eval point accuracy: 0.531787
+2021-01-05 15:23:06,220 - Model - INFO - eval point avg class acc: 0.283548
+2021-01-05 15:23:06,220 - Model - INFO - ------- IoU --------
+class ground         weight: 0.406, IoU: 0.201 
+class vegetatation   weight: 0.485, IoU: 0.490 
+class building       weight: 0.109, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:23:06,220 - Model - INFO - Eval mean loss: 0.896700
+2021-01-05 15:23:06,220 - Model - INFO - Eval accuracy: 0.531787
+2021-01-05 15:23:06,221 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:23:06,221 - Model - INFO - **** Epoch 20 (20/128) ****
+2021-01-05 15:23:06,221 - Model - INFO - Learning rate:0.000700
+2021-01-05 15:23:39,672 - Model - INFO - Training mean loss: 0.610850
+2021-01-05 15:23:39,672 - Model - INFO - Training accuracy: 0.750980
+2021-01-05 15:23:39,678 - Model - INFO - ---- EPOCH 020 EVALUATION ----
+2021-01-05 15:24:10,899 - Model - INFO - eval mean loss: 0.698435
+2021-01-05 15:24:10,899 - Model - INFO - eval point avg class IoU: 0.292317
+2021-01-05 15:24:10,899 - Model - INFO - eval point accuracy: 0.693548
+2021-01-05 15:24:10,899 - Model - INFO - eval point avg class acc: 0.394732
+2021-01-05 15:24:10,900 - Model - INFO - ------- IoU --------
+class ground         weight: 0.403, IoU: 0.604 
+class vegetatation   weight: 0.479, IoU: 0.566 
+class building       weight: 0.118, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:24:10,900 - Model - INFO - Eval mean loss: 0.698435
+2021-01-05 15:24:10,900 - Model - INFO - Eval accuracy: 0.693548
+2021-01-05 15:24:10,900 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:24:10,900 - Model - INFO - **** Epoch 21 (21/128) ****
+2021-01-05 15:24:10,900 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:24:44,579 - Model - INFO - Training mean loss: 0.606041
+2021-01-05 15:24:44,580 - Model - INFO - Training accuracy: 0.760249
+2021-01-05 15:24:44,580 - Model - INFO - Save model...
+2021-01-05 15:24:44,580 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:24:44,616 - Model - INFO - Saving model....
+2021-01-05 15:24:44,621 - Model - INFO - ---- EPOCH 021 EVALUATION ----
+2021-01-05 15:25:15,832 - Model - INFO - eval mean loss: 0.820213
+2021-01-05 15:25:15,832 - Model - INFO - eval point avg class IoU: 0.303886
+2021-01-05 15:25:15,832 - Model - INFO - eval point accuracy: 0.728061
+2021-01-05 15:25:15,832 - Model - INFO - eval point avg class acc: 0.397228
+2021-01-05 15:25:15,832 - Model - INFO - ------- IoU --------
+class ground         weight: 0.352, IoU: 0.581 
+class vegetatation   weight: 0.565, IoU: 0.634 
+class building       weight: 0.084, IoU: 0.001 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:25:15,832 - Model - INFO - Eval mean loss: 0.820213
+2021-01-05 15:25:15,832 - Model - INFO - Eval accuracy: 0.728061
+2021-01-05 15:25:15,833 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:25:15,833 - Model - INFO - **** Epoch 22 (22/128) ****
+2021-01-05 15:25:15,833 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:25:49,812 - Model - INFO - Training mean loss: 0.618482
+2021-01-05 15:25:49,812 - Model - INFO - Training accuracy: 0.746512
+2021-01-05 15:25:49,818 - Model - INFO - ---- EPOCH 022 EVALUATION ----
+2021-01-05 15:26:23,042 - Model - INFO - eval mean loss: 0.711832
+2021-01-05 15:26:23,042 - Model - INFO - eval point avg class IoU: 0.312311
+2021-01-05 15:26:23,042 - Model - INFO - eval point accuracy: 0.695112
+2021-01-05 15:26:23,042 - Model - INFO - eval point avg class acc: 0.398376
+2021-01-05 15:26:23,042 - Model - INFO - ------- IoU --------
+class ground         weight: 0.355, IoU: 0.407 
+class vegetatation   weight: 0.565, IoU: 0.631 
+class building       weight: 0.080, IoU: 0.211 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:26:23,042 - Model - INFO - Eval mean loss: 0.711832
+2021-01-05 15:26:23,042 - Model - INFO - Eval accuracy: 0.695112
+2021-01-05 15:26:23,042 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:26:23,042 - Model - INFO - **** Epoch 23 (23/128) ****
+2021-01-05 15:26:23,042 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:26:58,192 - Model - INFO - Training mean loss: 0.558714
+2021-01-05 15:26:58,192 - Model - INFO - Training accuracy: 0.784207
+2021-01-05 15:26:58,197 - Model - INFO - ---- EPOCH 023 EVALUATION ----
+2021-01-05 15:27:30,486 - Model - INFO - eval mean loss: 0.638845
+2021-01-05 15:27:30,486 - Model - INFO - eval point avg class IoU: 0.327578
+2021-01-05 15:27:30,486 - Model - INFO - eval point accuracy: 0.770833
+2021-01-05 15:27:30,486 - Model - INFO - eval point avg class acc: 0.407387
+2021-01-05 15:27:30,486 - Model - INFO - ------- IoU --------
+class ground         weight: 0.417, IoU: 0.656 
+class vegetatation   weight: 0.531, IoU: 0.654 
+class building       weight: 0.052, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:27:30,486 - Model - INFO - Eval mean loss: 0.638845
+2021-01-05 15:27:30,486 - Model - INFO - Eval accuracy: 0.770833
+2021-01-05 15:27:30,486 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:27:30,486 - Model - INFO - **** Epoch 24 (24/128) ****
+2021-01-05 15:27:30,486 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:28:05,272 - Model - INFO - Training mean loss: 0.588063
+2021-01-05 15:28:05,272 - Model - INFO - Training accuracy: 0.758783
+2021-01-05 15:28:05,277 - Model - INFO - ---- EPOCH 024 EVALUATION ----
+2021-01-05 15:28:36,971 - Model - INFO - eval mean loss: 0.680342
+2021-01-05 15:28:36,971 - Model - INFO - eval point avg class IoU: 0.274650
+2021-01-05 15:28:36,971 - Model - INFO - eval point accuracy: 0.699740
+2021-01-05 15:28:36,971 - Model - INFO - eval point avg class acc: 0.361868
+2021-01-05 15:28:36,971 - Model - INFO - ------- IoU --------
+class ground         weight: 0.380, IoU: 0.477 
+class vegetatation   weight: 0.557, IoU: 0.622 
+class building       weight: 0.063, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:28:36,971 - Model - INFO - Eval mean loss: 0.680342
+2021-01-05 15:28:36,972 - Model - INFO - Eval accuracy: 0.699740
+2021-01-05 15:28:36,972 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:28:36,972 - Model - INFO - **** Epoch 25 (25/128) ****
+2021-01-05 15:28:36,972 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:29:10,422 - Model - INFO - Training mean loss: 0.605687
+2021-01-05 15:29:10,422 - Model - INFO - Training accuracy: 0.768133
+2021-01-05 15:29:10,428 - Model - INFO - ---- EPOCH 025 EVALUATION ----
+2021-01-05 15:29:41,700 - Model - INFO - eval mean loss: 0.687051
+2021-01-05 15:29:41,700 - Model - INFO - eval point avg class IoU: 0.343091
+2021-01-05 15:29:41,700 - Model - INFO - eval point accuracy: 0.734652
+2021-01-05 15:29:41,700 - Model - INFO - eval point avg class acc: 0.434785
+2021-01-05 15:29:41,700 - Model - INFO - ------- IoU --------
+class ground         weight: 0.367, IoU: 0.548 
+class vegetatation   weight: 0.530, IoU: 0.673 
+class building       weight: 0.103, IoU: 0.152 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:29:41,700 - Model - INFO - Eval mean loss: 0.687051
+2021-01-05 15:29:41,700 - Model - INFO - Eval accuracy: 0.734652
+2021-01-05 15:29:41,700 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:29:41,700 - Model - INFO - **** Epoch 26 (26/128) ****
+2021-01-05 15:29:41,701 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:30:16,772 - Model - INFO - Training mean loss: 0.652443
+2021-01-05 15:30:16,772 - Model - INFO - Training accuracy: 0.737604
+2021-01-05 15:30:16,772 - Model - INFO - Save model...
+2021-01-05 15:30:16,772 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:30:16,829 - Model - INFO - Saving model....
+2021-01-05 15:30:16,836 - Model - INFO - ---- EPOCH 026 EVALUATION ----
+2021-01-05 15:30:48,019 - Model - INFO - eval mean loss: 0.750873
+2021-01-05 15:30:48,019 - Model - INFO - eval point avg class IoU: 0.269939
+2021-01-05 15:30:48,019 - Model - INFO - eval point accuracy: 0.646287
+2021-01-05 15:30:48,019 - Model - INFO - eval point avg class acc: 0.379759
+2021-01-05 15:30:48,019 - Model - INFO - ------- IoU --------
+class ground         weight: 0.347, IoU: 0.532 
+class vegetatation   weight: 0.497, IoU: 0.544 
+class building       weight: 0.156, IoU: 0.003 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:30:48,019 - Model - INFO - Eval mean loss: 0.750873
+2021-01-05 15:30:48,020 - Model - INFO - Eval accuracy: 0.646287
+2021-01-05 15:30:48,020 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:30:48,020 - Model - INFO - **** Epoch 27 (27/128) ****
+2021-01-05 15:30:48,020 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:31:21,538 - Model - INFO - Training mean loss: 0.585276
+2021-01-05 15:31:21,538 - Model - INFO - Training accuracy: 0.761677
+2021-01-05 15:31:21,544 - Model - INFO - ---- EPOCH 027 EVALUATION ----
+2021-01-05 15:31:52,670 - Model - INFO - eval mean loss: 0.682983
+2021-01-05 15:31:52,670 - Model - INFO - eval point avg class IoU: 0.259689
+2021-01-05 15:31:52,670 - Model - INFO - eval point accuracy: 0.685203
+2021-01-05 15:31:52,670 - Model - INFO - eval point avg class acc: 0.347774
+2021-01-05 15:31:52,670 - Model - INFO - ------- IoU --------
+class ground         weight: 0.342, IoU: 0.407 
+class vegetatation   weight: 0.575, IoU: 0.632 
+class building       weight: 0.083, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:31:52,670 - Model - INFO - Eval mean loss: 0.682983
+2021-01-05 15:31:52,670 - Model - INFO - Eval accuracy: 0.685203
+2021-01-05 15:31:52,670 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:31:52,670 - Model - INFO - **** Epoch 28 (28/128) ****
+2021-01-05 15:31:52,670 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:32:27,989 - Model - INFO - Training mean loss: 0.559966
+2021-01-05 15:32:27,989 - Model - INFO - Training accuracy: 0.784020
+2021-01-05 15:32:27,995 - Model - INFO - ---- EPOCH 028 EVALUATION ----
+2021-01-05 15:33:00,100 - Model - INFO - eval mean loss: 0.673064
+2021-01-05 15:33:00,100 - Model - INFO - eval point avg class IoU: 0.284625
+2021-01-05 15:33:00,100 - Model - INFO - eval point accuracy: 0.711507
+2021-01-05 15:33:00,100 - Model - INFO - eval point avg class acc: 0.372098
+2021-01-05 15:33:00,100 - Model - INFO - ------- IoU --------
+class ground         weight: 0.375, IoU: 0.513 
+class vegetatation   weight: 0.562, IoU: 0.626 
+class building       weight: 0.063, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:33:00,100 - Model - INFO - Eval mean loss: 0.673064
+2021-01-05 15:33:00,101 - Model - INFO - Eval accuracy: 0.711507
+2021-01-05 15:33:00,101 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:33:00,101 - Model - INFO - **** Epoch 29 (29/128) ****
+2021-01-05 15:33:00,101 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:33:33,929 - Model - INFO - Training mean loss: 0.535126
+2021-01-05 15:33:33,930 - Model - INFO - Training accuracy: 0.786449
+2021-01-05 15:33:33,935 - Model - INFO - ---- EPOCH 029 EVALUATION ----
+2021-01-05 15:34:06,128 - Model - INFO - eval mean loss: 0.541320
+2021-01-05 15:34:06,128 - Model - INFO - eval point avg class IoU: 0.334411
+2021-01-05 15:34:06,128 - Model - INFO - eval point accuracy: 0.797290
+2021-01-05 15:34:06,129 - Model - INFO - eval point avg class acc: 0.403072
+2021-01-05 15:34:06,129 - Model - INFO - ------- IoU --------
+class ground         weight: 0.387, IoU: 0.602 
+class vegetatation   weight: 0.582, IoU: 0.735 
+class building       weight: 0.031, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:34:06,129 - Model - INFO - Eval mean loss: 0.541320
+2021-01-05 15:34:06,129 - Model - INFO - Eval accuracy: 0.797290
+2021-01-05 15:34:06,129 - Model - INFO - Best mIoU: 0.345953
+2021-01-05 15:34:06,129 - Model - INFO - **** Epoch 30 (30/128) ****
+2021-01-05 15:34:06,129 - Model - INFO - Learning rate:0.000490
+2021-01-05 15:34:39,961 - Model - INFO - Training mean loss: 0.569594
+2021-01-05 15:34:39,961 - Model - INFO - Training accuracy: 0.784375
+2021-01-05 15:34:39,967 - Model - INFO - ---- EPOCH 030 EVALUATION ----
+2021-01-05 15:35:11,562 - Model - INFO - eval mean loss: 0.698857
+2021-01-05 15:35:11,562 - Model - INFO - eval point avg class IoU: 0.420124
+2021-01-05 15:35:11,562 - Model - INFO - eval point accuracy: 0.740195
+2021-01-05 15:35:11,562 - Model - INFO - eval point avg class acc: 0.509486
+2021-01-05 15:35:11,563 - Model - INFO - ------- IoU --------
+class ground         weight: 0.419, IoU: 0.603 
+class vegetatation   weight: 0.501, IoU: 0.587 
+class building       weight: 0.080, IoU: 0.491 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:35:11,563 - Model - INFO - Eval mean loss: 0.698857
+2021-01-05 15:35:11,563 - Model - INFO - Eval accuracy: 0.740195
+2021-01-05 15:35:11,563 - Model - INFO - Save model...
+2021-01-05 15:35:11,563 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 15:35:11,598 - Model - INFO - Saving model....
+2021-01-05 15:35:11,598 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:35:11,598 - Model - INFO - **** Epoch 31 (31/128) ****
+2021-01-05 15:35:11,598 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:35:45,020 - Model - INFO - Training mean loss: 0.600159
+2021-01-05 15:35:45,021 - Model - INFO - Training accuracy: 0.754666
+2021-01-05 15:35:45,021 - Model - INFO - Save model...
+2021-01-05 15:35:45,021 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:35:45,063 - Model - INFO - Saving model....
+2021-01-05 15:35:45,068 - Model - INFO - ---- EPOCH 031 EVALUATION ----
+2021-01-05 15:36:17,379 - Model - INFO - eval mean loss: 0.606158
+2021-01-05 15:36:17,379 - Model - INFO - eval point avg class IoU: 0.314850
+2021-01-05 15:36:17,379 - Model - INFO - eval point accuracy: 0.757555
+2021-01-05 15:36:17,379 - Model - INFO - eval point avg class acc: 0.393348
+2021-01-05 15:36:17,379 - Model - INFO - ------- IoU --------
+class ground         weight: 0.392, IoU: 0.576 
+class vegetatation   weight: 0.543, IoU: 0.683 
+class building       weight: 0.065, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:36:17,379 - Model - INFO - Eval mean loss: 0.606158
+2021-01-05 15:36:17,379 - Model - INFO - Eval accuracy: 0.757555
+2021-01-05 15:36:17,379 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:36:17,379 - Model - INFO - **** Epoch 32 (32/128) ****
+2021-01-05 15:36:17,379 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:36:50,828 - Model - INFO - Training mean loss: 0.595584
+2021-01-05 15:36:50,828 - Model - INFO - Training accuracy: 0.765646
+2021-01-05 15:36:50,834 - Model - INFO - ---- EPOCH 032 EVALUATION ----
+2021-01-05 15:37:21,981 - Model - INFO - eval mean loss: 0.544856
+2021-01-05 15:37:21,982 - Model - INFO - eval point avg class IoU: 0.355906
+2021-01-05 15:37:21,982 - Model - INFO - eval point accuracy: 0.757836
+2021-01-05 15:37:21,982 - Model - INFO - eval point avg class acc: 0.436679
+2021-01-05 15:37:21,982 - Model - INFO - ------- IoU --------
+class ground         weight: 0.359, IoU: 0.560 
+class vegetatation   weight: 0.564, IoU: 0.687 
+class building       weight: 0.076, IoU: 0.177 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:37:21,982 - Model - INFO - Eval mean loss: 0.544856
+2021-01-05 15:37:21,982 - Model - INFO - Eval accuracy: 0.757836
+2021-01-05 15:37:21,982 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:37:21,982 - Model - INFO - **** Epoch 33 (33/128) ****
+2021-01-05 15:37:21,982 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:37:54,894 - Model - INFO - Training mean loss: 0.552582
+2021-01-05 15:37:54,894 - Model - INFO - Training accuracy: 0.777816
+2021-01-05 15:37:54,899 - Model - INFO - ---- EPOCH 033 EVALUATION ----
+2021-01-05 15:38:25,892 - Model - INFO - eval mean loss: 0.780828
+2021-01-05 15:38:25,892 - Model - INFO - eval point avg class IoU: 0.267738
+2021-01-05 15:38:25,892 - Model - INFO - eval point accuracy: 0.641316
+2021-01-05 15:38:25,892 - Model - INFO - eval point avg class acc: 0.366446
+2021-01-05 15:38:25,892 - Model - INFO - ------- IoU --------
+class ground         weight: 0.433, IoU: 0.460 
+class vegetatation   weight: 0.475, IoU: 0.529 
+class building       weight: 0.092, IoU: 0.082 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:38:25,892 - Model - INFO - Eval mean loss: 0.780828
+2021-01-05 15:38:25,892 - Model - INFO - Eval accuracy: 0.641316
+2021-01-05 15:38:25,892 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:38:25,893 - Model - INFO - **** Epoch 34 (34/128) ****
+2021-01-05 15:38:25,893 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:38:59,153 - Model - INFO - Training mean loss: 0.551530
+2021-01-05 15:38:59,153 - Model - INFO - Training accuracy: 0.785359
+2021-01-05 15:38:59,158 - Model - INFO - ---- EPOCH 034 EVALUATION ----
+2021-01-05 15:39:30,267 - Model - INFO - eval mean loss: 0.626730
+2021-01-05 15:39:30,267 - Model - INFO - eval point avg class IoU: 0.253534
+2021-01-05 15:39:30,267 - Model - INFO - eval point accuracy: 0.672863
+2021-01-05 15:39:30,267 - Model - INFO - eval point avg class acc: 0.348143
+2021-01-05 15:39:30,267 - Model - INFO - ------- IoU --------
+class ground         weight: 0.386, IoU: 0.404 
+class vegetatation   weight: 0.525, IoU: 0.610 
+class building       weight: 0.089, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:39:30,267 - Model - INFO - Eval mean loss: 0.626730
+2021-01-05 15:39:30,267 - Model - INFO - Eval accuracy: 0.672863
+2021-01-05 15:39:30,267 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:39:30,267 - Model - INFO - **** Epoch 35 (35/128) ****
+2021-01-05 15:39:30,267 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:40:04,699 - Model - INFO - Training mean loss: 0.511894
+2021-01-05 15:40:04,700 - Model - INFO - Training accuracy: 0.798358
+2021-01-05 15:40:04,705 - Model - INFO - ---- EPOCH 035 EVALUATION ----
+2021-01-05 15:40:36,123 - Model - INFO - eval mean loss: 0.606836
+2021-01-05 15:40:36,123 - Model - INFO - eval point avg class IoU: 0.314312
+2021-01-05 15:40:36,123 - Model - INFO - eval point accuracy: 0.728190
+2021-01-05 15:40:36,123 - Model - INFO - eval point avg class acc: 0.399118
+2021-01-05 15:40:36,123 - Model - INFO - ------- IoU --------
+class ground         weight: 0.431, IoU: 0.554 
+class vegetatation   weight: 0.509, IoU: 0.630 
+class building       weight: 0.060, IoU: 0.074 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:40:36,123 - Model - INFO - Eval mean loss: 0.606836
+2021-01-05 15:40:36,123 - Model - INFO - Eval accuracy: 0.728190
+2021-01-05 15:40:36,123 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:40:36,123 - Model - INFO - **** Epoch 36 (36/128) ****
+2021-01-05 15:40:36,123 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:41:09,440 - Model - INFO - Training mean loss: 0.524625
+2021-01-05 15:41:09,440 - Model - INFO - Training accuracy: 0.800151
+2021-01-05 15:41:09,440 - Model - INFO - Save model...
+2021-01-05 15:41:09,440 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:41:09,482 - Model - INFO - Saving model....
+2021-01-05 15:41:09,488 - Model - INFO - ---- EPOCH 036 EVALUATION ----
+2021-01-05 15:41:40,041 - Model - INFO - eval mean loss: 0.525348
+2021-01-05 15:41:40,041 - Model - INFO - eval point avg class IoU: 0.355993
+2021-01-05 15:41:40,041 - Model - INFO - eval point accuracy: 0.815626
+2021-01-05 15:41:40,041 - Model - INFO - eval point avg class acc: 0.421383
+2021-01-05 15:41:40,041 - Model - INFO - ------- IoU --------
+class ground         weight: 0.474, IoU: 0.732 
+class vegetatation   weight: 0.496, IoU: 0.691 
+class building       weight: 0.031, IoU: 0.001 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:41:40,042 - Model - INFO - Eval mean loss: 0.525348
+2021-01-05 15:41:40,042 - Model - INFO - Eval accuracy: 0.815626
+2021-01-05 15:41:40,042 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:41:40,042 - Model - INFO - **** Epoch 37 (37/128) ****
+2021-01-05 15:41:40,042 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:42:13,124 - Model - INFO - Training mean loss: 0.539416
+2021-01-05 15:42:13,124 - Model - INFO - Training accuracy: 0.786858
+2021-01-05 15:42:13,130 - Model - INFO - ---- EPOCH 037 EVALUATION ----
+2021-01-05 15:42:43,915 - Model - INFO - eval mean loss: 0.641890
+2021-01-05 15:42:43,915 - Model - INFO - eval point avg class IoU: 0.256229
+2021-01-05 15:42:43,916 - Model - INFO - eval point accuracy: 0.657724
+2021-01-05 15:42:43,916 - Model - INFO - eval point avg class acc: 0.346204
+2021-01-05 15:42:43,916 - Model - INFO - ------- IoU --------
+class ground         weight: 0.419, IoU: 0.451 
+class vegetatation   weight: 0.530, IoU: 0.550 
+class building       weight: 0.051, IoU: 0.024 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:42:43,916 - Model - INFO - Eval mean loss: 0.641890
+2021-01-05 15:42:43,916 - Model - INFO - Eval accuracy: 0.657724
+2021-01-05 15:42:43,916 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:42:43,916 - Model - INFO - **** Epoch 38 (38/128) ****
+2021-01-05 15:42:43,916 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:43:16,917 - Model - INFO - Training mean loss: 0.506893
+2021-01-05 15:43:16,918 - Model - INFO - Training accuracy: 0.814315
+2021-01-05 15:43:16,922 - Model - INFO - ---- EPOCH 038 EVALUATION ----
+2021-01-05 15:43:47,940 - Model - INFO - eval mean loss: 0.567159
+2021-01-05 15:43:47,940 - Model - INFO - eval point avg class IoU: 0.362636
+2021-01-05 15:43:47,941 - Model - INFO - eval point accuracy: 0.766883
+2021-01-05 15:43:47,941 - Model - INFO - eval point avg class acc: 0.442256
+2021-01-05 15:43:47,941 - Model - INFO - ------- IoU --------
+class ground         weight: 0.395, IoU: 0.613 
+class vegetatation   weight: 0.541, IoU: 0.671 
+class building       weight: 0.064, IoU: 0.166 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:43:47,941 - Model - INFO - Eval mean loss: 0.567159
+2021-01-05 15:43:47,941 - Model - INFO - Eval accuracy: 0.766883
+2021-01-05 15:43:47,941 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:43:47,941 - Model - INFO - **** Epoch 39 (39/128) ****
+2021-01-05 15:43:47,941 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:44:20,825 - Model - INFO - Training mean loss: 0.576481
+2021-01-05 15:44:20,825 - Model - INFO - Training accuracy: 0.771544
+2021-01-05 15:44:20,831 - Model - INFO - ---- EPOCH 039 EVALUATION ----
+2021-01-05 15:44:51,371 - Model - INFO - eval mean loss: 0.686555
+2021-01-05 15:44:51,371 - Model - INFO - eval point avg class IoU: 0.291876
+2021-01-05 15:44:51,371 - Model - INFO - eval point accuracy: 0.698064
+2021-01-05 15:44:51,372 - Model - INFO - eval point avg class acc: 0.388747
+2021-01-05 15:44:51,372 - Model - INFO - ------- IoU --------
+class ground         weight: 0.378, IoU: 0.548 
+class vegetatation   weight: 0.513, IoU: 0.610 
+class building       weight: 0.109, IoU: 0.010 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:44:51,372 - Model - INFO - Eval mean loss: 0.686555
+2021-01-05 15:44:51,372 - Model - INFO - Eval accuracy: 0.698064
+2021-01-05 15:44:51,372 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:44:51,372 - Model - INFO - **** Epoch 40 (40/128) ****
+2021-01-05 15:44:51,372 - Model - INFO - Learning rate:0.000343
+2021-01-05 15:45:24,573 - Model - INFO - Training mean loss: 0.497665
+2021-01-05 15:45:24,573 - Model - INFO - Training accuracy: 0.810111
+2021-01-05 15:45:24,579 - Model - INFO - ---- EPOCH 040 EVALUATION ----
+2021-01-05 15:45:54,808 - Model - INFO - eval mean loss: 0.646333
+2021-01-05 15:45:54,808 - Model - INFO - eval point avg class IoU: 0.256966
+2021-01-05 15:45:54,808 - Model - INFO - eval point accuracy: 0.666890
+2021-01-05 15:45:54,808 - Model - INFO - eval point avg class acc: 0.353483
+2021-01-05 15:45:54,808 - Model - INFO - ------- IoU --------
+class ground         weight: 0.417, IoU: 0.443 
+class vegetatation   weight: 0.500, IoU: 0.584 
+class building       weight: 0.083, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:45:54,808 - Model - INFO - Eval mean loss: 0.646333
+2021-01-05 15:45:54,808 - Model - INFO - Eval accuracy: 0.666890
+2021-01-05 15:45:54,809 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:45:54,809 - Model - INFO - **** Epoch 41 (41/128) ****
+2021-01-05 15:45:54,809 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:46:28,163 - Model - INFO - Training mean loss: 0.523761
+2021-01-05 15:46:28,163 - Model - INFO - Training accuracy: 0.798982
+2021-01-05 15:46:28,163 - Model - INFO - Save model...
+2021-01-05 15:46:28,163 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:46:28,216 - Model - INFO - Saving model....
+2021-01-05 15:46:28,222 - Model - INFO - ---- EPOCH 041 EVALUATION ----
+2021-01-05 15:46:58,824 - Model - INFO - eval mean loss: 0.584587
+2021-01-05 15:46:58,824 - Model - INFO - eval point avg class IoU: 0.300499
+2021-01-05 15:46:58,824 - Model - INFO - eval point accuracy: 0.727158
+2021-01-05 15:46:58,824 - Model - INFO - eval point avg class acc: 0.385298
+2021-01-05 15:46:58,824 - Model - INFO - ------- IoU --------
+class ground         weight: 0.377, IoU: 0.550 
+class vegetatation   weight: 0.536, IoU: 0.647 
+class building       weight: 0.087, IoU: 0.005 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:46:58,825 - Model - INFO - Eval mean loss: 0.584587
+2021-01-05 15:46:58,825 - Model - INFO - Eval accuracy: 0.727158
+2021-01-05 15:46:58,825 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:46:58,825 - Model - INFO - **** Epoch 42 (42/128) ****
+2021-01-05 15:46:58,825 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:47:31,973 - Model - INFO - Training mean loss: 0.454610
+2021-01-05 15:47:31,973 - Model - INFO - Training accuracy: 0.834814
+2021-01-05 15:47:31,979 - Model - INFO - ---- EPOCH 042 EVALUATION ----
+2021-01-05 15:48:02,791 - Model - INFO - eval mean loss: 0.695982
+2021-01-05 15:48:02,792 - Model - INFO - eval point avg class IoU: 0.243384
+2021-01-05 15:48:02,792 - Model - INFO - eval point accuracy: 0.654118
+2021-01-05 15:48:02,792 - Model - INFO - eval point avg class acc: 0.338619
+2021-01-05 15:48:02,792 - Model - INFO - ------- IoU --------
+class ground         weight: 0.402, IoU: 0.390 
+class vegetatation   weight: 0.521, IoU: 0.584 
+class building       weight: 0.077, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:48:02,792 - Model - INFO - Eval mean loss: 0.695982
+2021-01-05 15:48:02,792 - Model - INFO - Eval accuracy: 0.654118
+2021-01-05 15:48:02,792 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:48:02,792 - Model - INFO - **** Epoch 43 (43/128) ****
+2021-01-05 15:48:02,792 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:48:35,989 - Model - INFO - Training mean loss: 0.524064
+2021-01-05 15:48:35,989 - Model - INFO - Training accuracy: 0.795826
+2021-01-05 15:48:35,995 - Model - INFO - ---- EPOCH 043 EVALUATION ----
+2021-01-05 15:49:06,591 - Model - INFO - eval mean loss: 0.681295
+2021-01-05 15:49:06,591 - Model - INFO - eval point avg class IoU: 0.270836
+2021-01-05 15:49:06,591 - Model - INFO - eval point accuracy: 0.673475
+2021-01-05 15:49:06,591 - Model - INFO - eval point avg class acc: 0.364587
+2021-01-05 15:49:06,591 - Model - INFO - ------- IoU --------
+class ground         weight: 0.407, IoU: 0.470 
+class vegetatation   weight: 0.507, IoU: 0.582 
+class building       weight: 0.085, IoU: 0.031 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:49:06,591 - Model - INFO - Eval mean loss: 0.681295
+2021-01-05 15:49:06,591 - Model - INFO - Eval accuracy: 0.673475
+2021-01-05 15:49:06,591 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:49:06,591 - Model - INFO - **** Epoch 44 (44/128) ****
+2021-01-05 15:49:06,591 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:49:39,979 - Model - INFO - Training mean loss: 0.503928
+2021-01-05 15:49:39,979 - Model - INFO - Training accuracy: 0.807602
+2021-01-05 15:49:39,985 - Model - INFO - ---- EPOCH 044 EVALUATION ----
+2021-01-05 15:50:11,236 - Model - INFO - eval mean loss: 0.782714
+2021-01-05 15:50:11,237 - Model - INFO - eval point avg class IoU: 0.244938
+2021-01-05 15:50:11,237 - Model - INFO - eval point accuracy: 0.633990
+2021-01-05 15:50:11,237 - Model - INFO - eval point avg class acc: 0.346975
+2021-01-05 15:50:11,237 - Model - INFO - ------- IoU --------
+class ground         weight: 0.408, IoU: 0.430 
+class vegetatation   weight: 0.485, IoU: 0.548 
+class building       weight: 0.107, IoU: 0.001 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:50:11,237 - Model - INFO - Eval mean loss: 0.782714
+2021-01-05 15:50:11,237 - Model - INFO - Eval accuracy: 0.633990
+2021-01-05 15:50:11,237 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:50:11,237 - Model - INFO - **** Epoch 45 (45/128) ****
+2021-01-05 15:50:11,237 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:50:45,604 - Model - INFO - Training mean loss: 0.482884
+2021-01-05 15:50:45,604 - Model - INFO - Training accuracy: 0.822426
+2021-01-05 15:50:45,610 - Model - INFO - ---- EPOCH 045 EVALUATION ----
+2021-01-05 15:51:18,000 - Model - INFO - eval mean loss: 0.673832
+2021-01-05 15:51:18,000 - Model - INFO - eval point avg class IoU: 0.381295
+2021-01-05 15:51:18,000 - Model - INFO - eval point accuracy: 0.684146
+2021-01-05 15:51:18,000 - Model - INFO - eval point avg class acc: 0.478826
+2021-01-05 15:51:18,000 - Model - INFO - ------- IoU --------
+class ground         weight: 0.453, IoU: 0.459 
+class vegetatation   weight: 0.464, IoU: 0.571 
+class building       weight: 0.083, IoU: 0.495 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:51:18,000 - Model - INFO - Eval mean loss: 0.673832
+2021-01-05 15:51:18,000 - Model - INFO - Eval accuracy: 0.684146
+2021-01-05 15:51:18,000 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:51:18,001 - Model - INFO - **** Epoch 46 (46/128) ****
+2021-01-05 15:51:18,001 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:51:52,536 - Model - INFO - Training mean loss: 0.473684
+2021-01-05 15:51:52,536 - Model - INFO - Training accuracy: 0.834288
+2021-01-05 15:51:52,536 - Model - INFO - Save model...
+2021-01-05 15:51:52,537 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:51:52,579 - Model - INFO - Saving model....
+2021-01-05 15:51:52,584 - Model - INFO - ---- EPOCH 046 EVALUATION ----
+2021-01-05 15:52:25,234 - Model - INFO - eval mean loss: 0.896292
+2021-01-05 15:52:25,234 - Model - INFO - eval point avg class IoU: 0.226304
+2021-01-05 15:52:25,234 - Model - INFO - eval point accuracy: 0.596889
+2021-01-05 15:52:25,234 - Model - INFO - eval point avg class acc: 0.328911
+2021-01-05 15:52:25,234 - Model - INFO - ------- IoU --------
+class ground         weight: 0.367, IoU: 0.374 
+class vegetatation   weight: 0.514, IoU: 0.523 
+class building       weight: 0.120, IoU: 0.009 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:52:25,234 - Model - INFO - Eval mean loss: 0.896292
+2021-01-05 15:52:25,234 - Model - INFO - Eval accuracy: 0.596889
+2021-01-05 15:52:25,234 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:52:25,234 - Model - INFO - **** Epoch 47 (47/128) ****
+2021-01-05 15:52:25,234 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:53:00,350 - Model - INFO - Training mean loss: 0.522641
+2021-01-05 15:53:00,350 - Model - INFO - Training accuracy: 0.804910
+2021-01-05 15:53:00,356 - Model - INFO - ---- EPOCH 047 EVALUATION ----
+2021-01-05 15:53:32,733 - Model - INFO - eval mean loss: 0.574460
+2021-01-05 15:53:32,734 - Model - INFO - eval point avg class IoU: 0.284683
+2021-01-05 15:53:32,734 - Model - INFO - eval point accuracy: 0.734574
+2021-01-05 15:53:32,734 - Model - INFO - eval point avg class acc: 0.362223
+2021-01-05 15:53:32,734 - Model - INFO - ------- IoU --------
+class ground         weight: 0.385, IoU: 0.471 
+class vegetatation   weight: 0.577, IoU: 0.667 
+class building       weight: 0.038, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:53:32,734 - Model - INFO - Eval mean loss: 0.574460
+2021-01-05 15:53:32,734 - Model - INFO - Eval accuracy: 0.734574
+2021-01-05 15:53:32,734 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:53:32,734 - Model - INFO - **** Epoch 48 (48/128) ****
+2021-01-05 15:53:32,734 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:54:07,173 - Model - INFO - Training mean loss: 0.458436
+2021-01-05 15:54:07,173 - Model - INFO - Training accuracy: 0.823105
+2021-01-05 15:54:07,178 - Model - INFO - ---- EPOCH 048 EVALUATION ----
+2021-01-05 15:54:39,305 - Model - INFO - eval mean loss: 0.605197
+2021-01-05 15:54:39,305 - Model - INFO - eval point avg class IoU: 0.337291
+2021-01-05 15:54:39,305 - Model - INFO - eval point accuracy: 0.750287
+2021-01-05 15:54:39,305 - Model - INFO - eval point avg class acc: 0.420802
+2021-01-05 15:54:39,305 - Model - INFO - ------- IoU --------
+class ground         weight: 0.361, IoU: 0.549 
+class vegetatation   weight: 0.570, IoU: 0.681 
+class building       weight: 0.068, IoU: 0.119 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:54:39,305 - Model - INFO - Eval mean loss: 0.605197
+2021-01-05 15:54:39,305 - Model - INFO - Eval accuracy: 0.750287
+2021-01-05 15:54:39,305 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:54:39,305 - Model - INFO - **** Epoch 49 (49/128) ****
+2021-01-05 15:54:39,305 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:55:13,710 - Model - INFO - Training mean loss: 0.525078
+2021-01-05 15:55:13,710 - Model - INFO - Training accuracy: 0.797584
+2021-01-05 15:55:13,716 - Model - INFO - ---- EPOCH 049 EVALUATION ----
+2021-01-05 15:55:47,129 - Model - INFO - eval mean loss: 0.667417
+2021-01-05 15:55:47,129 - Model - INFO - eval point avg class IoU: 0.374749
+2021-01-05 15:55:47,129 - Model - INFO - eval point accuracy: 0.724924
+2021-01-05 15:55:47,129 - Model - INFO - eval point avg class acc: 0.460800
+2021-01-05 15:55:47,129 - Model - INFO - ------- IoU --------
+class ground         weight: 0.420, IoU: 0.556 
+class vegetatation   weight: 0.508, IoU: 0.603 
+class building       weight: 0.072, IoU: 0.340 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:55:47,129 - Model - INFO - Eval mean loss: 0.667417
+2021-01-05 15:55:47,129 - Model - INFO - Eval accuracy: 0.724924
+2021-01-05 15:55:47,129 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:55:47,129 - Model - INFO - **** Epoch 50 (50/128) ****
+2021-01-05 15:55:47,129 - Model - INFO - Learning rate:0.000240
+2021-01-05 15:56:22,124 - Model - INFO - Training mean loss: 0.511856
+2021-01-05 15:56:22,125 - Model - INFO - Training accuracy: 0.809075
+2021-01-05 15:56:22,130 - Model - INFO - ---- EPOCH 050 EVALUATION ----
+2021-01-05 15:56:54,900 - Model - INFO - eval mean loss: 0.930269
+2021-01-05 15:56:54,900 - Model - INFO - eval point avg class IoU: 0.264045
+2021-01-05 15:56:54,900 - Model - INFO - eval point accuracy: 0.585343
+2021-01-05 15:56:54,900 - Model - INFO - eval point avg class acc: 0.368294
+2021-01-05 15:56:54,900 - Model - INFO - ------- IoU --------
+class ground         weight: 0.368, IoU: 0.319 
+class vegetatation   weight: 0.480, IoU: 0.502 
+class building       weight: 0.152, IoU: 0.235 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:56:54,901 - Model - INFO - Eval mean loss: 0.930269
+2021-01-05 15:56:54,901 - Model - INFO - Eval accuracy: 0.585343
+2021-01-05 15:56:54,901 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:56:54,901 - Model - INFO - **** Epoch 51 (51/128) ****
+2021-01-05 15:56:54,901 - Model - INFO - Learning rate:0.000168
+2021-01-05 15:57:30,818 - Model - INFO - Training mean loss: 0.521953
+2021-01-05 15:57:30,818 - Model - INFO - Training accuracy: 0.794524
+2021-01-05 15:57:30,819 - Model - INFO - Save model...
+2021-01-05 15:57:30,819 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 15:57:30,860 - Model - INFO - Saving model....
+2021-01-05 15:57:30,866 - Model - INFO - ---- EPOCH 051 EVALUATION ----
+2021-01-05 15:58:05,215 - Model - INFO - eval mean loss: 0.616708
+2021-01-05 15:58:05,215 - Model - INFO - eval point avg class IoU: 0.319725
+2021-01-05 15:58:05,215 - Model - INFO - eval point accuracy: 0.725666
+2021-01-05 15:58:05,215 - Model - INFO - eval point avg class acc: 0.400992
+2021-01-05 15:58:05,215 - Model - INFO - ------- IoU --------
+class ground         weight: 0.395, IoU: 0.514 
+class vegetatation   weight: 0.564, IoU: 0.631 
+class building       weight: 0.042, IoU: 0.134 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:58:05,215 - Model - INFO - Eval mean loss: 0.616708
+2021-01-05 15:58:05,215 - Model - INFO - Eval accuracy: 0.725666
+2021-01-05 15:58:05,215 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:58:05,215 - Model - INFO - **** Epoch 52 (52/128) ****
+2021-01-05 15:58:05,215 - Model - INFO - Learning rate:0.000168
+2021-01-05 15:58:41,678 - Model - INFO - Training mean loss: 0.496058
+2021-01-05 15:58:41,678 - Model - INFO - Training accuracy: 0.815271
+2021-01-05 15:58:41,683 - Model - INFO - ---- EPOCH 052 EVALUATION ----
+2021-01-05 15:59:14,631 - Model - INFO - eval mean loss: 0.624166
+2021-01-05 15:59:14,631 - Model - INFO - eval point avg class IoU: 0.396753
+2021-01-05 15:59:14,631 - Model - INFO - eval point accuracy: 0.773833
+2021-01-05 15:59:14,631 - Model - INFO - eval point avg class acc: 0.472325
+2021-01-05 15:59:14,631 - Model - INFO - ------- IoU --------
+class ground         weight: 0.385, IoU: 0.577 
+class vegetatation   weight: 0.562, IoU: 0.691 
+class building       weight: 0.053, IoU: 0.319 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 15:59:14,631 - Model - INFO - Eval mean loss: 0.624166
+2021-01-05 15:59:14,631 - Model - INFO - Eval accuracy: 0.773833
+2021-01-05 15:59:14,631 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 15:59:14,631 - Model - INFO - **** Epoch 53 (53/128) ****
+2021-01-05 15:59:14,631 - Model - INFO - Learning rate:0.000168
+2021-01-05 15:59:50,421 - Model - INFO - Training mean loss: 0.492735
+2021-01-05 15:59:50,421 - Model - INFO - Training accuracy: 0.811372
+2021-01-05 15:59:50,426 - Model - INFO - ---- EPOCH 053 EVALUATION ----
+2021-01-05 16:00:22,918 - Model - INFO - eval mean loss: 0.821829
+2021-01-05 16:00:22,919 - Model - INFO - eval point avg class IoU: 0.242477
+2021-01-05 16:00:22,919 - Model - INFO - eval point accuracy: 0.624890
+2021-01-05 16:00:22,919 - Model - INFO - eval point avg class acc: 0.341880
+2021-01-05 16:00:22,919 - Model - INFO - ------- IoU --------
+class ground         weight: 0.433, IoU: 0.458 
+class vegetatation   weight: 0.477, IoU: 0.506 
+class building       weight: 0.090, IoU: 0.006 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:00:22,919 - Model - INFO - Eval mean loss: 0.821829
+2021-01-05 16:00:22,919 - Model - INFO - Eval accuracy: 0.624890
+2021-01-05 16:00:22,919 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 16:00:22,919 - Model - INFO - **** Epoch 54 (54/128) ****
+2021-01-05 16:00:22,919 - Model - INFO - Learning rate:0.000168
+2021-01-05 16:00:58,437 - Model - INFO - Training mean loss: 0.456167
+2021-01-05 16:00:58,438 - Model - INFO - Training accuracy: 0.835819
+2021-01-05 16:00:58,443 - Model - INFO - ---- EPOCH 054 EVALUATION ----
+2021-01-05 16:01:30,880 - Model - INFO - eval mean loss: 0.721791
+2021-01-05 16:01:30,880 - Model - INFO - eval point avg class IoU: 0.269891
+2021-01-05 16:01:30,880 - Model - INFO - eval point accuracy: 0.682894
+2021-01-05 16:01:30,880 - Model - INFO - eval point avg class acc: 0.363345
+2021-01-05 16:01:30,881 - Model - INFO - ------- IoU --------
+class ground         weight: 0.349, IoU: 0.482 
+class vegetatation   weight: 0.567, IoU: 0.598 
+class building       weight: 0.083, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:01:30,881 - Model - INFO - Eval mean loss: 0.721791
+2021-01-05 16:01:30,881 - Model - INFO - Eval accuracy: 0.682894
+2021-01-05 16:01:30,881 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 16:01:30,881 - Model - INFO - **** Epoch 55 (55/128) ****
+2021-01-05 16:01:30,881 - Model - INFO - Learning rate:0.000168
+2021-01-05 16:02:04,201 - Model - INFO - Training mean loss: 0.494596
+2021-01-05 16:02:04,201 - Model - INFO - Training accuracy: 0.823207
+2021-01-05 16:02:04,206 - Model - INFO - ---- EPOCH 055 EVALUATION ----
+2021-01-05 16:02:35,095 - Model - INFO - eval mean loss: 0.652691
+2021-01-05 16:02:35,095 - Model - INFO - eval point avg class IoU: 0.304411
+2021-01-05 16:02:35,095 - Model - INFO - eval point accuracy: 0.722116
+2021-01-05 16:02:35,095 - Model - INFO - eval point avg class acc: 0.394815
+2021-01-05 16:02:35,096 - Model - INFO - ------- IoU --------
+class ground         weight: 0.426, IoU: 0.623 
+class vegetatation   weight: 0.494, IoU: 0.585 
+class building       weight: 0.080, IoU: 0.010 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:02:35,096 - Model - INFO - Eval mean loss: 0.652691
+2021-01-05 16:02:35,096 - Model - INFO - Eval accuracy: 0.722116
+2021-01-05 16:02:35,096 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 16:02:35,096 - Model - INFO - **** Epoch 56 (56/128) ****
+2021-01-05 16:02:35,096 - Model - INFO - Learning rate:0.000168
+2021-01-05 16:03:08,667 - Model - INFO - Training mean loss: 0.479055
+2021-01-05 16:03:08,668 - Model - INFO - Training accuracy: 0.816221
+2021-01-05 16:03:08,668 - Model - INFO - Save model...
+2021-01-05 16:03:08,668 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:03:08,703 - Model - INFO - Saving model....
+2021-01-05 16:03:08,708 - Model - INFO - ---- EPOCH 056 EVALUATION ----
+2021-01-05 16:03:39,307 - Model - INFO - eval mean loss: 0.746941
+2021-01-05 16:03:39,308 - Model - INFO - eval point avg class IoU: 0.244710
+2021-01-05 16:03:39,308 - Model - INFO - eval point accuracy: 0.642336
+2021-01-05 16:03:39,308 - Model - INFO - eval point avg class acc: 0.338772
+2021-01-05 16:03:39,308 - Model - INFO - ------- IoU --------
+class ground         weight: 0.365, IoU: 0.405 
+class vegetatation   weight: 0.549, IoU: 0.564 
+class building       weight: 0.086, IoU: 0.010 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:03:39,308 - Model - INFO - Eval mean loss: 0.746941
+2021-01-05 16:03:39,308 - Model - INFO - Eval accuracy: 0.642336
+2021-01-05 16:03:39,308 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 16:03:39,308 - Model - INFO - **** Epoch 57 (57/128) ****
+2021-01-05 16:03:39,308 - Model - INFO - Learning rate:0.000168
+2021-01-05 16:04:12,908 - Model - INFO - Training mean loss: 0.435198
+2021-01-05 16:04:12,908 - Model - INFO - Training accuracy: 0.841693
+2021-01-05 16:04:12,914 - Model - INFO - ---- EPOCH 057 EVALUATION ----
+2021-01-05 16:04:45,089 - Model - INFO - eval mean loss: 0.704636
+2021-01-05 16:04:45,089 - Model - INFO - eval point avg class IoU: 0.314892
+2021-01-05 16:04:45,089 - Model - INFO - eval point accuracy: 0.707494
+2021-01-05 16:04:45,089 - Model - INFO - eval point avg class acc: 0.401062
+2021-01-05 16:04:45,089 - Model - INFO - ------- IoU --------
+class ground         weight: 0.407, IoU: 0.500 
+class vegetatation   weight: 0.527, IoU: 0.613 
+class building       weight: 0.067, IoU: 0.147 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:04:45,089 - Model - INFO - Eval mean loss: 0.704636
+2021-01-05 16:04:45,089 - Model - INFO - Eval accuracy: 0.707494
+2021-01-05 16:04:45,089 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 16:04:45,090 - Model - INFO - **** Epoch 58 (58/128) ****
+2021-01-05 16:04:45,090 - Model - INFO - Learning rate:0.000168
+2021-01-05 16:05:21,318 - Model - INFO - Training mean loss: 0.491096
+2021-01-05 16:05:21,318 - Model - INFO - Training accuracy: 0.817579
+2021-01-05 16:05:21,324 - Model - INFO - ---- EPOCH 058 EVALUATION ----
+2021-01-05 16:05:52,383 - Model - INFO - eval mean loss: 0.563923
+2021-01-05 16:05:52,384 - Model - INFO - eval point avg class IoU: 0.334076
+2021-01-05 16:05:52,384 - Model - INFO - eval point accuracy: 0.799036
+2021-01-05 16:05:52,384 - Model - INFO - eval point avg class acc: 0.401485
+2021-01-05 16:05:52,384 - Model - INFO - ------- IoU --------
+class ground         weight: 0.430, IoU: 0.622 
+class vegetatation   weight: 0.558, IoU: 0.710 
+class building       weight: 0.012, IoU: 0.005 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:05:52,384 - Model - INFO - Eval mean loss: 0.563923
+2021-01-05 16:05:52,384 - Model - INFO - Eval accuracy: 0.799036
+2021-01-05 16:05:52,384 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 16:05:52,384 - Model - INFO - **** Epoch 59 (59/128) ****
+2021-01-05 16:05:52,384 - Model - INFO - Learning rate:0.000168
+2021-01-05 16:06:27,941 - Model - INFO - Training mean loss: 0.458605
+2021-01-05 16:06:27,941 - Model - INFO - Training accuracy: 0.833775
+2021-01-05 16:06:27,947 - Model - INFO - ---- EPOCH 059 EVALUATION ----
+2021-01-05 16:07:00,227 - Model - INFO - eval mean loss: 0.680827
+2021-01-05 16:07:00,227 - Model - INFO - eval point avg class IoU: 0.378075
+2021-01-05 16:07:00,228 - Model - INFO - eval point accuracy: 0.753617
+2021-01-05 16:07:00,228 - Model - INFO - eval point avg class acc: 0.455254
+2021-01-05 16:07:00,228 - Model - INFO - ------- IoU --------
+class ground         weight: 0.392, IoU: 0.532 
+class vegetatation   weight: 0.556, IoU: 0.672 
+class building       weight: 0.052, IoU: 0.309 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:07:00,228 - Model - INFO - Eval mean loss: 0.680827
+2021-01-05 16:07:00,228 - Model - INFO - Eval accuracy: 0.753617
+2021-01-05 16:07:00,228 - Model - INFO - Best mIoU: 0.420124
+2021-01-05 16:07:00,228 - Model - INFO - **** Epoch 60 (60/128) ****
+2021-01-05 16:07:00,228 - Model - INFO - Learning rate:0.000168
+2021-01-05 16:07:35,510 - Model - INFO - Training mean loss: 0.447744
+2021-01-05 16:07:35,510 - Model - INFO - Training accuracy: 0.832722
+2021-01-05 16:07:35,516 - Model - INFO - ---- EPOCH 060 EVALUATION ----
+2021-01-05 16:08:07,373 - Model - INFO - eval mean loss: 0.533947
+2021-01-05 16:08:07,373 - Model - INFO - eval point avg class IoU: 0.443893
+2021-01-05 16:08:07,373 - Model - INFO - eval point accuracy: 0.775405
+2021-01-05 16:08:07,373 - Model - INFO - eval point avg class acc: 0.516456
+2021-01-05 16:08:07,373 - Model - INFO - ------- IoU --------
+class ground         weight: 0.369, IoU: 0.543 
+class vegetatation   weight: 0.587, IoU: 0.694 
+class building       weight: 0.044, IoU: 0.539 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:08:07,373 - Model - INFO - Eval mean loss: 0.533947
+2021-01-05 16:08:07,373 - Model - INFO - Eval accuracy: 0.775405
+2021-01-05 16:08:07,373 - Model - INFO - Save model...
+2021-01-05 16:08:07,373 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 16:08:07,409 - Model - INFO - Saving model....
+2021-01-05 16:08:07,409 - Model - INFO - Best mIoU: 0.443893
+2021-01-05 16:08:07,409 - Model - INFO - **** Epoch 61 (61/128) ****
+2021-01-05 16:08:07,409 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:08:41,919 - Model - INFO - Training mean loss: 0.482685
+2021-01-05 16:08:41,919 - Model - INFO - Training accuracy: 0.821248
+2021-01-05 16:08:41,919 - Model - INFO - Save model...
+2021-01-05 16:08:41,919 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:08:41,959 - Model - INFO - Saving model....
+2021-01-05 16:08:41,964 - Model - INFO - ---- EPOCH 061 EVALUATION ----
+2021-01-05 16:09:14,580 - Model - INFO - eval mean loss: 0.537086
+2021-01-05 16:09:14,580 - Model - INFO - eval point avg class IoU: 0.484303
+2021-01-05 16:09:14,580 - Model - INFO - eval point accuracy: 0.794692
+2021-01-05 16:09:14,580 - Model - INFO - eval point avg class acc: 0.558076
+2021-01-05 16:09:14,580 - Model - INFO - ------- IoU --------
+class ground         weight: 0.404, IoU: 0.623 
+class vegetatation   weight: 0.529, IoU: 0.691 
+class building       weight: 0.067, IoU: 0.624 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:09:14,580 - Model - INFO - Eval mean loss: 0.537086
+2021-01-05 16:09:14,580 - Model - INFO - Eval accuracy: 0.794692
+2021-01-05 16:09:14,580 - Model - INFO - Save model...
+2021-01-05 16:09:14,580 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 16:09:14,615 - Model - INFO - Saving model....
+2021-01-05 16:09:14,615 - Model - INFO - Best mIoU: 0.484303
+2021-01-05 16:09:14,615 - Model - INFO - **** Epoch 62 (62/128) ****
+2021-01-05 16:09:14,615 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:09:49,002 - Model - INFO - Training mean loss: 0.415131
+2021-01-05 16:09:49,002 - Model - INFO - Training accuracy: 0.850161
+2021-01-05 16:09:49,007 - Model - INFO - ---- EPOCH 062 EVALUATION ----
+2021-01-05 16:10:20,160 - Model - INFO - eval mean loss: 0.554899
+2021-01-05 16:10:20,160 - Model - INFO - eval point avg class IoU: 0.328507
+2021-01-05 16:10:20,160 - Model - INFO - eval point accuracy: 0.770207
+2021-01-05 16:10:20,160 - Model - INFO - eval point avg class acc: 0.400592
+2021-01-05 16:10:20,160 - Model - INFO - ------- IoU --------
+class ground         weight: 0.424, IoU: 0.550 
+class vegetatation   weight: 0.562, IoU: 0.690 
+class building       weight: 0.014, IoU: 0.075 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:10:20,160 - Model - INFO - Eval mean loss: 0.554899
+2021-01-05 16:10:20,160 - Model - INFO - Eval accuracy: 0.770207
+2021-01-05 16:10:20,160 - Model - INFO - Best mIoU: 0.484303
+2021-01-05 16:10:20,160 - Model - INFO - **** Epoch 63 (63/128) ****
+2021-01-05 16:10:20,160 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:10:54,537 - Model - INFO - Training mean loss: 0.459850
+2021-01-05 16:10:54,537 - Model - INFO - Training accuracy: 0.832809
+2021-01-05 16:10:54,543 - Model - INFO - ---- EPOCH 063 EVALUATION ----
+2021-01-05 16:11:26,291 - Model - INFO - eval mean loss: 0.615541
+2021-01-05 16:11:26,291 - Model - INFO - eval point avg class IoU: 0.485338
+2021-01-05 16:11:26,291 - Model - INFO - eval point accuracy: 0.787878
+2021-01-05 16:11:26,291 - Model - INFO - eval point avg class acc: 0.559942
+2021-01-05 16:11:26,291 - Model - INFO - ------- IoU --------
+class ground         weight: 0.433, IoU: 0.618 
+class vegetatation   weight: 0.502, IoU: 0.676 
+class building       weight: 0.066, IoU: 0.648 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:11:26,292 - Model - INFO - Eval mean loss: 0.615541
+2021-01-05 16:11:26,292 - Model - INFO - Eval accuracy: 0.787878
+2021-01-05 16:11:26,292 - Model - INFO - Save model...
+2021-01-05 16:11:26,292 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 16:11:26,327 - Model - INFO - Saving model....
+2021-01-05 16:11:26,327 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:11:26,327 - Model - INFO - **** Epoch 64 (64/128) ****
+2021-01-05 16:11:26,327 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:11:59,686 - Model - INFO - Training mean loss: 0.425627
+2021-01-05 16:11:59,686 - Model - INFO - Training accuracy: 0.846434
+2021-01-05 16:11:59,691 - Model - INFO - ---- EPOCH 064 EVALUATION ----
+2021-01-05 16:12:30,518 - Model - INFO - eval mean loss: 0.575545
+2021-01-05 16:12:30,519 - Model - INFO - eval point avg class IoU: 0.452934
+2021-01-05 16:12:30,519 - Model - INFO - eval point accuracy: 0.762883
+2021-01-05 16:12:30,519 - Model - INFO - eval point avg class acc: 0.532420
+2021-01-05 16:12:30,519 - Model - INFO - ------- IoU --------
+class ground         weight: 0.394, IoU: 0.561 
+class vegetatation   weight: 0.507, IoU: 0.659 
+class building       weight: 0.099, IoU: 0.591 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:12:30,519 - Model - INFO - Eval mean loss: 0.575545
+2021-01-05 16:12:30,519 - Model - INFO - Eval accuracy: 0.762883
+2021-01-05 16:12:30,519 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:12:30,519 - Model - INFO - **** Epoch 65 (65/128) ****
+2021-01-05 16:12:30,519 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:13:04,419 - Model - INFO - Training mean loss: 0.434754
+2021-01-05 16:13:04,419 - Model - INFO - Training accuracy: 0.837030
+2021-01-05 16:13:04,424 - Model - INFO - ---- EPOCH 065 EVALUATION ----
+2021-01-05 16:13:35,579 - Model - INFO - eval mean loss: 0.680918
+2021-01-05 16:13:35,579 - Model - INFO - eval point avg class IoU: 0.329489
+2021-01-05 16:13:35,579 - Model - INFO - eval point accuracy: 0.738507
+2021-01-05 16:13:35,579 - Model - INFO - eval point avg class acc: 0.416793
+2021-01-05 16:13:35,579 - Model - INFO - ------- IoU --------
+class ground         weight: 0.433, IoU: 0.601 
+class vegetatation   weight: 0.488, IoU: 0.634 
+class building       weight: 0.079, IoU: 0.083 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:13:35,579 - Model - INFO - Eval mean loss: 0.680918
+2021-01-05 16:13:35,579 - Model - INFO - Eval accuracy: 0.738507
+2021-01-05 16:13:35,579 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:13:35,580 - Model - INFO - **** Epoch 66 (66/128) ****
+2021-01-05 16:13:35,580 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:14:09,174 - Model - INFO - Training mean loss: 0.418694
+2021-01-05 16:14:09,174 - Model - INFO - Training accuracy: 0.842069
+2021-01-05 16:14:09,175 - Model - INFO - Save model...
+2021-01-05 16:14:09,175 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:14:09,209 - Model - INFO - Saving model....
+2021-01-05 16:14:09,214 - Model - INFO - ---- EPOCH 066 EVALUATION ----
+2021-01-05 16:14:40,480 - Model - INFO - eval mean loss: 0.555507
+2021-01-05 16:14:40,481 - Model - INFO - eval point avg class IoU: 0.438391
+2021-01-05 16:14:40,481 - Model - INFO - eval point accuracy: 0.782126
+2021-01-05 16:14:40,481 - Model - INFO - eval point avg class acc: 0.510787
+2021-01-05 16:14:40,481 - Model - INFO - ------- IoU --------
+class ground         weight: 0.360, IoU: 0.549 
+class vegetatation   weight: 0.579, IoU: 0.711 
+class building       weight: 0.061, IoU: 0.494 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:14:40,481 - Model - INFO - Eval mean loss: 0.555507
+2021-01-05 16:14:40,481 - Model - INFO - Eval accuracy: 0.782126
+2021-01-05 16:14:40,481 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:14:40,481 - Model - INFO - **** Epoch 67 (67/128) ****
+2021-01-05 16:14:40,481 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:15:14,647 - Model - INFO - Training mean loss: 0.425098
+2021-01-05 16:15:14,647 - Model - INFO - Training accuracy: 0.848678
+2021-01-05 16:15:14,653 - Model - INFO - ---- EPOCH 067 EVALUATION ----
+2021-01-05 16:15:45,893 - Model - INFO - eval mean loss: 0.618869
+2021-01-05 16:15:45,893 - Model - INFO - eval point avg class IoU: 0.479289
+2021-01-05 16:15:45,893 - Model - INFO - eval point accuracy: 0.773341
+2021-01-05 16:15:45,893 - Model - INFO - eval point avg class acc: 0.559493
+2021-01-05 16:15:45,893 - Model - INFO - ------- IoU --------
+class ground         weight: 0.374, IoU: 0.549 
+class vegetatation   weight: 0.502, IoU: 0.677 
+class building       weight: 0.123, IoU: 0.691 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:15:45,894 - Model - INFO - Eval mean loss: 0.618869
+2021-01-05 16:15:45,894 - Model - INFO - Eval accuracy: 0.773341
+2021-01-05 16:15:45,894 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:15:45,894 - Model - INFO - **** Epoch 68 (68/128) ****
+2021-01-05 16:15:45,894 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:16:19,942 - Model - INFO - Training mean loss: 0.508012
+2021-01-05 16:16:19,942 - Model - INFO - Training accuracy: 0.811756
+2021-01-05 16:16:19,948 - Model - INFO - ---- EPOCH 068 EVALUATION ----
+2021-01-05 16:16:51,039 - Model - INFO - eval mean loss: 0.680296
+2021-01-05 16:16:51,039 - Model - INFO - eval point avg class IoU: 0.417187
+2021-01-05 16:16:51,039 - Model - INFO - eval point accuracy: 0.727529
+2021-01-05 16:16:51,039 - Model - INFO - eval point avg class acc: 0.502794
+2021-01-05 16:16:51,039 - Model - INFO - ------- IoU --------
+class ground         weight: 0.362, IoU: 0.448 
+class vegetatation   weight: 0.534, IoU: 0.649 
+class building       weight: 0.104, IoU: 0.572 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:16:51,039 - Model - INFO - Eval mean loss: 0.680296
+2021-01-05 16:16:51,039 - Model - INFO - Eval accuracy: 0.727529
+2021-01-05 16:16:51,039 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:16:51,039 - Model - INFO - **** Epoch 69 (69/128) ****
+2021-01-05 16:16:51,039 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:17:26,298 - Model - INFO - Training mean loss: 0.515926
+2021-01-05 16:17:26,298 - Model - INFO - Training accuracy: 0.804782
+2021-01-05 16:17:26,304 - Model - INFO - ---- EPOCH 069 EVALUATION ----
+2021-01-05 16:17:57,281 - Model - INFO - eval mean loss: 0.593159
+2021-01-05 16:17:57,282 - Model - INFO - eval point avg class IoU: 0.446175
+2021-01-05 16:17:57,282 - Model - INFO - eval point accuracy: 0.772656
+2021-01-05 16:17:57,282 - Model - INFO - eval point avg class acc: 0.520238
+2021-01-05 16:17:57,282 - Model - INFO - ------- IoU --------
+class ground         weight: 0.339, IoU: 0.506 
+class vegetatation   weight: 0.574, IoU: 0.702 
+class building       weight: 0.087, IoU: 0.577 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:17:57,282 - Model - INFO - Eval mean loss: 0.593159
+2021-01-05 16:17:57,282 - Model - INFO - Eval accuracy: 0.772656
+2021-01-05 16:17:57,282 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:17:57,282 - Model - INFO - **** Epoch 70 (70/128) ****
+2021-01-05 16:17:57,282 - Model - INFO - Learning rate:0.000118
+2021-01-05 16:18:30,555 - Model - INFO - Training mean loss: 0.470406
+2021-01-05 16:18:30,555 - Model - INFO - Training accuracy: 0.826890
+2021-01-05 16:18:30,561 - Model - INFO - ---- EPOCH 070 EVALUATION ----
+2021-01-05 16:19:01,880 - Model - INFO - eval mean loss: 0.609314
+2021-01-05 16:19:01,880 - Model - INFO - eval point avg class IoU: 0.476778
+2021-01-05 16:19:01,880 - Model - INFO - eval point accuracy: 0.763986
+2021-01-05 16:19:01,880 - Model - INFO - eval point avg class acc: 0.563019
+2021-01-05 16:19:01,880 - Model - INFO - ------- IoU --------
+class ground         weight: 0.447, IoU: 0.579 
+class vegetatation   weight: 0.487, IoU: 0.642 
+class building       weight: 0.066, IoU: 0.686 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:19:01,880 - Model - INFO - Eval mean loss: 0.609314
+2021-01-05 16:19:01,880 - Model - INFO - Eval accuracy: 0.763986
+2021-01-05 16:19:01,880 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:19:01,880 - Model - INFO - **** Epoch 71 (71/128) ****
+2021-01-05 16:19:01,881 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:19:35,541 - Model - INFO - Training mean loss: 0.461015
+2021-01-05 16:19:35,541 - Model - INFO - Training accuracy: 0.828951
+2021-01-05 16:19:35,541 - Model - INFO - Save model...
+2021-01-05 16:19:35,541 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:19:35,576 - Model - INFO - Saving model....
+2021-01-05 16:19:35,581 - Model - INFO - ---- EPOCH 071 EVALUATION ----
+2021-01-05 16:20:07,489 - Model - INFO - eval mean loss: 0.693344
+2021-01-05 16:20:07,489 - Model - INFO - eval point avg class IoU: 0.428589
+2021-01-05 16:20:07,489 - Model - INFO - eval point accuracy: 0.768369
+2021-01-05 16:20:07,489 - Model - INFO - eval point avg class acc: 0.509894
+2021-01-05 16:20:07,489 - Model - INFO - ------- IoU --------
+class ground         weight: 0.413, IoU: 0.599 
+class vegetatation   weight: 0.501, IoU: 0.665 
+class building       weight: 0.085, IoU: 0.450 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:20:07,489 - Model - INFO - Eval mean loss: 0.693344
+2021-01-05 16:20:07,489 - Model - INFO - Eval accuracy: 0.768369
+2021-01-05 16:20:07,489 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:20:07,490 - Model - INFO - **** Epoch 72 (72/128) ****
+2021-01-05 16:20:07,490 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:20:42,027 - Model - INFO - Training mean loss: 0.531023
+2021-01-05 16:20:42,027 - Model - INFO - Training accuracy: 0.791066
+2021-01-05 16:20:42,032 - Model - INFO - ---- EPOCH 072 EVALUATION ----
+2021-01-05 16:21:13,097 - Model - INFO - eval mean loss: 0.577339
+2021-01-05 16:21:13,098 - Model - INFO - eval point avg class IoU: 0.390963
+2021-01-05 16:21:13,098 - Model - INFO - eval point accuracy: 0.752674
+2021-01-05 16:21:13,098 - Model - INFO - eval point avg class acc: 0.471806
+2021-01-05 16:21:13,098 - Model - INFO - ------- IoU --------
+class ground         weight: 0.400, IoU: 0.530 
+class vegetatation   weight: 0.554, IoU: 0.669 
+class building       weight: 0.047, IoU: 0.365 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:21:13,098 - Model - INFO - Eval mean loss: 0.577339
+2021-01-05 16:21:13,098 - Model - INFO - Eval accuracy: 0.752674
+2021-01-05 16:21:13,098 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:21:13,098 - Model - INFO - **** Epoch 73 (73/128) ****
+2021-01-05 16:21:13,098 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:21:48,217 - Model - INFO - Training mean loss: 0.396612
+2021-01-05 16:21:48,218 - Model - INFO - Training accuracy: 0.854445
+2021-01-05 16:21:48,222 - Model - INFO - ---- EPOCH 073 EVALUATION ----
+2021-01-05 16:22:20,608 - Model - INFO - eval mean loss: 0.664882
+2021-01-05 16:22:20,608 - Model - INFO - eval point avg class IoU: 0.370524
+2021-01-05 16:22:20,608 - Model - INFO - eval point accuracy: 0.740065
+2021-01-05 16:22:20,608 - Model - INFO - eval point avg class acc: 0.454957
+2021-01-05 16:22:20,608 - Model - INFO - ------- IoU --------
+class ground         weight: 0.412, IoU: 0.555 
+class vegetatation   weight: 0.515, IoU: 0.645 
+class building       weight: 0.072, IoU: 0.282 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:22:20,608 - Model - INFO - Eval mean loss: 0.664882
+2021-01-05 16:22:20,608 - Model - INFO - Eval accuracy: 0.740065
+2021-01-05 16:22:20,608 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:22:20,608 - Model - INFO - **** Epoch 74 (74/128) ****
+2021-01-05 16:22:20,608 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:22:53,579 - Model - INFO - Training mean loss: 0.430213
+2021-01-05 16:22:53,579 - Model - INFO - Training accuracy: 0.835432
+2021-01-05 16:22:53,585 - Model - INFO - ---- EPOCH 074 EVALUATION ----
+2021-01-05 16:23:24,539 - Model - INFO - eval mean loss: 0.642480
+2021-01-05 16:23:24,540 - Model - INFO - eval point avg class IoU: 0.402198
+2021-01-05 16:23:24,540 - Model - INFO - eval point accuracy: 0.767940
+2021-01-05 16:23:24,540 - Model - INFO - eval point avg class acc: 0.483299
+2021-01-05 16:23:24,540 - Model - INFO - ------- IoU --------
+class ground         weight: 0.372, IoU: 0.576 
+class vegetatation   weight: 0.550, IoU: 0.684 
+class building       weight: 0.078, IoU: 0.349 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:23:24,540 - Model - INFO - Eval mean loss: 0.642480
+2021-01-05 16:23:24,540 - Model - INFO - Eval accuracy: 0.767940
+2021-01-05 16:23:24,540 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:23:24,540 - Model - INFO - **** Epoch 75 (75/128) ****
+2021-01-05 16:23:24,540 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:23:58,331 - Model - INFO - Training mean loss: 0.457612
+2021-01-05 16:23:58,331 - Model - INFO - Training accuracy: 0.837041
+2021-01-05 16:23:58,336 - Model - INFO - ---- EPOCH 075 EVALUATION ----
+2021-01-05 16:24:29,085 - Model - INFO - eval mean loss: 0.576400
+2021-01-05 16:24:29,085 - Model - INFO - eval point avg class IoU: 0.453145
+2021-01-05 16:24:29,085 - Model - INFO - eval point accuracy: 0.765050
+2021-01-05 16:24:29,085 - Model - INFO - eval point avg class acc: 0.537034
+2021-01-05 16:24:29,085 - Model - INFO - ------- IoU --------
+class ground         weight: 0.464, IoU: 0.606 
+class vegetatation   weight: 0.505, IoU: 0.634 
+class building       weight: 0.031, IoU: 0.573 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:24:29,085 - Model - INFO - Eval mean loss: 0.576400
+2021-01-05 16:24:29,085 - Model - INFO - Eval accuracy: 0.765050
+2021-01-05 16:24:29,085 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:24:29,085 - Model - INFO - **** Epoch 76 (76/128) ****
+2021-01-05 16:24:29,085 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:25:01,907 - Model - INFO - Training mean loss: 0.450963
+2021-01-05 16:25:01,907 - Model - INFO - Training accuracy: 0.838030
+2021-01-05 16:25:01,908 - Model - INFO - Save model...
+2021-01-05 16:25:01,908 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:25:01,949 - Model - INFO - Saving model....
+2021-01-05 16:25:01,954 - Model - INFO - ---- EPOCH 076 EVALUATION ----
+2021-01-05 16:25:32,491 - Model - INFO - eval mean loss: 0.636667
+2021-01-05 16:25:32,491 - Model - INFO - eval point avg class IoU: 0.362109
+2021-01-05 16:25:32,491 - Model - INFO - eval point accuracy: 0.748760
+2021-01-05 16:25:32,492 - Model - INFO - eval point avg class acc: 0.443817
+2021-01-05 16:25:32,492 - Model - INFO - ------- IoU --------
+class ground         weight: 0.403, IoU: 0.524 
+class vegetatation   weight: 0.560, IoU: 0.668 
+class building       weight: 0.037, IoU: 0.256 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:25:32,492 - Model - INFO - Eval mean loss: 0.636667
+2021-01-05 16:25:32,492 - Model - INFO - Eval accuracy: 0.748760
+2021-01-05 16:25:32,492 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:25:32,492 - Model - INFO - **** Epoch 77 (77/128) ****
+2021-01-05 16:25:32,492 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:26:05,682 - Model - INFO - Training mean loss: 0.478817
+2021-01-05 16:26:05,682 - Model - INFO - Training accuracy: 0.819683
+2021-01-05 16:26:05,687 - Model - INFO - ---- EPOCH 077 EVALUATION ----
+2021-01-05 16:26:36,420 - Model - INFO - eval mean loss: 0.569461
+2021-01-05 16:26:36,420 - Model - INFO - eval point avg class IoU: 0.397675
+2021-01-05 16:26:36,420 - Model - INFO - eval point accuracy: 0.776721
+2021-01-05 16:26:36,420 - Model - INFO - eval point avg class acc: 0.476585
+2021-01-05 16:26:36,420 - Model - INFO - ------- IoU --------
+class ground         weight: 0.404, IoU: 0.631 
+class vegetatation   weight: 0.549, IoU: 0.663 
+class building       weight: 0.047, IoU: 0.297 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:26:36,421 - Model - INFO - Eval mean loss: 0.569461
+2021-01-05 16:26:36,421 - Model - INFO - Eval accuracy: 0.776721
+2021-01-05 16:26:36,421 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:26:36,421 - Model - INFO - **** Epoch 78 (78/128) ****
+2021-01-05 16:26:36,421 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:27:09,134 - Model - INFO - Training mean loss: 0.459351
+2021-01-05 16:27:09,135 - Model - INFO - Training accuracy: 0.820767
+2021-01-05 16:27:09,140 - Model - INFO - ---- EPOCH 078 EVALUATION ----
+2021-01-05 16:27:40,121 - Model - INFO - eval mean loss: 0.638223
+2021-01-05 16:27:40,121 - Model - INFO - eval point avg class IoU: 0.402761
+2021-01-05 16:27:40,121 - Model - INFO - eval point accuracy: 0.728196
+2021-01-05 16:27:40,121 - Model - INFO - eval point avg class acc: 0.489826
+2021-01-05 16:27:40,121 - Model - INFO - ------- IoU --------
+class ground         weight: 0.437, IoU: 0.516 
+class vegetatation   weight: 0.479, IoU: 0.626 
+class building       weight: 0.084, IoU: 0.470 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:27:40,121 - Model - INFO - Eval mean loss: 0.638223
+2021-01-05 16:27:40,121 - Model - INFO - Eval accuracy: 0.728196
+2021-01-05 16:27:40,121 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:27:40,121 - Model - INFO - **** Epoch 79 (79/128) ****
+2021-01-05 16:27:40,121 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:28:12,933 - Model - INFO - Training mean loss: 0.413709
+2021-01-05 16:28:12,933 - Model - INFO - Training accuracy: 0.849884
+2021-01-05 16:28:12,939 - Model - INFO - ---- EPOCH 079 EVALUATION ----
+2021-01-05 16:28:43,461 - Model - INFO - eval mean loss: 0.615804
+2021-01-05 16:28:43,461 - Model - INFO - eval point avg class IoU: 0.443052
+2021-01-05 16:28:43,461 - Model - INFO - eval point accuracy: 0.766802
+2021-01-05 16:28:43,461 - Model - INFO - eval point avg class acc: 0.523395
+2021-01-05 16:28:43,461 - Model - INFO - ------- IoU --------
+class ground         weight: 0.418, IoU: 0.575 
+class vegetatation   weight: 0.531, IoU: 0.663 
+class building       weight: 0.051, IoU: 0.535 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:28:43,461 - Model - INFO - Eval mean loss: 0.615804
+2021-01-05 16:28:43,461 - Model - INFO - Eval accuracy: 0.766802
+2021-01-05 16:28:43,461 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:28:43,461 - Model - INFO - **** Epoch 80 (80/128) ****
+2021-01-05 16:28:43,461 - Model - INFO - Learning rate:0.000082
+2021-01-05 16:29:16,387 - Model - INFO - Training mean loss: 0.415032
+2021-01-05 16:29:16,388 - Model - INFO - Training accuracy: 0.844957
+2021-01-05 16:29:16,393 - Model - INFO - ---- EPOCH 080 EVALUATION ----
+2021-01-05 16:29:47,209 - Model - INFO - eval mean loss: 0.618807
+2021-01-05 16:29:47,209 - Model - INFO - eval point avg class IoU: 0.413747
+2021-01-05 16:29:47,209 - Model - INFO - eval point accuracy: 0.740257
+2021-01-05 16:29:47,209 - Model - INFO - eval point avg class acc: 0.498999
+2021-01-05 16:29:47,209 - Model - INFO - ------- IoU --------
+class ground         weight: 0.432, IoU: 0.536 
+class vegetatation   weight: 0.485, IoU: 0.637 
+class building       weight: 0.084, IoU: 0.482 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:29:47,209 - Model - INFO - Eval mean loss: 0.618807
+2021-01-05 16:29:47,209 - Model - INFO - Eval accuracy: 0.740257
+2021-01-05 16:29:47,210 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:29:47,210 - Model - INFO - **** Epoch 81 (81/128) ****
+2021-01-05 16:29:47,210 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:30:19,909 - Model - INFO - Training mean loss: 0.432340
+2021-01-05 16:30:19,910 - Model - INFO - Training accuracy: 0.841159
+2021-01-05 16:30:19,910 - Model - INFO - Save model...
+2021-01-05 16:30:19,910 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:30:19,954 - Model - INFO - Saving model....
+2021-01-05 16:30:19,960 - Model - INFO - ---- EPOCH 081 EVALUATION ----
+2021-01-05 16:30:50,926 - Model - INFO - eval mean loss: 0.603745
+2021-01-05 16:30:50,926 - Model - INFO - eval point avg class IoU: 0.432772
+2021-01-05 16:30:50,926 - Model - INFO - eval point accuracy: 0.763211
+2021-01-05 16:30:50,926 - Model - INFO - eval point avg class acc: 0.510957
+2021-01-05 16:30:50,926 - Model - INFO - ------- IoU --------
+class ground         weight: 0.412, IoU: 0.583 
+class vegetatation   weight: 0.521, IoU: 0.654 
+class building       weight: 0.067, IoU: 0.494 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:30:50,926 - Model - INFO - Eval mean loss: 0.603745
+2021-01-05 16:30:50,926 - Model - INFO - Eval accuracy: 0.763211
+2021-01-05 16:30:50,926 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:30:50,926 - Model - INFO - **** Epoch 82 (82/128) ****
+2021-01-05 16:30:50,926 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:31:24,041 - Model - INFO - Training mean loss: 0.435092
+2021-01-05 16:31:24,042 - Model - INFO - Training accuracy: 0.840587
+2021-01-05 16:31:24,046 - Model - INFO - ---- EPOCH 082 EVALUATION ----
+2021-01-05 16:31:54,562 - Model - INFO - eval mean loss: 0.638765
+2021-01-05 16:31:54,562 - Model - INFO - eval point avg class IoU: 0.406583
+2021-01-05 16:31:54,562 - Model - INFO - eval point accuracy: 0.752233
+2021-01-05 16:31:54,562 - Model - INFO - eval point avg class acc: 0.489508
+2021-01-05 16:31:54,562 - Model - INFO - ------- IoU --------
+class ground         weight: 0.379, IoU: 0.565 
+class vegetatation   weight: 0.522, IoU: 0.657 
+class building       weight: 0.099, IoU: 0.404 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:31:54,562 - Model - INFO - Eval mean loss: 0.638765
+2021-01-05 16:31:54,562 - Model - INFO - Eval accuracy: 0.752233
+2021-01-05 16:31:54,562 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:31:54,563 - Model - INFO - **** Epoch 83 (83/128) ****
+2021-01-05 16:31:54,563 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:32:27,336 - Model - INFO - Training mean loss: 0.446546
+2021-01-05 16:32:27,336 - Model - INFO - Training accuracy: 0.838399
+2021-01-05 16:32:27,341 - Model - INFO - ---- EPOCH 083 EVALUATION ----
+2021-01-05 16:32:57,963 - Model - INFO - eval mean loss: 0.636546
+2021-01-05 16:32:57,963 - Model - INFO - eval point avg class IoU: 0.425939
+2021-01-05 16:32:57,963 - Model - INFO - eval point accuracy: 0.763682
+2021-01-05 16:32:57,963 - Model - INFO - eval point avg class acc: 0.509692
+2021-01-05 16:32:57,963 - Model - INFO - ------- IoU --------
+class ground         weight: 0.386, IoU: 0.592 
+class vegetatation   weight: 0.514, IoU: 0.665 
+class building       weight: 0.100, IoU: 0.446 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:32:57,963 - Model - INFO - Eval mean loss: 0.636546
+2021-01-05 16:32:57,963 - Model - INFO - Eval accuracy: 0.763682
+2021-01-05 16:32:57,963 - Model - INFO - Best mIoU: 0.485338
+2021-01-05 16:32:57,963 - Model - INFO - **** Epoch 84 (84/128) ****
+2021-01-05 16:32:57,963 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:33:30,840 - Model - INFO - Training mean loss: 0.447307
+2021-01-05 16:33:30,841 - Model - INFO - Training accuracy: 0.829047
+2021-01-05 16:33:30,845 - Model - INFO - ---- EPOCH 084 EVALUATION ----
+2021-01-05 16:34:01,265 - Model - INFO - eval mean loss: 0.558247
+2021-01-05 16:34:01,265 - Model - INFO - eval point avg class IoU: 0.489243
+2021-01-05 16:34:01,265 - Model - INFO - eval point accuracy: 0.766900
+2021-01-05 16:34:01,265 - Model - INFO - eval point avg class acc: 0.571521
+2021-01-05 16:34:01,265 - Model - INFO - ------- IoU --------
+class ground         weight: 0.404, IoU: 0.527 
+class vegetatation   weight: 0.498, IoU: 0.662 
+class building       weight: 0.097, IoU: 0.768 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:34:01,265 - Model - INFO - Eval mean loss: 0.558247
+2021-01-05 16:34:01,265 - Model - INFO - Eval accuracy: 0.766900
+2021-01-05 16:34:01,265 - Model - INFO - Save model...
+2021-01-05 16:34:01,265 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 16:34:01,301 - Model - INFO - Saving model....
+2021-01-05 16:34:01,301 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:34:01,302 - Model - INFO - **** Epoch 85 (85/128) ****
+2021-01-05 16:34:01,302 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:34:34,277 - Model - INFO - Training mean loss: 0.432751
+2021-01-05 16:34:34,277 - Model - INFO - Training accuracy: 0.834036
+2021-01-05 16:34:34,282 - Model - INFO - ---- EPOCH 085 EVALUATION ----
+2021-01-05 16:35:04,824 - Model - INFO - eval mean loss: 0.711768
+2021-01-05 16:35:04,824 - Model - INFO - eval point avg class IoU: 0.412946
+2021-01-05 16:35:04,824 - Model - INFO - eval point accuracy: 0.726794
+2021-01-05 16:35:04,824 - Model - INFO - eval point avg class acc: 0.506628
+2021-01-05 16:35:04,824 - Model - INFO - ------- IoU --------
+class ground         weight: 0.390, IoU: 0.563 
+class vegetatation   weight: 0.455, IoU: 0.595 
+class building       weight: 0.154, IoU: 0.493 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:35:04,824 - Model - INFO - Eval mean loss: 0.711768
+2021-01-05 16:35:04,824 - Model - INFO - Eval accuracy: 0.726794
+2021-01-05 16:35:04,824 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:35:04,824 - Model - INFO - **** Epoch 86 (86/128) ****
+2021-01-05 16:35:04,824 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:35:37,957 - Model - INFO - Training mean loss: 0.400027
+2021-01-05 16:35:37,958 - Model - INFO - Training accuracy: 0.849624
+2021-01-05 16:35:37,958 - Model - INFO - Save model...
+2021-01-05 16:35:37,958 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:35:38,000 - Model - INFO - Saving model....
+2021-01-05 16:35:38,006 - Model - INFO - ---- EPOCH 086 EVALUATION ----
+2021-01-05 16:36:08,996 - Model - INFO - eval mean loss: 0.739902
+2021-01-05 16:36:08,997 - Model - INFO - eval point avg class IoU: 0.324873
+2021-01-05 16:36:08,997 - Model - INFO - eval point accuracy: 0.717697
+2021-01-05 16:36:08,997 - Model - INFO - eval point avg class acc: 0.411303
+2021-01-05 16:36:08,997 - Model - INFO - ------- IoU --------
+class ground         weight: 0.362, IoU: 0.510 
+class vegetatation   weight: 0.562, IoU: 0.631 
+class building       weight: 0.076, IoU: 0.158 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:36:08,997 - Model - INFO - Eval mean loss: 0.739902
+2021-01-05 16:36:08,997 - Model - INFO - Eval accuracy: 0.717697
+2021-01-05 16:36:08,997 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:36:08,997 - Model - INFO - **** Epoch 87 (87/128) ****
+2021-01-05 16:36:08,997 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:36:42,186 - Model - INFO - Training mean loss: 0.430155
+2021-01-05 16:36:42,186 - Model - INFO - Training accuracy: 0.833948
+2021-01-05 16:36:42,190 - Model - INFO - ---- EPOCH 087 EVALUATION ----
+2021-01-05 16:37:12,535 - Model - INFO - eval mean loss: 0.518260
+2021-01-05 16:37:12,535 - Model - INFO - eval point avg class IoU: 0.435765
+2021-01-05 16:37:12,536 - Model - INFO - eval point accuracy: 0.773484
+2021-01-05 16:37:12,536 - Model - INFO - eval point avg class acc: 0.509245
+2021-01-05 16:37:12,536 - Model - INFO - ------- IoU --------
+class ground         weight: 0.358, IoU: 0.521 
+class vegetatation   weight: 0.581, IoU: 0.705 
+class building       weight: 0.061, IoU: 0.517 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:37:12,536 - Model - INFO - Eval mean loss: 0.518260
+2021-01-05 16:37:12,536 - Model - INFO - Eval accuracy: 0.773484
+2021-01-05 16:37:12,536 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:37:12,536 - Model - INFO - **** Epoch 88 (88/128) ****
+2021-01-05 16:37:12,536 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:37:45,643 - Model - INFO - Training mean loss: 0.391802
+2021-01-05 16:37:45,644 - Model - INFO - Training accuracy: 0.860369
+2021-01-05 16:37:45,649 - Model - INFO - ---- EPOCH 088 EVALUATION ----
+2021-01-05 16:38:16,464 - Model - INFO - eval mean loss: 0.567461
+2021-01-05 16:38:16,464 - Model - INFO - eval point avg class IoU: 0.487881
+2021-01-05 16:38:16,465 - Model - INFO - eval point accuracy: 0.755543
+2021-01-05 16:38:16,465 - Model - INFO - eval point avg class acc: 0.565554
+2021-01-05 16:38:16,465 - Model - INFO - ------- IoU --------
+class ground         weight: 0.382, IoU: 0.521 
+class vegetatation   weight: 0.536, IoU: 0.645 
+class building       weight: 0.082, IoU: 0.786 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:38:16,465 - Model - INFO - Eval mean loss: 0.567461
+2021-01-05 16:38:16,465 - Model - INFO - Eval accuracy: 0.755543
+2021-01-05 16:38:16,465 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:38:16,465 - Model - INFO - **** Epoch 89 (89/128) ****
+2021-01-05 16:38:16,465 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:38:49,292 - Model - INFO - Training mean loss: 0.394555
+2021-01-05 16:38:49,292 - Model - INFO - Training accuracy: 0.849549
+2021-01-05 16:38:49,296 - Model - INFO - ---- EPOCH 089 EVALUATION ----
+2021-01-05 16:39:20,019 - Model - INFO - eval mean loss: 0.589728
+2021-01-05 16:39:20,019 - Model - INFO - eval point avg class IoU: 0.462376
+2021-01-05 16:39:20,019 - Model - INFO - eval point accuracy: 0.774795
+2021-01-05 16:39:20,019 - Model - INFO - eval point avg class acc: 0.546039
+2021-01-05 16:39:20,019 - Model - INFO - ------- IoU --------
+class ground         weight: 0.408, IoU: 0.623 
+class vegetatation   weight: 0.451, IoU: 0.653 
+class building       weight: 0.141, IoU: 0.574 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:39:20,019 - Model - INFO - Eval mean loss: 0.589728
+2021-01-05 16:39:20,019 - Model - INFO - Eval accuracy: 0.774795
+2021-01-05 16:39:20,019 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:39:20,019 - Model - INFO - **** Epoch 90 (90/128) ****
+2021-01-05 16:39:20,019 - Model - INFO - Learning rate:0.000058
+2021-01-05 16:39:53,176 - Model - INFO - Training mean loss: 0.430609
+2021-01-05 16:39:53,177 - Model - INFO - Training accuracy: 0.839239
+2021-01-05 16:39:53,182 - Model - INFO - ---- EPOCH 090 EVALUATION ----
+2021-01-05 16:40:23,717 - Model - INFO - eval mean loss: 0.606344
+2021-01-05 16:40:23,717 - Model - INFO - eval point avg class IoU: 0.439007
+2021-01-05 16:40:23,717 - Model - INFO - eval point accuracy: 0.776652
+2021-01-05 16:40:23,717 - Model - INFO - eval point avg class acc: 0.514831
+2021-01-05 16:40:23,717 - Model - INFO - ------- IoU --------
+class ground         weight: 0.454, IoU: 0.627 
+class vegetatation   weight: 0.489, IoU: 0.656 
+class building       weight: 0.056, IoU: 0.474 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:40:23,717 - Model - INFO - Eval mean loss: 0.606344
+2021-01-05 16:40:23,717 - Model - INFO - Eval accuracy: 0.776652
+2021-01-05 16:40:23,717 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:40:23,717 - Model - INFO - **** Epoch 91 (91/128) ****
+2021-01-05 16:40:23,717 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:40:57,067 - Model - INFO - Training mean loss: 0.433364
+2021-01-05 16:40:57,067 - Model - INFO - Training accuracy: 0.831234
+2021-01-05 16:40:57,068 - Model - INFO - Save model...
+2021-01-05 16:40:57,068 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:40:57,102 - Model - INFO - Saving model....
+2021-01-05 16:40:57,107 - Model - INFO - ---- EPOCH 091 EVALUATION ----
+2021-01-05 16:41:27,735 - Model - INFO - eval mean loss: 0.531694
+2021-01-05 16:41:27,735 - Model - INFO - eval point avg class IoU: 0.364626
+2021-01-05 16:41:27,736 - Model - INFO - eval point accuracy: 0.752320
+2021-01-05 16:41:27,736 - Model - INFO - eval point avg class acc: 0.440100
+2021-01-05 16:41:27,736 - Model - INFO - ------- IoU --------
+class ground         weight: 0.375, IoU: 0.512 
+class vegetatation   weight: 0.592, IoU: 0.673 
+class building       weight: 0.033, IoU: 0.274 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:41:27,736 - Model - INFO - Eval mean loss: 0.531694
+2021-01-05 16:41:27,736 - Model - INFO - Eval accuracy: 0.752320
+2021-01-05 16:41:27,736 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:41:27,736 - Model - INFO - **** Epoch 92 (92/128) ****
+2021-01-05 16:41:27,736 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:42:00,670 - Model - INFO - Training mean loss: 0.386610
+2021-01-05 16:42:00,671 - Model - INFO - Training accuracy: 0.852717
+2021-01-05 16:42:00,676 - Model - INFO - ---- EPOCH 092 EVALUATION ----
+2021-01-05 16:42:31,747 - Model - INFO - eval mean loss: 0.634670
+2021-01-05 16:42:31,747 - Model - INFO - eval point avg class IoU: 0.382417
+2021-01-05 16:42:31,747 - Model - INFO - eval point accuracy: 0.730281
+2021-01-05 16:42:31,747 - Model - INFO - eval point avg class acc: 0.461914
+2021-01-05 16:42:31,747 - Model - INFO - ------- IoU --------
+class ground         weight: 0.395, IoU: 0.455 
+class vegetatation   weight: 0.567, IoU: 0.660 
+class building       weight: 0.038, IoU: 0.415 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:42:31,747 - Model - INFO - Eval mean loss: 0.634670
+2021-01-05 16:42:31,747 - Model - INFO - Eval accuracy: 0.730281
+2021-01-05 16:42:31,747 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:42:31,747 - Model - INFO - **** Epoch 93 (93/128) ****
+2021-01-05 16:42:31,747 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:43:04,773 - Model - INFO - Training mean loss: 0.454250
+2021-01-05 16:43:04,773 - Model - INFO - Training accuracy: 0.833406
+2021-01-05 16:43:04,778 - Model - INFO - ---- EPOCH 093 EVALUATION ----
+2021-01-05 16:43:35,530 - Model - INFO - eval mean loss: 0.601225
+2021-01-05 16:43:35,530 - Model - INFO - eval point avg class IoU: 0.400007
+2021-01-05 16:43:35,530 - Model - INFO - eval point accuracy: 0.735682
+2021-01-05 16:43:35,530 - Model - INFO - eval point avg class acc: 0.479741
+2021-01-05 16:43:35,530 - Model - INFO - ------- IoU --------
+class ground         weight: 0.359, IoU: 0.456 
+class vegetatation   weight: 0.566, IoU: 0.662 
+class building       weight: 0.075, IoU: 0.482 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:43:35,530 - Model - INFO - Eval mean loss: 0.601225
+2021-01-05 16:43:35,530 - Model - INFO - Eval accuracy: 0.735682
+2021-01-05 16:43:35,530 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:43:35,530 - Model - INFO - **** Epoch 94 (94/128) ****
+2021-01-05 16:43:35,530 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:44:08,534 - Model - INFO - Training mean loss: 0.418266
+2021-01-05 16:44:08,534 - Model - INFO - Training accuracy: 0.841866
+2021-01-05 16:44:08,539 - Model - INFO - ---- EPOCH 094 EVALUATION ----
+2021-01-05 16:44:38,909 - Model - INFO - eval mean loss: 0.606923
+2021-01-05 16:44:38,909 - Model - INFO - eval point avg class IoU: 0.413377
+2021-01-05 16:44:38,909 - Model - INFO - eval point accuracy: 0.738174
+2021-01-05 16:44:38,909 - Model - INFO - eval point avg class acc: 0.498147
+2021-01-05 16:44:38,909 - Model - INFO - ------- IoU --------
+class ground         weight: 0.418, IoU: 0.514 
+class vegetatation   weight: 0.501, IoU: 0.644 
+class building       weight: 0.081, IoU: 0.495 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:44:38,909 - Model - INFO - Eval mean loss: 0.606923
+2021-01-05 16:44:38,909 - Model - INFO - Eval accuracy: 0.738174
+2021-01-05 16:44:38,909 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:44:38,909 - Model - INFO - **** Epoch 95 (95/128) ****
+2021-01-05 16:44:38,909 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:45:11,369 - Model - INFO - Training mean loss: 0.393128
+2021-01-05 16:45:11,369 - Model - INFO - Training accuracy: 0.854125
+2021-01-05 16:45:11,375 - Model - INFO - ---- EPOCH 095 EVALUATION ----
+2021-01-05 16:45:41,937 - Model - INFO - eval mean loss: 0.614758
+2021-01-05 16:45:41,938 - Model - INFO - eval point avg class IoU: 0.394841
+2021-01-05 16:45:41,938 - Model - INFO - eval point accuracy: 0.658541
+2021-01-05 16:45:41,938 - Model - INFO - eval point avg class acc: 0.488389
+2021-01-05 16:45:41,938 - Model - INFO - ------- IoU --------
+class ground         weight: 0.439, IoU: 0.327 
+class vegetatation   weight: 0.511, IoU: 0.578 
+class building       weight: 0.050, IoU: 0.675 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:45:41,938 - Model - INFO - Eval mean loss: 0.614758
+2021-01-05 16:45:41,938 - Model - INFO - Eval accuracy: 0.658541
+2021-01-05 16:45:41,938 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:45:41,938 - Model - INFO - **** Epoch 96 (96/128) ****
+2021-01-05 16:45:41,938 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:46:14,675 - Model - INFO - Training mean loss: 0.412375
+2021-01-05 16:46:14,675 - Model - INFO - Training accuracy: 0.845934
+2021-01-05 16:46:14,675 - Model - INFO - Save model...
+2021-01-05 16:46:14,675 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:46:14,718 - Model - INFO - Saving model....
+2021-01-05 16:46:14,723 - Model - INFO - ---- EPOCH 096 EVALUATION ----
+2021-01-05 16:46:45,718 - Model - INFO - eval mean loss: 0.509362
+2021-01-05 16:46:45,718 - Model - INFO - eval point avg class IoU: 0.405571
+2021-01-05 16:46:45,718 - Model - INFO - eval point accuracy: 0.763312
+2021-01-05 16:46:45,718 - Model - INFO - eval point avg class acc: 0.489076
+2021-01-05 16:46:45,718 - Model - INFO - ------- IoU --------
+class ground         weight: 0.390, IoU: 0.521 
+class vegetatation   weight: 0.573, IoU: 0.685 
+class building       weight: 0.037, IoU: 0.416 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:46:45,718 - Model - INFO - Eval mean loss: 0.509362
+2021-01-05 16:46:45,718 - Model - INFO - Eval accuracy: 0.763312
+2021-01-05 16:46:45,718 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:46:45,718 - Model - INFO - **** Epoch 97 (97/128) ****
+2021-01-05 16:46:45,718 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:47:18,764 - Model - INFO - Training mean loss: 0.358514
+2021-01-05 16:47:18,764 - Model - INFO - Training accuracy: 0.872065
+2021-01-05 16:47:18,769 - Model - INFO - ---- EPOCH 097 EVALUATION ----
+2021-01-05 16:47:49,662 - Model - INFO - eval mean loss: 0.538003
+2021-01-05 16:47:49,662 - Model - INFO - eval point avg class IoU: 0.322269
+2021-01-05 16:47:49,662 - Model - INFO - eval point accuracy: 0.781219
+2021-01-05 16:47:49,662 - Model - INFO - eval point avg class acc: 0.393244
+2021-01-05 16:47:49,662 - Model - INFO - ------- IoU --------
+class ground         weight: 0.394, IoU: 0.582 
+class vegetatation   weight: 0.576, IoU: 0.707 
+class building       weight: 0.030, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:47:49,663 - Model - INFO - Eval mean loss: 0.538003
+2021-01-05 16:47:49,663 - Model - INFO - Eval accuracy: 0.781219
+2021-01-05 16:47:49,663 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:47:49,663 - Model - INFO - **** Epoch 98 (98/128) ****
+2021-01-05 16:47:49,663 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:48:22,563 - Model - INFO - Training mean loss: 0.454719
+2021-01-05 16:48:22,563 - Model - INFO - Training accuracy: 0.827681
+2021-01-05 16:48:22,569 - Model - INFO - ---- EPOCH 098 EVALUATION ----
+2021-01-05 16:48:53,206 - Model - INFO - eval mean loss: 0.550140
+2021-01-05 16:48:53,207 - Model - INFO - eval point avg class IoU: 0.432914
+2021-01-05 16:48:53,207 - Model - INFO - eval point accuracy: 0.768577
+2021-01-05 16:48:53,207 - Model - INFO - eval point avg class acc: 0.509636
+2021-01-05 16:48:53,207 - Model - INFO - ------- IoU --------
+class ground         weight: 0.365, IoU: 0.503 
+class vegetatation   weight: 0.569, IoU: 0.701 
+class building       weight: 0.066, IoU: 0.528 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:48:53,207 - Model - INFO - Eval mean loss: 0.550140
+2021-01-05 16:48:53,207 - Model - INFO - Eval accuracy: 0.768577
+2021-01-05 16:48:53,207 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:48:53,207 - Model - INFO - **** Epoch 99 (99/128) ****
+2021-01-05 16:48:53,207 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:49:26,300 - Model - INFO - Training mean loss: 0.473925
+2021-01-05 16:49:26,300 - Model - INFO - Training accuracy: 0.822662
+2021-01-05 16:49:26,306 - Model - INFO - ---- EPOCH 099 EVALUATION ----
+2021-01-05 16:49:56,870 - Model - INFO - eval mean loss: 0.634555
+2021-01-05 16:49:56,870 - Model - INFO - eval point avg class IoU: 0.476131
+2021-01-05 16:49:56,870 - Model - INFO - eval point accuracy: 0.802140
+2021-01-05 16:49:56,870 - Model - INFO - eval point avg class acc: 0.550380
+2021-01-05 16:49:56,870 - Model - INFO - ------- IoU --------
+class ground         weight: 0.492, IoU: 0.704 
+class vegetatation   weight: 0.435, IoU: 0.651 
+class building       weight: 0.073, IoU: 0.549 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:49:56,870 - Model - INFO - Eval mean loss: 0.634555
+2021-01-05 16:49:56,870 - Model - INFO - Eval accuracy: 0.802140
+2021-01-05 16:49:56,870 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:49:56,870 - Model - INFO - **** Epoch 100 (100/128) ****
+2021-01-05 16:49:56,871 - Model - INFO - Learning rate:0.000040
+2021-01-05 16:50:30,048 - Model - INFO - Training mean loss: 0.412583
+2021-01-05 16:50:30,048 - Model - INFO - Training accuracy: 0.844152
+2021-01-05 16:50:30,053 - Model - INFO - ---- EPOCH 100 EVALUATION ----
+2021-01-05 16:51:00,700 - Model - INFO - eval mean loss: 0.622589
+2021-01-05 16:51:00,701 - Model - INFO - eval point avg class IoU: 0.477771
+2021-01-05 16:51:00,701 - Model - INFO - eval point accuracy: 0.787023
+2021-01-05 16:51:00,701 - Model - INFO - eval point avg class acc: 0.558482
+2021-01-05 16:51:00,701 - Model - INFO - ------- IoU --------
+class ground         weight: 0.424, IoU: 0.635 
+class vegetatation   weight: 0.467, IoU: 0.668 
+class building       weight: 0.109, IoU: 0.608 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:51:00,701 - Model - INFO - Eval mean loss: 0.622589
+2021-01-05 16:51:00,701 - Model - INFO - Eval accuracy: 0.787023
+2021-01-05 16:51:00,701 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:51:00,701 - Model - INFO - **** Epoch 101 (101/128) ****
+2021-01-05 16:51:00,701 - Model - INFO - Learning rate:0.000028
+2021-01-05 16:51:33,562 - Model - INFO - Training mean loss: 0.436620
+2021-01-05 16:51:33,562 - Model - INFO - Training accuracy: 0.835710
+2021-01-05 16:51:33,562 - Model - INFO - Save model...
+2021-01-05 16:51:33,562 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:51:33,596 - Model - INFO - Saving model....
+2021-01-05 16:51:33,601 - Model - INFO - ---- EPOCH 101 EVALUATION ----
+2021-01-05 16:52:04,529 - Model - INFO - eval mean loss: 0.557431
+2021-01-05 16:52:04,529 - Model - INFO - eval point avg class IoU: 0.455075
+2021-01-05 16:52:04,529 - Model - INFO - eval point accuracy: 0.769987
+2021-01-05 16:52:04,529 - Model - INFO - eval point avg class acc: 0.541542
+2021-01-05 16:52:04,529 - Model - INFO - ------- IoU --------
+class ground         weight: 0.377, IoU: 0.532 
+class vegetatation   weight: 0.553, IoU: 0.684 
+class building       weight: 0.069, IoU: 0.605 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:52:04,529 - Model - INFO - Eval mean loss: 0.557431
+2021-01-05 16:52:04,529 - Model - INFO - Eval accuracy: 0.769987
+2021-01-05 16:52:04,529 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:52:04,529 - Model - INFO - **** Epoch 102 (102/128) ****
+2021-01-05 16:52:04,529 - Model - INFO - Learning rate:0.000028
+2021-01-05 16:52:37,083 - Model - INFO - Training mean loss: 0.407254
+2021-01-05 16:52:37,084 - Model - INFO - Training accuracy: 0.848441
+2021-01-05 16:52:37,089 - Model - INFO - ---- EPOCH 102 EVALUATION ----
+2021-01-05 16:53:07,594 - Model - INFO - eval mean loss: 0.654199
+2021-01-05 16:53:07,594 - Model - INFO - eval point avg class IoU: 0.480833
+2021-01-05 16:53:07,594 - Model - INFO - eval point accuracy: 0.792209
+2021-01-05 16:53:07,594 - Model - INFO - eval point avg class acc: 0.562474
+2021-01-05 16:53:07,594 - Model - INFO - ------- IoU --------
+class ground         weight: 0.450, IoU: 0.646 
+class vegetatation   weight: 0.484, IoU: 0.670 
+class building       weight: 0.066, IoU: 0.608 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:53:07,594 - Model - INFO - Eval mean loss: 0.654199
+2021-01-05 16:53:07,594 - Model - INFO - Eval accuracy: 0.792209
+2021-01-05 16:53:07,595 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:53:07,595 - Model - INFO - **** Epoch 103 (103/128) ****
+2021-01-05 16:53:07,595 - Model - INFO - Learning rate:0.000028
+2021-01-05 16:53:40,611 - Model - INFO - Training mean loss: 0.413724
+2021-01-05 16:53:40,611 - Model - INFO - Training accuracy: 0.845182
+2021-01-05 16:53:40,617 - Model - INFO - ---- EPOCH 103 EVALUATION ----
+2021-01-05 16:54:11,124 - Model - INFO - eval mean loss: 0.593987
+2021-01-05 16:54:11,124 - Model - INFO - eval point avg class IoU: 0.470447
+2021-01-05 16:54:11,124 - Model - INFO - eval point accuracy: 0.784119
+2021-01-05 16:54:11,124 - Model - INFO - eval point avg class acc: 0.550475
+2021-01-05 16:54:11,124 - Model - INFO - ------- IoU --------
+class ground         weight: 0.439, IoU: 0.621 
+class vegetatation   weight: 0.467, IoU: 0.673 
+class building       weight: 0.094, IoU: 0.588 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:54:11,125 - Model - INFO - Eval mean loss: 0.593987
+2021-01-05 16:54:11,125 - Model - INFO - Eval accuracy: 0.784119
+2021-01-05 16:54:11,125 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:54:11,125 - Model - INFO - **** Epoch 104 (104/128) ****
+2021-01-05 16:54:11,125 - Model - INFO - Learning rate:0.000028
+2021-01-05 16:54:44,154 - Model - INFO - Training mean loss: 0.454539
+2021-01-05 16:54:44,154 - Model - INFO - Training accuracy: 0.821584
+2021-01-05 16:54:44,159 - Model - INFO - ---- EPOCH 104 EVALUATION ----
+2021-01-05 16:55:14,766 - Model - INFO - eval mean loss: 0.677124
+2021-01-05 16:55:14,766 - Model - INFO - eval point avg class IoU: 0.472250
+2021-01-05 16:55:14,766 - Model - INFO - eval point accuracy: 0.776403
+2021-01-05 16:55:14,766 - Model - INFO - eval point avg class acc: 0.552566
+2021-01-05 16:55:14,766 - Model - INFO - ------- IoU --------
+class ground         weight: 0.451, IoU: 0.645 
+class vegetatation   weight: 0.445, IoU: 0.628 
+class building       weight: 0.104, IoU: 0.616 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:55:14,766 - Model - INFO - Eval mean loss: 0.677124
+2021-01-05 16:55:14,766 - Model - INFO - Eval accuracy: 0.776403
+2021-01-05 16:55:14,766 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:55:14,767 - Model - INFO - **** Epoch 105 (105/128) ****
+2021-01-05 16:55:14,767 - Model - INFO - Learning rate:0.000028
+2021-01-05 16:55:47,943 - Model - INFO - Training mean loss: 0.361183
+2021-01-05 16:55:47,943 - Model - INFO - Training accuracy: 0.867285
+2021-01-05 16:55:47,949 - Model - INFO - ---- EPOCH 105 EVALUATION ----
+2021-01-05 16:56:18,637 - Model - INFO - eval mean loss: 0.652103
+2021-01-05 16:56:18,637 - Model - INFO - eval point avg class IoU: 0.376054
+2021-01-05 16:56:18,637 - Model - INFO - eval point accuracy: 0.725260
+2021-01-05 16:56:18,637 - Model - INFO - eval point avg class acc: 0.458836
+2021-01-05 16:56:18,637 - Model - INFO - ------- IoU --------
+class ground         weight: 0.363, IoU: 0.454 
+class vegetatation   weight: 0.554, IoU: 0.651 
+class building       weight: 0.083, IoU: 0.400 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:56:18,638 - Model - INFO - Eval mean loss: 0.652103
+2021-01-05 16:56:18,638 - Model - INFO - Eval accuracy: 0.725260
+2021-01-05 16:56:18,638 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:56:18,638 - Model - INFO - **** Epoch 106 (106/128) ****
+2021-01-05 16:56:18,638 - Model - INFO - Learning rate:0.000028
+2021-01-05 16:56:51,724 - Model - INFO - Training mean loss: 0.466640
+2021-01-05 16:56:51,724 - Model - INFO - Training accuracy: 0.827682
+2021-01-05 16:56:51,724 - Model - INFO - Save model...
+2021-01-05 16:56:51,724 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 16:56:51,759 - Model - INFO - Saving model....
+2021-01-05 16:56:51,765 - Model - INFO - ---- EPOCH 106 EVALUATION ----
+2021-01-05 16:57:22,226 - Model - INFO - eval mean loss: 0.618547
+2021-01-05 16:57:22,226 - Model - INFO - eval point avg class IoU: 0.368094
+2021-01-05 16:57:22,226 - Model - INFO - eval point accuracy: 0.748543
+2021-01-05 16:57:22,226 - Model - INFO - eval point avg class acc: 0.454024
+2021-01-05 16:57:22,226 - Model - INFO - ------- IoU --------
+class ground         weight: 0.431, IoU: 0.545 
+class vegetatation   weight: 0.501, IoU: 0.671 
+class building       weight: 0.068, IoU: 0.256 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:57:22,226 - Model - INFO - Eval mean loss: 0.618547
+2021-01-05 16:57:22,226 - Model - INFO - Eval accuracy: 0.748543
+2021-01-05 16:57:22,226 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:57:22,226 - Model - INFO - **** Epoch 107 (107/128) ****
+2021-01-05 16:57:22,226 - Model - INFO - Learning rate:0.000028
+2021-01-05 16:57:55,142 - Model - INFO - Training mean loss: 0.412058
+2021-01-05 16:57:55,142 - Model - INFO - Training accuracy: 0.848341
+2021-01-05 16:57:55,147 - Model - INFO - ---- EPOCH 107 EVALUATION ----
+2021-01-05 16:58:25,494 - Model - INFO - eval mean loss: 0.626314
+2021-01-05 16:58:25,494 - Model - INFO - eval point avg class IoU: 0.399822
+2021-01-05 16:58:25,494 - Model - INFO - eval point accuracy: 0.735135
+2021-01-05 16:58:25,494 - Model - INFO - eval point avg class acc: 0.486014
+2021-01-05 16:58:25,494 - Model - INFO - ------- IoU --------
+class ground         weight: 0.426, IoU: 0.522 
+class vegetatation   weight: 0.494, IoU: 0.640 
+class building       weight: 0.080, IoU: 0.438 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:58:25,494 - Model - INFO - Eval mean loss: 0.626314
+2021-01-05 16:58:25,494 - Model - INFO - Eval accuracy: 0.735135
+2021-01-05 16:58:25,494 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:58:25,494 - Model - INFO - **** Epoch 108 (108/128) ****
+2021-01-05 16:58:25,494 - Model - INFO - Learning rate:0.000028
+2021-01-05 16:58:58,545 - Model - INFO - Training mean loss: 0.424301
+2021-01-05 16:58:58,545 - Model - INFO - Training accuracy: 0.844799
+2021-01-05 16:58:58,551 - Model - INFO - ---- EPOCH 108 EVALUATION ----
+2021-01-05 16:59:28,969 - Model - INFO - eval mean loss: 0.485913
+2021-01-05 16:59:28,969 - Model - INFO - eval point avg class IoU: 0.469910
+2021-01-05 16:59:28,969 - Model - INFO - eval point accuracy: 0.785325
+2021-01-05 16:59:28,969 - Model - INFO - eval point avg class acc: 0.541511
+2021-01-05 16:59:28,969 - Model - INFO - ------- IoU --------
+class ground         weight: 0.387, IoU: 0.560 
+class vegetatation   weight: 0.552, IoU: 0.701 
+class building       weight: 0.061, IoU: 0.618 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 16:59:28,969 - Model - INFO - Eval mean loss: 0.485913
+2021-01-05 16:59:28,969 - Model - INFO - Eval accuracy: 0.785325
+2021-01-05 16:59:28,969 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 16:59:28,969 - Model - INFO - **** Epoch 109 (109/128) ****
+2021-01-05 16:59:28,969 - Model - INFO - Learning rate:0.000028
+2021-01-05 17:00:01,822 - Model - INFO - Training mean loss: 0.424402
+2021-01-05 17:00:01,823 - Model - INFO - Training accuracy: 0.847209
+2021-01-05 17:00:01,827 - Model - INFO - ---- EPOCH 109 EVALUATION ----
+2021-01-05 17:00:32,836 - Model - INFO - eval mean loss: 0.715239
+2021-01-05 17:00:32,836 - Model - INFO - eval point avg class IoU: 0.323497
+2021-01-05 17:00:32,836 - Model - INFO - eval point accuracy: 0.718181
+2021-01-05 17:00:32,836 - Model - INFO - eval point avg class acc: 0.416863
+2021-01-05 17:00:32,837 - Model - INFO - ------- IoU --------
+class ground         weight: 0.468, IoU: 0.559 
+class vegetatation   weight: 0.454, IoU: 0.616 
+class building       weight: 0.079, IoU: 0.119 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 17:00:32,837 - Model - INFO - Eval mean loss: 0.715239
+2021-01-05 17:00:32,837 - Model - INFO - Eval accuracy: 0.718181
+2021-01-05 17:00:32,837 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 17:00:32,837 - Model - INFO - **** Epoch 110 (110/128) ****
+2021-01-05 17:00:32,837 - Model - INFO - Learning rate:0.000028
+2021-01-05 17:01:05,852 - Model - INFO - Training mean loss: 0.456120
+2021-01-05 17:01:05,852 - Model - INFO - Training accuracy: 0.827905
+2021-01-05 17:01:05,858 - Model - INFO - ---- EPOCH 110 EVALUATION ----
+2021-01-05 17:01:36,416 - Model - INFO - eval mean loss: 0.543989
+2021-01-05 17:01:36,416 - Model - INFO - eval point avg class IoU: 0.329022
+2021-01-05 17:01:36,416 - Model - INFO - eval point accuracy: 0.745397
+2021-01-05 17:01:36,416 - Model - INFO - eval point avg class acc: 0.407185
+2021-01-05 17:01:36,416 - Model - INFO - ------- IoU --------
+class ground         weight: 0.352, IoU: 0.468 
+class vegetatation   weight: 0.592, IoU: 0.696 
+class building       weight: 0.056, IoU: 0.152 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 17:01:36,417 - Model - INFO - Eval mean loss: 0.543989
+2021-01-05 17:01:36,417 - Model - INFO - Eval accuracy: 0.745397
+2021-01-05 17:01:36,417 - Model - INFO - Best mIoU: 0.489243
+2021-01-05 17:01:36,417 - Model - INFO - **** Epoch 111 (111/128) ****
+2021-01-05 17:01:36,417 - Model - INFO - Learning rate:0.000020
+2021-01-05 17:02:09,414 - Model - INFO - Training mean loss: 0.468346
+2021-01-05 17:02:09,414 - Model - INFO - Training accuracy: 0.819117
+2021-01-05 17:02:09,414 - Model - INFO - Save model...
+2021-01-05 17:02:09,414 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 17:02:09,449 - Model - INFO - Saving model....
+2021-01-05 17:02:09,454 - Model - INFO - ---- EPOCH 111 EVALUATION ----
+2021-01-05 17:02:39,969 - Model - INFO - eval mean loss: 0.603113
+2021-01-05 17:02:39,970 - Model - INFO - eval point avg class IoU: 0.496509
+2021-01-05 17:02:39,970 - Model - INFO - eval point accuracy: 0.779564
+2021-01-05 17:02:39,970 - Model - INFO - eval point avg class acc: 0.573971
+2021-01-05 17:02:39,970 - Model - INFO - ------- IoU --------
+class ground         weight: 0.404, IoU: 0.583 
+class vegetatation   weight: 0.496, IoU: 0.667 
+class building       weight: 0.100, IoU: 0.737 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 17:02:39,970 - Model - INFO - Eval mean loss: 0.603113
+2021-01-05 17:02:39,970 - Model - INFO - Eval accuracy: 0.779564
+2021-01-05 17:02:39,970 - Model - INFO - Save model...
+2021-01-05 17:02:39,970 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/best_model.pth
+2021-01-05 17:02:40,006 - Model - INFO - Saving model....
+2021-01-05 17:02:40,006 - Model - INFO - Best mIoU: 0.496509
+2021-01-05 17:02:40,006 - Model - INFO - **** Epoch 112 (112/128) ****
+2021-01-05 17:02:40,006 - Model - INFO - Learning rate:0.000020
+2021-01-05 17:03:12,860 - Model - INFO - Training mean loss: 0.435801
+2021-01-05 17:03:12,860 - Model - INFO - Training accuracy: 0.838522
+2021-01-05 17:03:12,865 - Model - INFO - ---- EPOCH 112 EVALUATION ----
+2021-01-05 17:03:43,466 - Model - INFO - eval mean loss: 0.547227
+2021-01-05 17:03:43,467 - Model - INFO - eval point avg class IoU: 0.328505
+2021-01-05 17:03:43,467 - Model - INFO - eval point accuracy: 0.785642
+2021-01-05 17:03:43,467 - Model - INFO - eval point avg class acc: 0.402274
+2021-01-05 17:03:43,467 - Model - INFO - ------- IoU --------
+class ground         weight: 0.393, IoU: 0.597 
+class vegetatation   weight: 0.572, IoU: 0.717 
+class building       weight: 0.035, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 17:03:43,467 - Model - INFO - Eval mean loss: 0.547227
+2021-01-05 17:03:43,467 - Model - INFO - Eval accuracy: 0.785642
+2021-01-05 17:03:43,467 - Model - INFO - Best mIoU: 0.496509
+2021-01-05 17:03:43,467 - Model - INFO - **** Epoch 113 (113/128) ****
+2021-01-05 17:03:43,467 - Model - INFO - Learning rate:0.000020
+2021-01-05 17:04:16,110 - Model - INFO - Training mean loss: 0.370395
+2021-01-05 17:04:16,110 - Model - INFO - Training accuracy: 0.868007
+2021-01-05 17:04:16,116 - Model - INFO - ---- EPOCH 113 EVALUATION ----
+2021-01-05 17:04:46,860 - Model - INFO - eval mean loss: 0.542611
+2021-01-05 17:04:46,860 - Model - INFO - eval point avg class IoU: 0.361820
+2021-01-05 17:04:46,860 - Model - INFO - eval point accuracy: 0.789396
+2021-01-05 17:04:46,860 - Model - INFO - eval point avg class acc: 0.436622
+2021-01-05 17:04:46,860 - Model - INFO - ------- IoU --------
+class ground         weight: 0.453, IoU: 0.656 
+class vegetatation   weight: 0.496, IoU: 0.694 
+class building       weight: 0.050, IoU: 0.097 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 17:04:46,860 - Model - INFO - Eval mean loss: 0.542611
+2021-01-05 17:04:46,860 - Model - INFO - Eval accuracy: 0.789396
+2021-01-05 17:04:46,861 - Model - INFO - Best mIoU: 0.496509
+2021-01-05 17:04:46,861 - Model - INFO - **** Epoch 114 (114/128) ****
+2021-01-05 17:04:46,861 - Model - INFO - Learning rate:0.000020
+2021-01-05 17:05:19,799 - Model - INFO - Training mean loss: 0.415649
+2021-01-05 17:05:19,799 - Model - INFO - Training accuracy: 0.835943
+2021-01-05 17:05:19,804 - Model - INFO - ---- EPOCH 114 EVALUATION ----
+2021-01-05 17:05:51,453 - Model - INFO - eval mean loss: 0.589340
+2021-01-05 17:05:51,453 - Model - INFO - eval point avg class IoU: 0.312428
+2021-01-05 17:05:51,453 - Model - INFO - eval point accuracy: 0.761470
+2021-01-05 17:05:51,453 - Model - INFO - eval point avg class acc: 0.389850
+2021-01-05 17:05:51,453 - Model - INFO - ------- IoU --------
+class ground         weight: 0.394, IoU: 0.556 
+class vegetatation   weight: 0.563, IoU: 0.694 
+class building       weight: 0.043, IoU: 0.000 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 17:05:51,453 - Model - INFO - Eval mean loss: 0.589340
+2021-01-05 17:05:51,453 - Model - INFO - Eval accuracy: 0.761470
+2021-01-05 17:05:51,453 - Model - INFO - Best mIoU: 0.496509
+2021-01-05 17:05:51,453 - Model - INFO - **** Epoch 115 (115/128) ****
+2021-01-05 17:05:51,453 - Model - INFO - Learning rate:0.000020
+2021-01-05 17:06:24,480 - Model - INFO - Training mean loss: 0.416063
+2021-01-05 17:06:24,480 - Model - INFO - Training accuracy: 0.845557
+2021-01-05 17:06:24,486 - Model - INFO - ---- EPOCH 115 EVALUATION ----
+2021-01-05 17:06:55,939 - Model - INFO - eval mean loss: 0.650872
+2021-01-05 17:06:55,939 - Model - INFO - eval point avg class IoU: 0.416677
+2021-01-05 17:06:55,939 - Model - INFO - eval point accuracy: 0.752467
+2021-01-05 17:06:55,940 - Model - INFO - eval point avg class acc: 0.499847
+2021-01-05 17:06:55,940 - Model - INFO - ------- IoU --------
+class ground         weight: 0.429, IoU: 0.562 
+class vegetatation   weight: 0.487, IoU: 0.654 
+class building       weight: 0.084, IoU: 0.451 
+class water          weight: 0.000, IoU: nan 
+
+2021-01-05 17:06:55,940 - Model - INFO - Eval mean loss: 0.650872
+2021-01-05 17:06:55,940 - Model - INFO - Eval accuracy: 0.752467
+2021-01-05 17:06:55,940 - Model - INFO - Best mIoU: 0.496509
+2021-01-05 17:06:55,940 - Model - INFO - **** Epoch 116 (116/128) ****
+2021-01-05 17:06:55,940 - Model - INFO - Learning rate:0.000020
+2021-01-05 18:50:28,392 - Model - INFO - PARAMETER ...
+2021-01-05 18:50:28,415 - Model - INFO - Namespace(batch_size=4, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_crop_3', lr_decay=0.7, model='pointnet2_sem_seg_msg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-05 18:50:44,706 - Model - INFO - The number of training data is: 218
+2021-01-05 18:50:44,706 - Model - INFO - The number of test data is: 218
+2021-01-05 18:50:45,078 - Model - INFO - Use pretrain model
+2021-01-05 18:50:45,078 - Model - INFO - **** Epoch 1 (111/128) ****
+2021-01-05 18:50:45,078 - Model - INFO - Learning rate:0.000020
+2021-01-05 18:51:20,033 - Model - INFO - Training mean loss: 0.425170
+2021-01-05 18:51:20,034 - Model - INFO - Training accuracy: 0.842031
+2021-01-05 18:51:20,034 - Model - INFO - Save model...
+2021-01-05 18:51:20,034 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_crop_3/checkpoints/model.pth
+2021-01-05 18:51:20,074 - Model - INFO - Saving model....
+2021-01-05 18:51:20,079 - Model - INFO - ---- EPOCH 001 EVALUATION ----

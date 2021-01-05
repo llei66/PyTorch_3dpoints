@@ -21,7 +21,8 @@ Pytorch >= 11.5.1+cu92
 
 
 ## Predata with Geodata
-
+### Introduction of Geodata
+> [Datainfo](https://download.kortforsyningen.dk/content/dhmpunktsky)
 
 ### Download LAStools and comppile
 ```buildoutcfg
@@ -32,7 +33,6 @@ unzip LAStools.zip
 ### Download .laz data from ERDA samples or official website
 - [ERDA samples](https://erda.dk/wsgi-bin/fileman.py?path=DeepCrop/)
   > ./DeepCrop/Datasets/GeoData/train_test_whole_class_1km/
-- [Offical Website](https://download.kortforsyningen.dk/content/dhmpunktsky)
 ### Use LAStools to convert .txt data
 ```buildoutcfg
 sh LAStools/bin/las2txt.sh ${.laz} ${.txt}
@@ -44,7 +44,16 @@ sh LAStools/bin/las2txt.sh ${.laz} ${.txt}
 cd data_utils/pre_utils_data
 python clear_geodata_1.py
 ```
+## Use DublinCity datasets
 
+### Introduction of DublinCityData
+
+> [DataInfo](https://v-sense.scss.tcd.ie/dublincity/)
+
+```
+Download data from Erda
+>  ./DeepCrop/Datasets/DublinCityData/TrainTestData/
+```
 ## <a name='jump'> Semantic Segmentation </a>
 
 ### Dowdload train and test sample from Erda
@@ -54,7 +63,7 @@ unzip train_test_whole_class_200m.zip -d ./data/
 ```
 ### Run
 
-#### run with 250m * 250m subares
+#### run with 250m * 250m subares of Geodata
 ```
 sh train_geodata_crop_1.sh
 ```
@@ -62,6 +71,10 @@ sh train_geodata_crop_1.sh
 #### run with the whole areas
 ```buildoutcfg
 sh train_geodata_1.sh
+```
+#### run with DublinCityData
+```buildoutcfg
+sh train_dublin_1.sh
 ```
 ### Test and Visulize
 ```buildoutcfg
