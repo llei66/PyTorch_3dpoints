@@ -33,7 +33,7 @@ class DublinData_1(Dataset):
             # pdb.set_trace()
 
             # room_data = np.load(room_path)  # xyzrgbl, N*7
-            # print(room_path)
+            print(room_path)
             room_data = np.loadtxt(room_path)  # xyzrgbl, N*7
 
             points, labels = room_data[:, 0:6], room_data[:, 6]  # xyzrgb, N*6; l, N
@@ -47,12 +47,12 @@ class DublinData_1(Dataset):
             num_point_all.append(labels.size)
         # pdb.set_trace()
 
-        # labelweights = labelweights.astype(np.float32)
-        # labelweights = labelweights / np.sum(labelweights)
-        # self.labelweights = np.power(np.amax(labelweights) / labelweights, 1 / 3.0)
-        # print(self.labelweights)
+        labelweights = labelweights.astype(np.float32)
+        labelweights = labelweights / np.sum(labelweights)
+        self.labelweights = np.power(np.amax(labelweights) / labelweights, 1 / 3.0)
+        print(self.labelweights)
 
-        self.labelweights = np.ones(3).astype(np.float32)
+        # self.labelweights = np.ones(3).astype(np.float32)
 
         sample_prob = num_point_all / np.sum(num_point_all)
         num_iter = int(np.sum(num_point_all) * sample_rate / num_point)

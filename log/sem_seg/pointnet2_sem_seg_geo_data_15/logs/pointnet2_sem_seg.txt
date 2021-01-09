@@ -1,0 +1,155 @@
+2021-01-09 13:49:51,879 - Model - INFO - PARAMETER ...
+2021-01-09 13:49:51,879 - Model - INFO - Namespace(batch_size=8, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 13:55:32,019 - Model - INFO - The number of training data is: 5117
+2021-01-09 13:55:32,020 - Model - INFO - The number of test data is: 5117
+2021-01-09 13:55:32,081 - Model - INFO - No existing model, starting training from scratch...
+2021-01-09 13:55:32,083 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 13:55:32,083 - Model - INFO - Learning rate:0.001000
+2021-01-09 14:13:38,721 - Model - INFO - PARAMETER ...
+2021-01-09 14:13:38,722 - Model - INFO - Namespace(batch_size=8, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 14:14:53,945 - Model - INFO - PARAMETER ...
+2021-01-09 14:14:53,945 - Model - INFO - Namespace(batch_size=8, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 14:19:27,346 - Model - INFO - The number of training data is: 5117
+2021-01-09 14:19:27,346 - Model - INFO - The number of test data is: 3008
+2021-01-09 14:19:27,361 - Model - INFO - No existing model, starting training from scratch...
+2021-01-09 14:19:27,362 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 14:19:27,362 - Model - INFO - Learning rate:0.001000
+2021-01-09 14:53:35,533 - Model - INFO - Training mean loss: 0.310084
+2021-01-09 14:53:35,533 - Model - INFO - Training accuracy: 0.900350
+2021-01-09 14:53:35,533 - Model - INFO - Save model...
+2021-01-09 14:53:35,534 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_data_15/checkpoints/model.pth
+2021-01-09 14:53:35,583 - Model - INFO - Saving model....
+2021-01-09 14:53:35,629 - Model - INFO - ---- EPOCH 001 EVALUATION ----
+2021-01-09 15:06:25,170 - Model - INFO - eval mean loss: 0.379660
+2021-01-09 15:06:25,170 - Model - INFO - eval point avg class IoU: 0.370657
+2021-01-09 15:06:25,170 - Model - INFO - eval point accuracy: 0.856821
+2021-01-09 15:06:25,170 - Model - INFO - eval point avg class acc: 0.445473
+2021-01-09 15:06:25,170 - Model - INFO - ------- IoU --------
+class ground         weight: 0.002, IoU: 0.687 
+class vegetatation   weight: 0.319, IoU: 0.796 
+class building       weight: 0.677, IoU: 0.000 
+class water          weight: 0.002, IoU: 0.000 
+
+2021-01-09 15:06:25,170 - Model - INFO - Eval mean loss: 0.379660
+2021-01-09 15:06:25,170 - Model - INFO - Eval accuracy: 0.856821
+2021-01-09 15:06:25,170 - Model - INFO - Save model...
+2021-01-09 15:06:25,170 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_data_15/checkpoints/best_model.pth
+2021-01-09 15:06:25,192 - Model - INFO - Saving model....
+2021-01-09 15:06:25,192 - Model - INFO - Best mIoU: 0.370657
+2021-01-09 15:06:25,192 - Model - INFO - **** Epoch 2 (2/128) ****
+2021-01-09 15:06:25,192 - Model - INFO - Learning rate:0.001000
+2021-01-09 15:07:36,019 - Model - INFO - PARAMETER ...
+2021-01-09 15:07:36,019 - Model - INFO - Namespace(batch_size=8, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 15:14:39,634 - Model - INFO - PARAMETER ...
+2021-01-09 15:14:39,634 - Model - INFO - Namespace(batch_size=8, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 15:39:30,813 - Model - INFO - The number of training data is: 38217
+2021-01-09 15:39:30,878 - Model - INFO - The number of test data is: 7443
+2021-01-09 15:39:31,817 - Model - INFO - Use pretrain model
+2021-01-09 15:39:31,817 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 15:39:31,817 - Model - INFO - Learning rate:0.001000
+2021-01-09 15:43:16,835 - Model - INFO - PARAMETER ...
+2021-01-09 15:43:16,835 - Model - INFO - Namespace(batch_size=8, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 15:43:30,629 - Model - INFO - PARAMETER ...
+2021-01-09 15:43:30,630 - Model - INFO - Namespace(batch_size=8, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 15:58:28,611 - Model - INFO - The number of training data is: 20060
+2021-01-09 15:58:28,611 - Model - INFO - The number of test data is: 7443
+2021-01-09 15:58:29,007 - Model - INFO - Use pretrain model
+2021-01-09 15:58:29,008 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 15:58:29,009 - Model - INFO - Learning rate:0.001000
+2021-01-09 18:28:20,308 - Model - INFO - Training mean loss: 0.291115
+2021-01-09 18:28:20,308 - Model - INFO - Training accuracy: 0.916446
+2021-01-09 18:28:20,308 - Model - INFO - Save model...
+2021-01-09 18:28:20,308 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_data_15/checkpoints/model.pth
+2021-01-09 18:28:20,567 - Model - INFO - Saving model....
+2021-01-09 18:28:20,764 - Model - INFO - ---- EPOCH 001 EVALUATION ----
+2021-01-09 19:27:27,084 - Model - INFO - eval mean loss: 0.438549
+2021-01-09 19:27:27,084 - Model - INFO - eval point avg class IoU: 0.350740
+2021-01-09 19:27:27,084 - Model - INFO - eval point accuracy: 0.843141
+2021-01-09 19:27:27,084 - Model - INFO - eval point avg class acc: 0.441596
+2021-01-09 19:27:27,084 - Model - INFO - ------- IoU --------
+class ground         weight: 0.001, IoU: 0.608 
+class vegetatation   weight: 0.252, IoU: 0.795 
+class building       weight: 0.745, IoU: 0.000 
+class water          weight: 0.001, IoU: 0.000 
+
+2021-01-09 19:27:27,084 - Model - INFO - Eval mean loss: 0.438549
+2021-01-09 19:27:27,084 - Model - INFO - Eval accuracy: 0.843141
+2021-01-09 19:27:27,084 - Model - INFO - Save model...
+2021-01-09 19:27:27,084 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_data_15/checkpoints/best_model.pth
+2021-01-09 19:27:27,106 - Model - INFO - Saving model....
+2021-01-09 19:27:27,106 - Model - INFO - Best mIoU: 0.350740
+2021-01-09 19:27:27,106 - Model - INFO - **** Epoch 2 (2/128) ****
+2021-01-09 19:27:27,106 - Model - INFO - Learning rate:0.001000
+2021-01-09 20:33:54,263 - Model - INFO - PARAMETER ...
+2021-01-09 20:33:54,263 - Model - INFO - Namespace(batch_size=8, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 20:36:39,662 - Model - INFO - PARAMETER ...
+2021-01-09 20:36:39,662 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 20:39:55,982 - Model - INFO - The number of training data is: 3008
+2021-01-09 20:39:55,983 - Model - INFO - The number of test data is: 3008
+2021-01-09 20:39:56,053 - Model - INFO - Use pretrain model
+2021-01-09 20:39:56,053 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 20:39:56,053 - Model - INFO - Learning rate:0.001000
+2021-01-09 20:51:23,951 - Model - INFO - Training mean loss: 0.236550
+2021-01-09 20:51:23,951 - Model - INFO - Training accuracy: 0.942860
+2021-01-09 20:51:23,951 - Model - INFO - Save model...
+2021-01-09 20:51:23,951 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_data_15/checkpoints/model.pth
+2021-01-09 20:51:23,976 - Model - INFO - Saving model....
+2021-01-09 20:51:23,989 - Model - INFO - ---- EPOCH 001 EVALUATION ----
+2021-01-09 21:01:49,332 - Model - INFO - eval mean loss: 0.634803
+2021-01-09 21:01:49,332 - Model - INFO - eval point avg class IoU: 0.349563
+2021-01-09 21:01:49,332 - Model - INFO - eval point accuracy: 0.855152
+2021-01-09 21:01:49,332 - Model - INFO - eval point avg class acc: 0.396229
+2021-01-09 21:01:49,332 - Model - INFO - ------- IoU --------
+class ground         weight: 0.002, IoU: 0.577 
+class vegetatation   weight: 0.316, IoU: 0.821 
+class building       weight: 0.680, IoU: 0.000 
+class water          weight: 0.002, IoU: 0.000 
+
+2021-01-09 21:01:49,332 - Model - INFO - Eval mean loss: 0.634803
+2021-01-09 21:01:49,332 - Model - INFO - Eval accuracy: 0.855152
+2021-01-09 21:01:49,332 - Model - INFO - Save model...
+2021-01-09 21:01:49,332 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg_geo_data_15/checkpoints/best_model.pth
+2021-01-09 21:01:49,356 - Model - INFO - Saving model....
+2021-01-09 21:01:49,356 - Model - INFO - Best mIoU: 0.349563
+2021-01-09 21:01:49,356 - Model - INFO - **** Epoch 2 (2/128) ****
+2021-01-09 21:01:49,356 - Model - INFO - Learning rate:0.001000
+2021-01-09 21:13:17,056 - Model - INFO - Training mean loss: 0.220827
+2021-01-09 21:13:17,056 - Model - INFO - Training accuracy: 0.947562
+2021-01-09 21:13:17,072 - Model - INFO - ---- EPOCH 002 EVALUATION ----
+2021-01-09 21:18:58,379 - Model - INFO - PARAMETER ...
+2021-01-09 21:18:58,379 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 21:22:13,427 - Model - INFO - The number of training data is: 3008
+2021-01-09 21:22:13,427 - Model - INFO - The number of test data is: 3008
+2021-01-09 21:22:13,467 - Model - INFO - Use pretrain model
+2021-01-09 21:22:13,468 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 21:22:13,468 - Model - INFO - Learning rate:0.001000
+2021-01-09 21:24:54,829 - Model - INFO - PARAMETER ...
+2021-01-09 21:24:54,829 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 21:28:11,057 - Model - INFO - The number of training data is: 3008
+2021-01-09 21:28:11,057 - Model - INFO - The number of test data is: 3008
+2021-01-09 21:28:11,096 - Model - INFO - Use pretrain model
+2021-01-09 21:28:11,096 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 21:28:11,097 - Model - INFO - Learning rate:0.001000
+2021-01-09 21:32:51,833 - Model - INFO - PARAMETER ...
+2021-01-09 21:32:51,833 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 21:36:10,594 - Model - INFO - The number of training data is: 3008
+2021-01-09 21:36:10,594 - Model - INFO - The number of test data is: 3008
+2021-01-09 21:36:10,633 - Model - INFO - Use pretrain model
+2021-01-09 21:36:10,634 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 21:36:10,634 - Model - INFO - Learning rate:0.001000
+2021-01-09 21:39:19,182 - Model - INFO - PARAMETER ...
+2021-01-09 21:39:19,183 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 21:39:31,035 - Model - INFO - PARAMETER ...
+2021-01-09 21:39:31,035 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 21:42:49,299 - Model - INFO - The number of training data is: 3008
+2021-01-09 21:42:49,299 - Model - INFO - The number of test data is: 3008
+2021-01-09 21:42:49,339 - Model - INFO - Use pretrain model
+2021-01-09 21:42:49,339 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 21:42:49,339 - Model - INFO - Learning rate:0.001000
+2021-01-09 21:52:59,986 - Model - INFO - PARAMETER ...
+2021-01-09 21:52:59,987 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_geo_data_15', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, test_area=5)
+2021-01-09 21:56:15,387 - Model - INFO - The number of training data is: 3008
+2021-01-09 21:56:15,387 - Model - INFO - The number of test data is: 3008
+2021-01-09 21:56:15,427 - Model - INFO - Use pretrain model
+2021-01-09 21:56:15,428 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-09 21:56:15,428 - Model - INFO - Learning rate:0.001000

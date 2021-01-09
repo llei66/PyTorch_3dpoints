@@ -104,13 +104,19 @@ def main(args):
     # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_whole_class_1km/'
     # test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/test_whole_class_1km'
 
-    root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/train'
-    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_whole_class_200m/test_one_area'
-    test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test'
+    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/train'
+    # # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_whole_class_200m/test_one_area'
+    # test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test'
+    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/train_1'
+    root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test_one'
+
+    # test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test_one'
+    test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test_one'
+
     NUM_CLASSES = 4
     NUM_POINT = args.npoint
     BATCH_SIZE = args.batch_size
-    Block_size = 5.0
+    Block_size = 15
     # NUM_POINT
 
     print("start loading training data ...")
@@ -299,4 +305,3 @@ def main(args):
 if __name__ == '__main__':
     args = parse_args()
     main(args)
-

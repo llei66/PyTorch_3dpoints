@@ -17,6 +17,7 @@ from tqdm import tqdm
 import provider
 import numpy as np
 import time
+import pdb
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -97,14 +98,14 @@ def main(args):
     # root = './data/train_test_whole_class_200m/test_sub_areas'
     # test_root = './data/train_test_whole_class_200m/train_sub_areas'
 
-    root = '/home/SENSETIME/lilei/DEEPCROP/DublinCity/sample/whole_label_train'
+    root = '/home/SENSETIME/lilei/DEEPCROP/DublinCity/sample/whole_label_train_one'
     test_root = '//home/SENSETIME/lilei/DEEPCROP/DublinCity/sample/whole_label_test'
     NUM_CLASSES = 3
     NUM_POINT = args.npoint
     BATCH_SIZE = args.batch_size
     # Block_size = 1.0
     Block_size = 2.0
-
+    pdb.set_trace()
     # NUM_POINT
 
     print("start loading training data ...")
@@ -294,4 +295,3 @@ def main(args):
 if __name__ == '__main__':
     args = parse_args()
     main(args)
-

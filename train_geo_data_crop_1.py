@@ -97,12 +97,14 @@ def main(args):
     # root = './data/train_test_whole_class_200m/test_sub_areas'
     # test_root = './data/train_test_whole_class_200m/train_sub_areas'
 
-    root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/test_one_area_1'
-    test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/test_one_area_1'
+    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/test_one_area_1'
+    # test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_200m/test_one_area_1'
+    root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/train'
+    test_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test'
     NUM_CLASSES = 4
     NUM_POINT = args.npoint
     BATCH_SIZE = args.batch_size
-    Block_size = 5.0
+    Block_size = 15.0
     # NUM_POINT
 
     print("start loading training data ...")
@@ -292,4 +294,3 @@ def main(args):
 if __name__ == '__main__':
     args = parse_args()
     main(args)
-

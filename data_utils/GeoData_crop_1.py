@@ -47,12 +47,12 @@ class GeoData_crop_1(Dataset):
             num_point_all.append(labels.size)
         # pdb.set_trace()
 
-        # labelweights = labelweights.astype(np.float32)
-        # labelweights = labelweights / np.sum(labelweights)
-        # self.labelweights = np.power(np.amax(labelweights) / labelweights, 1 / 3.0)
-        # print(self.labelweights)
+        labelweights = labelweights.astype(np.float32)
+        labelweights = labelweights / np.sum(labelweights)
+        self.labelweights = np.power(np.amax(labelweights) / labelweights, 1 / 3.0)
+        print(self.labelweights)
 
-        self.labelweights = np.ones(4).astype(np.float32)
+        # self.labelweights = np.ones(4).astype(np.float32)
 
         sample_prob = num_point_all / np.sum(num_point_all)
         num_iter = int(np.sum(num_point_all) * sample_rate / num_point)
@@ -77,15 +77,20 @@ class GeoData_crop_1(Dataset):
             block_max = center + [self.block_size / 2.0, self.block_size / 2.0, 0]
 
             point_idxs = np.where((points[:, 0] >= block_min[0]) & (points[:, 0] <= block_max[0]) & (points[:, 1] >= block_min[1]) & (points[:, 1] <= block_max[1]))[0]
-            # if point_idxs.size > 1024:
-            # print(point_idxs.size)
-            # print(count)
-            if point_idxs.size > 512:
+            # if point_idxs.size > 4096:
+            # # print(point_idxs.size)
+            # # print(count)
+            # # if point_idxs.size > 512:
+            # #
+            if point_idxs.size > 9000:
 
                 break
+            # print(point_idxs.size)
 
         if point_idxs.size >= self.num_point:
+            # selected_point_idxs = np.random.choice(point_idxs, self.num_point, replace=False)
             selected_point_idxs = np.random.choice(point_idxs, self.num_point, replace=False)
+
         else:
             selected_point_idxs = np.random.choice(point_idxs, self.num_point, replace=True)
         # pdb.set_trace()
@@ -136,7 +141,10 @@ if __name__ == '__main__':
     # num_point,  block_size, sample_rate = 2048, 5.0, 0.01
     # num_point,  block_size, sample_rate = 4096, 5.0, 1
     # num_point,  block_size, sample_rate = 4096, 5.0, 1
-    num_point,  block_size, sample_rate = 4096, 4.0, 1
+    # root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test'
+
+    data_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test_one'
+    num_point,  block_size, sample_rate = 4096, 20.0, 1
     # num_point,  block_size, sample_rate = 8192, 1.0, 1
 
     print(num_point,  block_size, sample_rate)
