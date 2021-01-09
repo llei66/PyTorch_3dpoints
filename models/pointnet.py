@@ -1,10 +1,9 @@
+import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import torch.nn.parallel
 import torch.utils.data
-from torch.autograd import Variable
-import numpy as np
-import torch.nn.functional as F
 
 
 class STN3d(nn.Module):
@@ -36,10 +35,8 @@ class STN3d(nn.Module):
         x = F.relu(self.bn5(self.fc2(x)))
         x = self.fc3(x)
 
-        iden = Variable(torch.from_numpy(np.array([1, 0, 0, 0, 1, 0, 0, 0, 1]).astype(np.float32))).view(1, 9).repeat(
-            batchsize, 1)
-        if x.is_cuda:
-            iden = iden.cuda()
+        iden = torch.from_numpy(np.array([1, 0, 0, 0, 1, 0, 0, 0, 1]).astype(np.float32)).view(1, 9).repeat(
+            batchsize, 1).to(x.device)
         x = x + iden
         x = x.view(-1, 3, 3)
         return x
@@ -76,10 +73,8 @@ class STNkd(nn.Module):
         x = F.relu(self.bn5(self.fc2(x)))
         x = self.fc3(x)
 
-        iden = Variable(torch.from_numpy(np.eye(self.k).flatten().astype(np.float32))).view(1, self.k * self.k).repeat(
-            batchsize, 1)
-        if x.is_cuda:
-            iden = iden.cuda()
+        iden = torch.from_numpy(np.eye(self.k).flatten().astype(np.float32)).view(1, self.k * self.k).repeat(
+            batchsize, 1).to(x.device)
         x = x + iden
         x = x.view(-1, self.k, self.k)
         return x
@@ -104,11 +99,11 @@ class PointNetEncoder(nn.Module):
         B, D, N = x.size()
         trans = self.stn(x)
         x = x.transpose(2, 1)
-        if D >3 :
-            x, feature = x.split(3,dim=2)
+        if D > 3:
+            x, feature = x.split(3, dim=2)
         x = torch.bmm(x, trans)
         if D > 3:
-            x = torch.cat([x,feature],dim=2)
+            x = torch.cat([x, feature], dim=2)
         x = x.transpose(2, 1)
         x = F.relu(self.bn1(self.conv1(x)))
 
@@ -132,10 +127,8 @@ class PointNetEncoder(nn.Module):
             return torch.cat([x, pointfeat], 1), trans, trans_feat
 
 
-def feature_transform_reguliarzer(trans):
+def feature_transform_regularizer(trans):
     d = trans.size()[1]
-    I = torch.eye(d)[None, :, :]
-    if trans.is_cuda:
-        I = I.cuda()
+    I = torch.eye(d)[None, :, :].to(trans.device)
     loss = torch.mean(torch.norm(torch.bmm(trans, trans.transpose(2, 1) - I), dim=(1, 2)))
     return loss

@@ -113,7 +113,7 @@ def main(args):
     TEST_DATASET = GeoData_crop_1(split='test', data_root=test_root, num_point=NUM_POINT,  block_size=Block_size, sample_rate=1.0, transform=None)
     trainDataLoader = torch.utils.data.DataLoader(TRAIN_DATASET, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, pin_memory=True, drop_last=True, worker_init_fn = lambda x: np.random.seed(x+int(time.time())))
     testDataLoader = torch.utils.data.DataLoader(TEST_DATASET, batch_size=BATCH_SIZE, shuffle=False, num_workers=4, pin_memory=True, drop_last=True)
-    weights = torch.Tensor(TRAIN_DATASET.labelweights).cuda()
+    weights = torch.Tensor(TRAIN_DATASET.label_weights).cuda()
 
     # weights = torch.Tensor([1,1,1,1]).cude()
 

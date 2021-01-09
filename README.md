@@ -31,7 +31,7 @@ Pytorch >= 11.5.1+cu92
 =======
 >>>>>>> bae0a347b3467b5722ac4ad65140724710c10c39
 
-### Download LAStools and comppile
+### Download LAStools and compile
 ```buildoutcfg
 wget http://lastools.github.io/download/LAStools.zip
 unzip LAStools.zip; cd LAStools; make -j8
@@ -63,7 +63,7 @@ Download data from Erda
 ```
 ## <a name='jump'> Semantic Segmentation </a>
 
-### Dowdload train and test sample from Erda
+### Download train and test sample from Erda
 ```
 wget https://sid.erda.dk/share_redirect/dJxtJ4Kysc
 unzip train_test_whole_class_200m.zip -d ./data/
