@@ -63,8 +63,8 @@ class PointDataset(Dataset):
 
         total_class_counts = total_class_counts.astype(np.float32)
         # class weighting 1/(C*|S_k|)
-        self.label_weights = 1 / (total_class_counts * self.n_classes)
-        print(f"label weights: {self.label_weights}")
+        self.class_weights = 1 / (total_class_counts * self.n_classes)
+        print(f"label weights: {self.class_weights}")
         print(f"class counts : {total_class_counts}")
         print(f"class distribution : {total_class_counts / total_class_counts.sum()}")
 

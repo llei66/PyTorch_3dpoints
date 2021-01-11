@@ -12,16 +12,12 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-from
-from utils import augmentations
+from models.util import weights_init, bn_momentum_adjust
 from utils.point_dataset import PointDataset
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
 sys.path.append(os.path.join(ROOT_DIR, 'models'))
-
-# classes = ['ground','low_vegetatation','medium_vegetation','high_vegetataion','building','water']
-# classes = ['unclassified','ground','low_vegetatation','medium_vegetation','high_vegetataion','building','noise']
 
 classes = ['ground', 'vegetatation', 'building', 'water']
 
@@ -60,7 +56,194 @@ def parse_args():
     return parser.parse_args()
 
 
-def init_logging(log_dir):
+class Trainer:
+    def __init__(self, model_name, optimizer_name, n_classes, learning_rate, decay_rate,
+                 step_size, class_weights, logger, checkpoint_dir):
+        # set hyperparameter
+        # set visible devices (how many GPUs are used for training)
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.class_weights = class_weights
+        self.n_classes = n_classes
+
+        self.logger, self.checkpoints_dir = logger, checkpoint_dir
+
+        # init model
+        model, criterion = get_model(model_name, self.n_classes)
+
+        # push to correct device
+        self.model = model.to(self.device)
+        self.criterion = criterion.to(self.device)
+
+        # TODO this should be optional through parameters (and will never happen since experiment folders are created with timestamp
+        try:
+            checkpoint = torch.load(str(self.checkpoints_dir) + '/checkpoints/best_model.pth')
+            self.start_epoch = checkpoint['epoch']
+            self.model.load_state_dict(checkpoint['model_state_dict'])
+            self.logger.info('Use pretrain model')
+        except:
+            self.logger.info('No existing model, starting training from scratch...')
+            self.start_epoch = 0
+            self.model = model.apply(weights_init)
+
+        optimizer_name = optimizer_name.lower()
+        if optimizer_name == 'adam':
+            self.optimizer = torch.optim.Adam(
+                self.model.parameters(), lr=learning_rate, betas=(0.9, 0.999), eps=1e-08, weight_decay=decay_rate
+            )
+        elif optimizer_name == "sgd":
+            self.optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
+        else:
+            raise NotImplementedError(f"Only supports Adam and SGD for now, you selected: {self.optimizer}.")
+
+        # TODO this should be parameters not constants
+        self.learning_rate_clip = 1e-5
+        self.momentum_original = 0.1
+        self.momentum_decay = 0.5
+        self.momentum_decay_step = step_size
+
+    def adjust_lr(self, epoch):
+        lr = max(args.learning_rate * (args.lr_decay ** (epoch // args.step_size)), self.learning_rate_clip)
+        self.logger.info('Learning rate:%f' % lr)
+        for param_group in self.optimizer.param_groups:
+            param_group['lr'] = lr
+
+    def adjust_bn_momentum(self, epoch):
+        momentum = self.momentum_original * (self.momentum_decay ** (epoch // self.momentum_decay_step))
+        if momentum < 0.01:
+            momentum = 0.01
+        self.logger.info('BN momentum updated to: %f' % momentum)
+        self.model = self.model.apply(lambda x: bn_momentum_adjust(x, momentum))
+
+    def save_model(self, epoch, mIoU, name="model"):
+        savepath = f"{str(self.checkpoints_dir)}/{name}.pth"
+        self.logger.info('Saving model at %s' % savepath)
+        state = {
+            'epoch': epoch,
+            'model_state_dict': self.model.state_dict(),
+            'optimizer_state_dict': self.optimizer.state_dict(),
+            'miou': mIoU,
+        }
+        torch.save(state, savepath)
+
+    def train(self, loader):
+        '''Train on chopped scenes'''
+
+        num_batches = len(loader)
+        total_correct = 0
+        total_seen = 0
+        loss_sum = 0
+
+        self.model.train()
+        for i, (points, target) in tqdm(enumerate(loader), total=len(loader), smoothing=0.9):
+            points, target = points.float().to(self.device), target.long().to(self.device)
+            points = points.transpose(2, 1)
+            bs = points.shape[0]
+            self.optimizer.zero_grad()
+
+            # apply model and make gradient step
+            seg_pred, trans_feat = self.model(points)
+            seg_pred = seg_pred.contiguous().view(-1, self.n_classes)
+            batch_label = target.view(-1, 1)[:, 0].cpu().data.numpy()
+            target = target.view(-1, 1)[:, 0]
+            loss = self.criterion(seg_pred, target, trans_feat, self.class_weights)
+            loss.backward()
+            self.optimizer.step()
+
+            pred_choice = seg_pred.cpu().data.max(1)[1].numpy()
+            correct = np.sum(pred_choice == batch_label)
+            total_correct += correct
+            total_seen += (bs * points.shape[-1])
+            loss_sum += loss
+
+        return loss_sum / num_batches, total_correct / float(total_seen)
+
+    def eval(self, loader):
+        '''Evaluate on all scenes'''
+        num_batches = len(loader)
+        total_correct = 0
+        total_seen = 0
+        loss_sum = 0
+        class_distribution = np.zeros(self.n_classes)
+        total_seen_class = np.zeros(self.n_classes)
+        total_correct_class = np.zeros(self.n_classes)
+        total_iou_deno_class = np.zeros(self.n_classes)
+
+        self.model.eval()
+        with torch.no_grad():  # no gradient required
+            for i, (points, target) in tqdm(enumerate(loader), total=len(loader), smoothing=0.9):
+                points, target = points.float().to(self.device), target.long().to(self.device)
+                points = points.transpose(2, 1)
+                bs = points.shape[0]  # should be 1
+                n_points = points.shape[-1]
+
+                # apply model
+                seg_pred, trans_feat = self.model(points)
+
+                # calculate eval scores
+                pred_val = seg_pred.cpu().data.numpy()
+                seg_pred = seg_pred.view(-1, self.n_classes)
+                batch_label = target.cpu().data.numpy()
+                target = target.view(-1, 1)[:, 0]
+                # # no need to use weighting in evaluation (set to None)
+                loss = self.criterion(seg_pred, target, trans_feat, None)
+                loss_sum += loss
+                pred_val = np.argmax(pred_val, 2)
+                correct = np.sum((pred_val == batch_label))
+                total_correct += correct
+                total_seen += (bs * n_points)
+                counts, _ = np.histogram(batch_label, range(self.n_classes + 1))
+                class_distribution += counts
+                for j in range(self.n_classes):
+                    total_seen_class[j] += np.sum((batch_label == j))
+                    total_correct_class[j] += np.sum((pred_val == j) & (batch_label == j))
+                    total_iou_deno_class[j] += np.sum(((pred_val == j) | (batch_label == j)))
+
+        eval_loss = loss_sum / float(num_batches)
+        class_distribution = class_distribution.astype(np.float32) / np.sum(class_distribution.astype(np.float32))
+        mIoU = np.mean(np.array(total_correct_class) / (np.array(total_iou_deno_class, dtype=np.float) + 1e-6))
+        acc = total_correct / float(total_seen)
+        class_acc = np.mean(np.array(total_correct_class) / (np.array(total_seen_class, dtype=np.float) + 1e-6))
+        return eval_loss, mIoU, acc, class_acc, total_correct_class, total_iou_deno_class, class_distribution
+
+
+def get_model(model_name: str, n_classes: int):
+    model_name = model_name.lower().replace(" ", "").replace("_", "")
+    if model_name == "pointnet":
+        from models.pointnet.model import PointNet
+        from models.pointnet.loss import Loss
+        model = PointNet(n_classes)
+        criterion = Loss(mat_diff_loss_scale=0.001)  # TODO replace magic constant
+    elif model_name in ["pointnet++ssg", "pointnet2ssg"]:
+        from models.pointnet2.model import PointNet2SSG
+        from models.pointnet2.loss import Loss
+        model = PointNet2SSG(n_classes)
+        criterion = Loss()
+    elif model_name in ["pointnet++msg", "pointnet2msg"]:
+        from models.pointnet2.model import PointNet2MSG
+        from models.pointnet2.loss import Loss
+        model = PointNet2MSG(n_classes)
+        criterion = Loss()
+    else:
+        raise NotImplementedError(
+            f"Chosen model ({model_name} is not available, must be in ('pointnet', 'pointnet++ssg', 'pointnet++msg')"
+        )
+
+    return model, criterion
+
+
+def get_data_loader(batch_size, blocks_per_epoch, points_per_sample, block_size, data_path, split, training: bool):
+    dataset = PointDataset(
+        split=split, data_root=data_path, blocks_per_epoch=blocks_per_epoch,
+        points_per_sample=points_per_sample, block_size=block_size, transform=None, training=training
+    )
+    loader = torch.utils.data.DataLoader(
+        dataset, batch_size=batch_size, shuffle=training, num_workers=args.n_data_worker,
+        pin_memory=torch.cuda.is_available() and training, drop_last=training
+    )
+    return loader
+
+
+def init_logging(log_dir, model_name):
     # define log dir
     timestr = str(datetime.datetime.now().strftime('%Y-%m-%d_%H-%M'))
     experiment_dir = Path('./log/')
@@ -78,268 +261,122 @@ def init_logging(log_dir):
     log_dir.mkdir(exist_ok=True)
 
     # init logger
-    args = parse_args()
     logger = logging.getLogger("Model")
     logger.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    file_handler = logging.FileHandler('%s/%s.txt' % (log_dir, args.model))
+    file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    console_formatter = logging.Formatter('%(message)s')
+
+    # add file output
+    file_handler = logging.FileHandler('%s/%s.txt' % (log_dir, model_name))
     file_handler.setLevel(logging.INFO)
-    file_handler.setFormatter(formatter)
+    file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
-    log(logger, 'Parameters ...')
-    log(logger, args)
+
+    # add console output
+    consoleHandler = logging.StreamHandler()
+    consoleHandler.setFormatter(console_formatter)
+    logger.addHandler(consoleHandler)
     return logger, experiment_dir
 
 
-def log(logger, msg):
-    logger.info(msg)
-    print(msg)
+def log_training(logger, loss, accuracy):
+    logger.info('Training mean loss: %f' % loss)
+    logger.info('Training accuracy: %f' % accuracy)
 
 
-def get_model(model_name: str, n_classes: int):
-    model_name = model_name.lower().replace(" ", "").replace("_", "")
-    if model_name == "pointnet":
-        from models.pointnet import PointNet, Loss
-        model = PointNet(n_classes)
-        criterion = Loss(mat_diff_loss_scale=0.001)  # TODO replace magic constant
-    elif model_name in ["pointnet++ssg", "pointnet2ssg"]:
-        from models.pointnet2_msg import PointNet2MSG, Loss
-        model = PointNet2MSG(n_classes)
-        criterion = Loss()
-    elif model_name in ["pointnet++msg", "pointnet2msg"]:
-        from models.pointnet2_ssg import PointNet2SSG, Loss
-        model = PointNet2SSG(n_classes)
-        criterion = Loss()
-    else:
-        raise NotImplementedError(
-            f"Chosen model ({model_name} is not available, must be in ('pointnet', 'pointnet++ssg', 'pointnet++msg')"
-        )
+def log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
+             total_correct_class, total_iou_deno_class, class_distribution):
+    logger.info('eval mean loss: %f' % eval_loss)
+    logger.info('eval point avg class IoU: %f' % mIoU)
+    logger.info('eval point accuracy: %f' % accuracy)
+    logger.info('eval point avg class acc: %f' % class_acc)
+    iou_per_class_str = '------- IoU --------\n'
+    for j in range(len(class_distribution)):
+        iou_per_class_str += 'class %s ratio: %f, IoU: %f \n' % (
+            seg_label_to_cat[j] + ' ' * (14 - len(seg_label_to_cat[j])), class_distribution[j],
+            total_correct_class[j] / float(total_iou_deno_class[j]))
 
-    return model, criterion
+    logger.info(iou_per_class_str)
 
 
 def main(args):
-    # set hyperparameter
-    # set visible devices (how many GPUs are used for training)
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    batch_size = args.batch_size
-    # seen blocks per epoch (iterations)
-    blocks_per_epoch = args.blocks_per_epoch
-    # points per sample TODO think of variable way to do this
-    points_per_sample = args.points_per_sample
-    # tuple for normalized sampling area (e.g., if 1km = 1, 200m = 0.2)
-    block_size = (args.block_size_x, args.block_size_y)
+    args = parse_args()
 
-    logger, experiment_dir = init_logging(args.log_dir)
+    # init logger
+    logger, checkpoint_dir = init_logging(args.log_dir, args.model)
 
     # init data loader
-    log(logger, "start loading training data ...")
-    train_dataset = PointDataset(
-        split='train', data_root=args.data_path, blocks_per_epoch=blocks_per_epoch,
-        points_per_sample=points_per_sample, block_size=block_size, transform=None, training=True
+    # tuple for normalized sampling area (e.g., if 1km = 1, 200m = 0.2)
+    block_size = (args.block_size_x, args.block_size_y)
+    logger.info("start loading train data ...")
+    # TODO add back augmentations
+    train_loader = get_data_loader(
+        args.batch_size, args.blocks_per_epoch, args.points_per_sample,
+        block_size, args.data_path, "train", training=True
     )
-    print("start loading test data ...")
-    test_dataset = PointDataset(
-        split='test', data_root=args.data_path, blocks_per_epoch=blocks_per_epoch,
-        points_per_sample=points_per_sample, block_size=block_size, transform=None, training=False
-    )
+    logger.info("start loading test data ...")
     # test loader has to use batch size of 1 to allow for varying point clouds
-    train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=batch_size, shuffle=True, num_workers=args.n_data_worker,
-        pin_memory=torch.cuda.is_available(), drop_last=True
+    test_loader = get_data_loader(
+        1, args.blocks_per_epoch, args.points_per_sample, block_size, args.data_path, "test", training=False
     )
-    # TODO this is not nice since there is still non-determistic sampling hapenning inside
-    test_loader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=1, shuffle=False, num_workers=args.n_data_worker,
-        pin_memory=torch.cuda.is_available(), drop_last=False  # do not drop the last batches in test mode
-    )
-    # load already inverted weights TODO might be cleaner to invert them here
+
+    # determine weighting method for loss function
+    class_weights = None
     if args.weighting == "class":
-        weights = torch.Tensor(train_dataset.label_weights).to(device)
-    else:
-        weights = None
+        # load already inverted weights TODO might be cleaner to invert them here
+        class_weights = torch.Tensor(train_loader.dataset.class_weights)
 
-    n_classes = train_dataset.n_classes
-
-    log(logger, "The number of training data is: %d" % len(train_dataset))
-    log(logger, "The number of test data is: %d" % len(test_dataset))
-
-    # init model
-    model, criterion = get_model(args.model, n_classes)
-
-    # push to correct device
-    model = model.to(device)
-    criterion = criterion.to(device)
-
-    # TODO this should be optional through parameters
-    try:
-        checkpoint = torch.load(str(experiment_dir) + '/checkpoints/best_model.pth')
-        start_epoch = checkpoint['epoch']
-        model.load_state_dict(checkpoint['model_state_dict'])
-        log(logger, 'Use pretrain model')
-    except:
-        log(logger, 'No existing model, starting training from scratch...')
-        start_epoch = 0
-        model = model.apply(weights_init)
-
-    if args.optimizer == 'Adam':
-        optimizer = torch.optim.Adam(
-            model.parameters(),
-            lr=args.learning_rate,
-            betas=(0.9, 0.999),
-            eps=1e-08,
-            weight_decay=args.decay_rate
-        )
-    else:
-        optimizer = torch.optim.SGD(model.parameters(), lr=args.learning_rate, momentum=0.9)
-
-    def bn_momentum_adjust(m, momentum):
-        if isinstance(m, torch.nn.BatchNorm2d) or isinstance(m, torch.nn.BatchNorm1d):
-            m.momentum = momentum
-
-    # TODOS this should be parameters not constanstants
-    LEARNING_RATE_CLIP = 1e-5
-    MOMENTUM_ORIGINAL = 0.1
-    MOMENTUM_DECAY = 0.5
-    MOMENTUM_DECAY_STEP = args.step_size
+    # init model and optimizer
+    trainer = Trainer(
+        logger=logger,
+        checkpoint_dir=checkpoint_dir,
+        model_name=args.model,
+        optimizer_name=args.optimizer,
+        n_classes=train_loader.dataset.n_classes,
+        learning_rate=args.learning_rate,
+        decay_rate=args.decay_rate,
+        step_size=args.step_size,
+        class_weights=class_weights
+    )
+    logger.info('Parameters ...')
+    logger.info(args)
 
     global_epoch = 0
     best_iou = 0
+    for epoch in range(trainer.start_epoch, args.epoch):
+        logger.info('**** Epoch %d (%d/%s) ****' % (global_epoch + 1, epoch + 1, args.epoch))
 
-    # TODO make this a function (eval and train)
-    for epoch in range(start_epoch, args.epoch):
-        '''Train on chopped scenes'''
-        log(logger, '**** Epoch %d (%d/%s) ****' % (global_epoch + 1, epoch + 1, args.epoch))
-        lr = max(args.learning_rate * (args.lr_decay ** (epoch // args.step_size)), LEARNING_RATE_CLIP)
-        log(logger, 'Learning rate:%f' % lr)
-        for param_group in optimizer.param_groups:
-            param_group['lr'] = lr
-        momentum = MOMENTUM_ORIGINAL * (MOMENTUM_DECAY ** (epoch // MOMENTUM_DECAY_STEP))
-        if momentum < 0.01:
-            momentum = 0.01
-        print('BN momentum updated to: %f' % momentum)
-        model = model.apply(lambda x: bn_momentum_adjust(x, momentum))
-        num_batches = len(train_loader)
-        total_correct = 0
-        total_seen = 0
-        loss_sum = 0
+        # adjust learning rate and bn momentum
+        trainer.adjust_lr(epoch)
+        trainer.adjust_bn_momentum(epoch)
 
-        for i, data in tqdm(enumerate(train_loader), total=len(train_loader), smoothing=0.9):
-            points, target = data
-            points = points.data.numpy()
-            points[:, :, :3] = augmentations.rotate_point_cloud_z(points[:, :, :3])
-            points = torch.Tensor(points)
-            points, target = points.float().to(device), target.long().to(device)
-            points = points.transpose(2, 1)
-            optimizer.zero_grad()
+        loss, accuracy = trainer.train(train_loader)
+        log_training(logger, loss, accuracy)
 
-            # apply model and make gradient step
-            model = model.train()
-            seg_pred, trans_feat = model(points)
-            seg_pred = seg_pred.contiguous().view(-1, n_classes)
-            batch_label = target.view(-1, 1)[:, 0].cpu().data.numpy()
-            target = target.view(-1, 1)[:, 0]
-            loss = criterion(seg_pred, target, trans_feat, weights)
-            loss.backward()
-            optimizer.step()
+        # evaluate TODO do this on a validation set instead
+        logger.info('---- Epoch %03d Evaluation ----' % (global_epoch + 1))
+        (
+            eval_loss, mIoU, accuracy, class_acc,
+            total_correct_class, total_iou_deno_class, class_distribution
+        ) = trainer.eval(test_loader)
 
-            pred_choice = seg_pred.cpu().data.max(1)[1].numpy()
-            correct = np.sum(pred_choice == batch_label)
-            total_correct += correct
-            total_seen += (batch_size * points_per_sample)
-            loss_sum += loss
+        log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
+                 total_correct_class, total_iou_deno_class, class_distribution)
 
-        log(logger, 'Training mean loss: %f' % (loss_sum / num_batches))
-        log(logger, 'Training accuracy: %f' % (total_correct / float(total_seen)))
+        # save as best model if mIoU is better
+        if mIoU >= best_iou:
+            best_iou = mIoU
+            trainer.save_model(epoch, mIoU, "best_model")
 
-        if epoch % 5 == 0:
-            logger.info('Save model...')
-            savepath = str(checkpoints_dir) + '/model.pth'
-            log(logger, 'Saving at %s' % savepath)
-            state = {
-                'epoch': epoch,
-                'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-            }
-            torch.save(state, savepath)
-            log('Saving model....')
+        # save model every 5 epochs
+        if epoch % 5 == 0:  # TODO this should be a parameter inside Trainer
+            trainer.save_model(epoch, mIoU)
 
-        '''Evaluate on chopped scenes'''
-        # TODO disclaimer: not yet chopped and should be validation loader at this point
-        with torch.no_grad():
-            num_batches = len(test_loader)
-            total_correct = 0
-            total_seen = 0
-            loss_sum = 0
-            class_distribution = np.zeros(n_classes)  # TODO later this should be constant
-            total_seen_class = np.zeros(n_classes)
-            total_correct_class = np.zeros(n_classes)
-            total_iou_deno_class = np.zeros(n_classes)
-
-            log(logger, '---- EPOCH %03d EVALUATION ----' % (global_epoch + 1))
-            for i, data in tqdm(enumerate(test_loader), total=len(test_loader), smoothing=0.9):
-                points, target = data
-                points = points.data.numpy()
-                points = torch.Tensor(points)
-                points, target = points.float().to(device), target.long().to(device)
-                points = points.transpose(2, 1)
-
-                # apply model
-                model = model.eval()
-                seg_pred, trans_feat = model(points)
-
-                # calculate eval scores
-                pred_val = seg_pred.contiguous().cpu().data.numpy()
-                seg_pred = seg_pred.contiguous().view(-1, n_classes)
-                batch_label = target.cpu().data.numpy()
-                target = target.view(-1, 1)[:, 0]
-                # # no need to use weighting in evaluation
-                loss = criterion(seg_pred, target, trans_feat, None)
-                loss_sum += loss
-                pred_val = np.argmax(pred_val, 2)
-                correct = np.sum((pred_val == batch_label))
-                total_correct += correct
-                total_seen += (batch_size * points_per_sample)
-                counts, _ = np.histogram(batch_label, range(n_classes + 1))
-                class_distribution += counts
-                for l in range(n_classes):
-                    total_seen_class[l] += np.sum((batch_label == l))
-                    total_correct_class[l] += np.sum((pred_val == l) & (batch_label == l))
-                    total_iou_deno_class[l] += np.sum(((pred_val == l) | (batch_label == l)))
-
-            class_distribution = class_distribution.astype(np.float32) / np.sum(class_distribution.astype(np.float32))
-            mIoU = np.mean(np.array(total_correct_class) / (np.array(total_iou_deno_class, dtype=np.float) + 1e-6))
-            log(logger, 'eval mean loss: %f' % (loss_sum / float(num_batches)))
-            log(logger, 'eval point avg class IoU: %f' % (mIoU))
-            log(logger, 'eval point accuracy: %f' % (total_correct / float(total_seen)))
-            log(logger, 'eval point avg class acc: %f' % (
-                np.mean(np.array(total_correct_class) / (np.array(total_seen_class, dtype=np.float) + 1e-6))))
-            iou_per_class_str = '------- IoU --------\n'
-            for l in range(n_classes):
-                iou_per_class_str += 'class %s ratio: %f, IoU: %f \n' % (
-                    seg_label_to_cat[l] + ' ' * (14 - len(seg_label_to_cat[l])), class_distribution[l],
-                    total_correct_class[l] / float(total_iou_deno_class[l]))
-
-            log(logger, iou_per_class_str)
-            log(logger, 'Eval mean loss: %f' % (loss_sum / num_batches))
-            log(logger, 'Eval accuracy: %f' % (total_correct / float(total_seen
-                                                                     )))
-            if mIoU >= best_iou:
-                best_iou = mIoU
-                logger.info('Save model...')
-                savepath = str(checkpoints_dir) + '/best_model.pth'
-                log(logger, 'Saving at %s' % savepath)
-                state = {
-                    'epoch': epoch,
-                    'class_avg_iou': mIoU,
-                    'model_state_dict': model.state_dict(),
-                    'optimizer_state_dict': optimizer.state_dict(),
-                }
-                torch.save(state, savepath)
-                log(logger, 'Saving model....')
-            log(logger, 'Best mIoU: %f' % best_iou)
+        logger.info('Best mIoU: %f' % best_iou)
         global_epoch += 1
+
+    # evaluate on test data TODO
 
 
 if __name__ == '__main__':
