@@ -40,7 +40,9 @@ def parse_args():
     parser.add_argument('--optimizer', type=str, default='Adam', help='Adam or SGD [default: Adam]')
     parser.add_argument('--log-dir', type=str, default="./log", help='Log path [default: "./log"]')
     parser.add_argument('--decay-rate', type=float, default=1e-4, help='weight decay [default: 1e-4]')
-    parser.add_argument('--points-per-sample', type=int, default=4096 * 2, help='points per sample [default: 4096 * 2]')
+    parser.add_argument('--points-per-sample', type=int, default=4096, help='points per sample [default: 4096]')
+    parser.add_argument('--eval-points-per-sample', type=int, default=10000,
+                        help='points per sample during eval [default: 10000]')
     parser.add_argument('--blocks-per-epoch', type=int, default=4096, help='blocks per epoch [default: 4096]')
     parser.add_argument('--block-size-x', type=float, default=0.05,
                         help='normalized block size for x coordinate [default: 0.05]')
@@ -318,7 +320,7 @@ def main(args):
     logger.info("start loading test data ...")
     # test loader has to use batch size of 1 to allow for varying point clouds
     test_loader = get_data_loader(
-        1, args.blocks_per_epoch, args.points_per_sample, block_size, args.data_path, "test", training=False
+        1, args.blocks_per_epoch, args.eval_points_per_sample, block_size, args.data_path, "test", training=False
     )
 
     # determine weighting method for loss function
