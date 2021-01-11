@@ -15,7 +15,7 @@ import torch
 from tqdm import tqdm
 
 import provider
-from data_utils.GeoData_crop_1 import GeoData_crop_1
+from data_utils.point_dataset import PointDataset
 
 # from data_utils.S3DISDataLoader import S3DISDataset
 # from data_utils.DeDataLoader_600 import S3DISDataset
@@ -54,8 +54,6 @@ def parse_args():
                         help='normalized block size for x coordinate [default: 0.05]')
     parser.add_argument('--block-size-y', type=float, default=0.05,
                         help='normalized block size for x coordinate [default: 0.05]')
-    parser.add_argument('--block-size-z', type=float, default=1,
-                        help='normalized block size for x coordinate [default: 1]')
     parser.add_argument('--step-size', type=int, default=10, help='Decay step for lr decay [default: every 10 epochs]')
     parser.add_argument('--lr-decay', type=float, default=0.7, help='Decay rate for lr decay [default: 0.7]')
     parser.add_argument('--test-area', type=int, default=5, help='Which area to use for test, option: 1-6 [default: 5]')
@@ -113,23 +111,24 @@ def main(args):
     # points per sample TODO think of variable way to do this
     points_per_sample = args.points_per_sample
     # tuple for normalized sampling area (e.g., if 1km = 1, 200m = 0.2)
-    block_size = (args.block_size_x, args.block_size_y, args.block_size_z)
+    block_size = (args.block_size_x, args.block_size_y)
 
     print("start loading training data ...")
     # get samples before training process
     # block size: your sample in a [block_x, block_y], ingore the Z axis, measuring with meter
     # Go to data_utils/GeoData_crop_1.py for details
-    train_dataset = GeoData_crop_1(
+    train_dataset = PointDataset(
         split='train', data_root=args.data_path, blocks_per_epoch=blocks_per_epoch,
-        points_per_sample=points_per_sample, block_size=block_size, transform=None
+        points_per_sample=points_per_sample, block_size=block_size, transform=None, training=True
     )
     print("start loading test data ...")
-    test_dataset = GeoData_crop_1(
+    test_dataset = PointDataset(
         split='test', data_root=args.data_path, blocks_per_epoch=blocks_per_epoch,
-        points_per_sample=points_per_sample, block_size=block_size, transform=None
+        points_per_sample=points_per_sample, block_size=block_size, transform=None, training=False
     )
+    # test loader has to use batch size of 1 to allow for varying point clouds
     train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=batch_size, shuffle=True, num_workers=args.n_data_worker,
+        train_dataset, batch_size=1, shuffle=True, num_workers=args.n_data_worker,
         pin_memory=torch.cuda.is_available(), drop_last=True
     )
     # TODO this is not nice since there is still non-determistic sampling hapenning inside
