@@ -128,12 +128,12 @@ def main(args):
     )
     # test loader has to use batch size of 1 to allow for varying point clouds
     train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=1, shuffle=True, num_workers=args.n_data_worker,
+        train_dataset, batch_size=batch_size, shuffle=True, num_workers=args.n_data_worker,
         pin_memory=torch.cuda.is_available(), drop_last=True
     )
     # TODO this is not nice since there is still non-determistic sampling hapenning inside
     test_loader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=batch_size, shuffle=False, num_workers=args.n_data_worker,
+        test_dataset, batch_size=1, shuffle=False, num_workers=args.n_data_worker,
         pin_memory=torch.cuda.is_available(), drop_last=False  # do not drop the last batches in test mode
     )
     # load already inverted weights TODO might be clearner to invert them here
