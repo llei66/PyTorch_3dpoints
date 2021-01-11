@@ -1,0 +1,7 @@
+2021-01-10 21:38:44,751 - Model - INFO - PARAMETER ...
+2021-01-10 21:38:44,752 - Model - INFO - Namespace(batch_size=8, block_size_x=0.05, block_size_y=0.05, block_size_z=1, blocks_per_epoch=4096, data_path='/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test_train_ll', decay_rate=0.0001, epoch=128, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg_testll', lr_decay=0.7, model='pointnet2_sem_seg', n_data_worker=4, optimizer='Adam', points_per_sample=8192, step_size=10, test_area=5, weighting='equal')
+2021-01-10 21:38:50,121 - Model - INFO - The number of training data is: 4096
+2021-01-10 21:38:50,121 - Model - INFO - The number of test data is: 4096
+2021-01-10 21:38:51,495 - Model - INFO - No existing model, starting training from scratch...
+2021-01-10 21:38:51,496 - Model - INFO - **** Epoch 1 (1/128) ****
+2021-01-10 21:38:51,496 - Model - INFO - Learning rate:0.001000

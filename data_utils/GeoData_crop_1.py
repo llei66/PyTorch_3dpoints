@@ -120,7 +120,8 @@ class GeoData_crop_1(Dataset):
 
 if __name__ == '__main__':
     # TODO this could be used to create subset of the data
-    data_root = './data/train_test_whole_class_1km'
+    # data_root = './data/train_test_whole_class_1km'
+    data_root = '/data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test_train_ll'
     save_dir = "./dataset"
     blocks_per_epoch = 4096  # seen blocks per epoch (iterations)
     points_per_sample = 4096 * 2  # points per sample TODO think of variable way to do this

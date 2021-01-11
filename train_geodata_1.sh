@@ -1,1 +1,1 @@
-python  train_geo_data_1.py  --model pointnet2_sem_seg  --log_dir pointnet2_sem_seg_geo_data_15 --batch_size 16 --npoint 4096
+python  train_geo_data_1.py  --model pointnet2_sem_seg  --log-dir pointnet2_sem_seg_testll --batch-size 8  --data-path /data/REASEARCH/DEEPCROP/PointCloudData/20201218_train_test_set/train_test_whole_class_1km/test_train_ll

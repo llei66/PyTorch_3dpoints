@@ -24,8 +24,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
 sys.path.append(os.path.join(ROOT_DIR, 'models'))
 
-# classes = ['ceiling','floor','wall','beam','column','window','door','table','chair','sofa','bookcase','board','clutter']
-
 # classes = ['ground','low_vegetatation','medium_vegetation','high_vegetataion','building','water']
 # classes = ['unclassified','ground','low_vegetatation','medium_vegetation','high_vegetataion','building','noise']
 
@@ -78,6 +76,7 @@ def main(args):
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
     '''CREATE DIR'''
+    # define log dir
     timestr = str(datetime.datetime.now().strftime('%Y-%m-%d_%H-%M'))
     experiment_dir = Path('./log/')
     experiment_dir.mkdir(exist_ok=True)
@@ -117,6 +116,9 @@ def main(args):
     block_size = (args.block_size_x, args.block_size_y, args.block_size_z)
 
     print("start loading training data ...")
+    # get samples before training process
+    # block size: your sample in a [block_x, block_y], ingore the Z axis, measuring with meter
+    # Go to data_utils/GeoData_crop_1.py for details
     train_dataset = GeoData_crop_1(
         split='train', data_root=args.data_path, blocks_per_epoch=blocks_per_epoch,
         points_per_sample=points_per_sample, block_size=block_size, transform=None
@@ -309,7 +311,7 @@ def main(args):
                 np.mean(np.array(total_correct_class) / (np.array(total_seen_class, dtype=np.float) + 1e-6))))
             iou_per_class_str = '------- IoU --------\n'
             for l in range(n_classes):
-                iou_per_class_str += 'class %s ratio: %.3f, IoU: %.3f \n' % (
+                iou_per_class_str += 'class %s ratio: %f, IoU: %f \n' % (
                     seg_label_to_cat[l] + ' ' * (14 - len(seg_label_to_cat[l])), class_distribution[l],
                     total_correct_class[l] / float(total_iou_deno_class[l]))
 
