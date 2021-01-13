@@ -9,7 +9,7 @@ from torch.utils.data import Dataset
 
 class PointDataset(Dataset):
     def __init__(self, split, data_root, blocks_per_epoch, points_per_sample, use_rgb: bool,
-                 training: bool, block_size=(1., 1.), transform=None):
+                 training: bool, block_size=(1., 1.), transform=None, global_z=None):
         super().__init__()
         if isinstance(block_size, float):
             block_size = [block_size] * 2
@@ -66,8 +66,11 @@ class PointDataset(Dataset):
             n_point_rooms.append(labels.size)
 
         # # normalize points individually over x and y, but use the highest/lowest values for z across all rooms
-        min_z = np.min(np.array(self.room_coord_min)[:, 2], 0)
-        max_z = np.max(np.array(self.room_coord_max)[:, 2], 0)
+        if global_z is None:
+            min_z = np.min(np.array(self.room_coord_min)[:, 2], 0)
+            max_z = np.max(np.array(self.room_coord_max)[:, 2], 0)
+        else:
+            min_z, max_z = global_z
         for points, coord_min, coord_max in zip(self.room_points, self.room_coord_min, self.room_coord_max):
             # override local z with global z
             coord_min[2] = min_z
@@ -103,6 +106,9 @@ class PointDataset(Dataset):
             self.room_idxs = room_idxs
 
         print("Totally {} samples in {} set.".format(len(self.room_idxs), split))
+
+    def get_global_z(self):
+        return self.room_coord_min[0][2], self.room_coord_max[0][2]
 
     def __getitem__(self, idx):
         room_idx, sample_idx = self.room_idxs[idx]

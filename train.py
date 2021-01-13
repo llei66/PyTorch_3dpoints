@@ -239,9 +239,10 @@ def get_model(model_name: str, n_classes: int, use_rgb: bool):
     return model, criterion
 
 
-def get_data_loader(batch_size, blocks_per_epoch, points_per_sample, block_size, data_path, split, use_rgb, training):
+def get_data_loader(batch_size, blocks_per_epoch, points_per_sample,
+                    block_size, data_path, split, use_rgb, training, global_z=None):
     dataset = PointDataset(
-        split=split, data_root=data_path, blocks_per_epoch=blocks_per_epoch, use_rgb=use_rgb,
+        split=split, data_root=data_path, blocks_per_epoch=blocks_per_epoch, use_rgb=use_rgb, global_z=global_z,
         points_per_sample=points_per_sample, block_size=block_size, transform=None, training=training
     )
     loader = torch.utils.data.DataLoader(
@@ -320,14 +321,14 @@ def main(args):
     logger.info("start loading train data ...")
     # TODO add back augmentations
     train_loader = get_data_loader(
-        args.batch_size, args.blocks_per_epoch, args.points_per_sample,
-        block_size, args.data_path, "train", use_rgb=not args.no_rgb, training=True
+        args.batch_size, args.blocks_per_epoch, args.points_per_sample, block_size, args.data_path, "train",
+        use_rgb=not args.no_rgb, training=True
     )
     logger.info("start loading test data ...")
     # test loader has to use batch size of 1 to allow for varying point clouds
     test_loader = get_data_loader(
-        1, args.blocks_per_epoch, args.eval_points_per_sample,
-        block_size, args.data_path, "test", use_rgb=not args.no_rgb, training=False
+        1, args.blocks_per_epoch, args.eval_points_per_sample, block_size, args.data_path, "test",
+        global_z=train_loader.dataset.get_global_z(), use_rgb=not args.no_rgb, training=False,
     )
 
     # determine weighting method for loss function
