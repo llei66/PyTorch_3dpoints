@@ -54,13 +54,14 @@ def parse_args():
                         help='defines the weighting method, either "equal" or "class" [default: "equal"]')
     parser.add_argument('--n-data-worker', type=int, default=4,
                         help='data preprocessing threads [default: 4]')
+    parser.add_argument('--no-rgb', action='store_true', default=False, help="ignores RBG if used")
 
     return parser.parse_args()
 
 
 class Trainer:
     def __init__(self, model_name, optimizer_name, n_classes, learning_rate, decay_rate,
-                 step_size, class_weights, logger, checkpoint_dir):
+                 step_size, class_weights, logger, checkpoint_dir, use_rgb):
         # set hyperparameter
         # set visible devices (how many GPUs are used for training)
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -70,7 +71,7 @@ class Trainer:
         self.logger, self.checkpoints_dir = logger, checkpoint_dir
 
         # init model
-        model, criterion = get_model(model_name, self.n_classes)
+        model, criterion = get_model(model_name, self.n_classes, use_rgb)
 
         # push to correct device
         self.model = model.to(self.device)
@@ -208,22 +209,25 @@ class Trainer:
         return eval_loss, mIoU, acc, class_acc, total_correct_class, total_iou_deno_class, class_distribution
 
 
-def get_model(model_name: str, n_classes: int):
+def get_model(model_name: str, n_classes: int, use_rgb: bool):
     model_name = model_name.lower().replace(" ", "").replace("_", "")
+    info_channel = 0
+    if use_rgb:
+        info_channel = 3
     if model_name == "pointnet":
         from models.pointnet.model import PointNet
         from models.pointnet.loss import Loss
-        model = PointNet(n_classes)
+        model = PointNet(n_classes, info_channel)
         criterion = Loss(mat_diff_loss_scale=0.001)  # TODO replace magic constant
     elif model_name in ["pointnet++ssg", "pointnet2ssg"]:
         from models.pointnet2.model import PointNet2SSG
         from models.pointnet2.loss import Loss
-        model = PointNet2SSG(n_classes)
+        model = PointNet2SSG(n_classes, info_channel)
         criterion = Loss()
     elif model_name in ["pointnet++msg", "pointnet2msg"]:
         from models.pointnet2.model import PointNet2MSG
         from models.pointnet2.loss import Loss
-        model = PointNet2MSG(n_classes)
+        model = PointNet2MSG(n_classes, info_channel)
         criterion = Loss()
     else:
         raise NotImplementedError(
@@ -233,9 +237,9 @@ def get_model(model_name: str, n_classes: int):
     return model, criterion
 
 
-def get_data_loader(batch_size, blocks_per_epoch, points_per_sample, block_size, data_path, split, training: bool):
+def get_data_loader(batch_size, blocks_per_epoch, points_per_sample, block_size, data_path, split, use_rgb, training):
     dataset = PointDataset(
-        split=split, data_root=data_path, blocks_per_epoch=blocks_per_epoch,
+        split=split, data_root=data_path, blocks_per_epoch=blocks_per_epoch, use_rgb=use_rgb,
         points_per_sample=points_per_sample, block_size=block_size, transform=None, training=training
     )
     loader = torch.utils.data.DataLoader(
@@ -315,12 +319,13 @@ def main(args):
     # TODO add back augmentations
     train_loader = get_data_loader(
         args.batch_size, args.blocks_per_epoch, args.points_per_sample,
-        block_size, args.data_path, "train", training=True
+        block_size, args.data_path, "train", use_rgb=not args.no_rgb, training=True
     )
     logger.info("start loading test data ...")
     # test loader has to use batch size of 1 to allow for varying point clouds
     test_loader = get_data_loader(
-        1, args.blocks_per_epoch, args.eval_points_per_sample, block_size, args.data_path, "test", training=False
+        1, args.blocks_per_epoch, args.eval_points_per_sample,
+        block_size, args.data_path, "test", use_rgb=not args.no_rgb, training=False
     )
 
     # determine weighting method for loss function
@@ -339,7 +344,8 @@ def main(args):
         learning_rate=args.learning_rate,
         decay_rate=args.decay_rate,
         step_size=args.step_size,
-        class_weights=class_weights
+        class_weights=class_weights,
+        use_rgb=not args.no_rgb
     )
     logger.info('Parameters ...')
     logger.info(args)

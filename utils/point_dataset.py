@@ -8,8 +8,8 @@ from torch.utils.data import Dataset
 
 
 class PointDataset(Dataset):
-    def __init__(self, split, data_root, blocks_per_epoch, points_per_sample, training: bool, block_size=(1., 1.),
-                 transform=None):
+    def __init__(self, split, data_root, blocks_per_epoch, points_per_sample, use_rgb: bool,
+                 training: bool, block_size=(1., 1.), transform=None):
         super().__init__()
         if isinstance(block_size, float):
             block_size = [block_size] * 2
@@ -23,6 +23,7 @@ class PointDataset(Dataset):
 
         self.room_points, self.room_labels = [], []
         self.room_coord_min, self.room_coord_max = [], []
+        self.use_rgb = use_rgb
         n_point_rooms = []
         total_class_counts = 0
 
@@ -43,9 +44,12 @@ class PointDataset(Dataset):
             coord_min, coord_max = np.amin(points, axis=0)[:3], np.amax(points, axis=0)[:3]
             # coordinates
             points[:, :3] = (points[:, :3] - coord_min) / (coord_max - coord_min)
-            # rgb
-            # TODO these seem always to be empty atm
-            points[:, 3:] /= 255
+            if use_rgb:
+                # rgb
+                # TODO these seem always to be empty atm
+                points[:, 3:] /= 255
+            else:
+                points = points[:, :3]
 
             # get stats about occurances
             unique, counts = np.unique(labels, return_counts=True)

@@ -93,8 +93,8 @@ def query_ball_point(radius, nsample, xyz, new_xyz):
     Input:
         radius: local region radius
         nsample: max sample number in local region
-        xyz: all points, [B, N, 3]
-        new_xyz: query points, [B, S, 3]
+        xyz: all points, [B, N, C]
+        new_xyz: query points, [B, S, C]
     Return:
         group_idx: grouped points index, [B, S, nsample]
     """
@@ -102,11 +102,18 @@ def query_ball_point(radius, nsample, xyz, new_xyz):
     B, N, C = xyz.shape
     _, S, _ = new_xyz.shape
     group_idx = torch.arange(N, dtype=torch.long).to(device).view(1, 1, N).repeat([B, S, 1])
+    # sqrdists: [B, S, N] Record the Euclidean distance between the center point and all points
     sqrdists = square_distance(new_xyz, xyz)
+    # Find all distances greater than radius^2, its group_idx is directly set to N; the rest retain the original value
     group_idx[sqrdists > radius ** 2] = N
+    # Do ascending order, the front is greater than radius^2 are N, will be the maximum, so will take the first nsample points directly in the remaining points
     group_idx = group_idx.sort(dim=-1)[0][:, :, :nsample]
+    # Considering that there may be points in the previous nsample points that are assigned N (ie, less than nsample points in the spherical area), this point needs to be discarded, and the first point can be used instead.
+    # group_first: [B, S, k], actually copy the value of the first point in group_idx to the dimension of [B, S, K], which is convenient for subsequent replacement.
     group_first = group_idx[:, :, 0].view(B, S, 1).repeat([1, 1, nsample])
+    # Find the point where group_idx is equal to N
     mask = group_idx == N
+    # Replace the value of these points with the value of the first point
     group_idx[mask] = group_first[mask]
     return group_idx
 

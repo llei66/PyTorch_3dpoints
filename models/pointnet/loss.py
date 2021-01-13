@@ -1,8 +1,13 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from models.pointnet.util import feature_transform_regularizer
 
+def feature_transform_regularizer(trans):
+    d = trans.size()[1]
+    iden = torch.eye(d).unsqueeze(0).to(trans.device)
+    loss = torch.mean(torch.norm(torch.bmm(trans, trans.transpose(2, 1) - iden), dim=(1, 2)))
+    return loss
 
 class Loss(nn.Module):
     def __init__(self, mat_diff_loss_scale=0.001):

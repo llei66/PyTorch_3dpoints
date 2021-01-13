@@ -5,10 +5,11 @@ from models.pointnet2.util import PointNetSetAbstractionMsg, PointNetFeatureProp
 
 
 class PointNet2MSG(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, num_classes, info_channel=0):
         super(PointNet2MSG, self).__init__()
 
-        self.sa1 = PointNetSetAbstractionMsg(1024, [0.05, 0.1], [16, 32], 6, [[16, 16, 32], [32, 32, 64]])
+        self.sa1 = PointNetSetAbstractionMsg(1024, [0.05, 0.1], [16, 32], 3 + info_channel,
+                                             [[16, 16, 32], [32, 32, 64]])
         self.sa2 = PointNetSetAbstractionMsg(256, [0.1, 0.2], [16, 32], 32 + 64, [[64, 64, 128], [64, 96, 128]])
         self.sa3 = PointNetSetAbstractionMsg(64, [0.2, 0.4], [16, 32], 128 + 128, [[128, 196, 256], [128, 196, 256]])
         self.sa4 = PointNetSetAbstractionMsg(16, [0.4, 0.8], [16, 32], 256 + 256, [[256, 256, 512], [256, 384, 512]])
@@ -43,9 +44,9 @@ class PointNet2MSG(nn.Module):
 
 
 class PointNet2SSG(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, num_classes, info_channel=0):
         super(PointNet2SSG, self).__init__()
-        self.sa1 = PointNetSetAbstraction(1024, 0.1, 32, 6 + 3, [32, 32, 64], False)
+        self.sa1 = PointNetSetAbstraction(1024, 0.1, 32, 3 + info_channel + 3, [32, 32, 64], False)
         self.sa2 = PointNetSetAbstraction(256, 0.2, 32, 64 + 3, [64, 64, 128], False)
         self.sa3 = PointNetSetAbstraction(64, 0.4, 32, 128 + 3, [128, 128, 256], False)
         self.sa4 = PointNetSetAbstraction(16, 0.8, 32, 256 + 3, [256, 256, 512], False)
@@ -82,6 +83,6 @@ class PointNet2SSG(nn.Module):
 if __name__ == '__main__':
     import torch
 
-    model = PointNet2MSG(13)
+    model = PointNet2MSG(13, 3)
     xyz = torch.rand(6, 9, 2048)
     (model(xyz))

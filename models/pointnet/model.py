@@ -1,37 +1,25 @@
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.nn.parallel
 import torch.utils.data
 
-from models.pointnet.util import PointNetEncoder
+from models.pointnet.util import PointNetEncoder, point_block
 
 
 class PointNet(nn.Module):
-    def __init__(self, n_classes, with_rgb=True):
+    def __init__(self, n_classes, info_channel=0):
         super(PointNet, self).__init__()
-        if with_rgb:
-            channel = 6
-        else:
-            channel = 3
         self.n_classes = n_classes
         self.act = nn.ReLU(inplace=True)
 
         # global feature extractor
-        self.feat = PointNetEncoder(global_feat=False, feature_transform=True, channel=channel)
+        self.feat = PointNetEncoder(global_feat=False, feature_transform=True, info_channel=info_channel)
 
         # segmentation mlp part
         self.seg_mlp = nn.Sequential(
-            nn.Conv1d(1088, 512, 1),
-            nn.BatchNorm1d(512),
-            self.act,
-            nn.Conv1d(512, 256, 1),
-            nn.BatchNorm1d(256),
-            self.act,
-            nn.Conv1d(256, 128, 1),
-            nn.BatchNorm1d(128),
-            self.act,
-            torch.nn.Conv1d(128, self.n_classes, 1)
+            point_block(1088, 512, self.act),
+            point_block(512, 256, self.act),
+            point_block(256, 128, self.act),
+            nn.Conv1d(128, self.n_classes, 1)
         )
 
     def forward(self, x):
@@ -53,6 +41,6 @@ class PointNet(nn.Module):
 
 
 if __name__ == '__main__':
-    model = PointNet(13, with_rgb=False)
+    model = PointNet(13, 0)
     xyz = torch.rand(12, 3, 2048)
     model(xyz)

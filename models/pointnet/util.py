@@ -1,4 +1,3 @@
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -33,44 +32,12 @@ def mlp(in_dims, out_dims, activation):
     return nn.Sequential(*modules)
 
 
-class STN3d(nn.Module):
-    def __init__(self, channel):
-        super(STN3d, self).__init__()
-        self.act = nn.ReLU(inplace=True)
-        self.point_blocks = nn.Sequential(
-            point_block(channel, 64, self.act),
-            point_block(64, 128, self.act),
-            point_block(128, 1024, self.act),
-        )
-        self.mlps = nn.Sequential(
-            mlp(1024, 512, self.act),
-            mlp(512, 256, self.act),
-        )
-        self.out = nn.Linear(256, 9)
-
-    def forward(self, x):
-        batchsize = x.size()[0]
-        x = self.point_blocks(x)
-        x = torch.max(x, 2, keepdim=True)[0]
-        x = x.view(-1, 1024)
-
-        x = self.mlps(x)
-        x = self.out(x)
-
-        # TODO this is inefficient
-        iden = torch.from_numpy(np.array([1, 0, 0, 0, 1, 0, 0, 0, 1]).astype(np.float32)).view(1, 9).repeat(
-            batchsize, 1).to(x.device)
-        x = x + iden
-        x = x.view(-1, 3, 3)
-        return x
-
-
 class STNkd(nn.Module):
-    def __init__(self, k=64):
+    def __init__(self, info_channel=0, k=64):
         super(STNkd, self).__init__()
         self.act = nn.ReLU(inplace=True)
         self.point_blocks = nn.Sequential(
-            point_block(k, 64, self.act),
+            point_block(k + info_channel, 64, self.act),
             point_block(64, 128, self.act),
             point_block(128, 1024, self.act),
         )
@@ -80,9 +47,9 @@ class STNkd(nn.Module):
         )
         self.out = nn.Linear(256, k * k)
         self.k = k
+        self.iden = torch.nn.Parameter(torch.eye(self.k).unsqueeze(0), requires_grad=False)
 
     def forward(self, x):
-        batchsize = x.size()[0]
         x = self.point_blocks(x)
         x = torch.max(x, 2, keepdim=True)[0]
         x = x.view(-1, 1024)
@@ -90,19 +57,22 @@ class STNkd(nn.Module):
         x = self.mlps(x)
         x = self.out(x)
 
-        iden = torch.from_numpy(np.eye(self.k).flatten().astype(np.float32)).view(1, self.k * self.k).repeat(
-            batchsize, 1).to(x.device)
-        x = x + iden
         x = x.view(-1, self.k, self.k)
+        x = x + self.iden
         return x
 
 
+class STN3d(STNkd):
+    def __init__(self, info_channel):
+        super(STN3d, self).__init__(info_channel, k=3)
+
+
 class PointNetEncoder(nn.Module):
-    def __init__(self, global_feat=True, feature_transform=False, channel=3):
+    def __init__(self, global_feat=True, feature_transform=False, info_channel=3):
         super(PointNetEncoder, self).__init__()
-        self.stn = STN3d(channel)
+        self.stn = STN3d(info_channel)
         self.activation = nn.ReLU(inplace=True)
-        self.conv1 = point_block(channel, 64, self.activation)
+        self.conv1 = point_block(info_channel + 3, 64, self.activation)
         self.conv2 = nn.Sequential(
             point_block(64, 128, self.activation),
             point_block(128, 1024, self.activation),
@@ -133,7 +103,7 @@ class PointNetEncoder(nn.Module):
             trans_feat = None
 
         pointfeat = x
-        x = self.conv(2)
+        x = self.conv2(x)
         x = torch.max(x, 2, keepdim=True)[0]
         x = x.view(-1, 1024)
         if self.global_feat:
@@ -141,10 +111,3 @@ class PointNetEncoder(nn.Module):
         else:
             x = x.view(-1, 1024, 1).repeat(1, 1, N)
             return torch.cat([x, pointfeat], 1), trans, trans_feat
-
-
-def feature_transform_regularizer(trans):
-    d = trans.size()[1]
-    I = torch.eye(d)[None, :, :].to(trans.device)
-    loss = torch.mean(torch.norm(torch.bmm(trans, trans.transpose(2, 1) - I), dim=(1, 2)))
-    return loss
