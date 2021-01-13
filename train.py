@@ -66,6 +66,8 @@ class Trainer:
         # set visible devices (how many GPUs are used for training)
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.class_weights = class_weights
+        if self.class_weights is not None:  # is a tensor
+            self.class_weights = self.class_weights.to(self.device)
         self.n_classes = n_classes
 
         self.logger, self.checkpoints_dir = logger, checkpoint_dir

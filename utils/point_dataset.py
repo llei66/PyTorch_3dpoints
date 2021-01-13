@@ -25,7 +25,7 @@ class PointDataset(Dataset):
         self.room_coord_min, self.room_coord_max = [], []
         self.use_rgb = use_rgb
         n_point_rooms = []
-        total_class_counts = 0
+        total_class_counts = {}
 
         # load all room data
         for room_name in os.listdir(self.path):
@@ -39,11 +39,11 @@ class PointDataset(Dataset):
             # split into points and labels
             points, labels = room_data[:, :6], room_data[:, 6]  # xyzrgb, N*6; l, N
 
-            # normalize
+            # stats for normalization
             # TODO FIX THIS, rooms will have different scaling in real world
             coord_min, coord_max = np.amin(points, axis=0)[:3], np.amax(points, axis=0)[:3]
-            # coordinates
-            points[:, :3] = (points[:, :3] - coord_min) / (coord_max - coord_min)
+
+            # remove rbg channel if not needed:
             if use_rgb:
                 # rgb
                 # TODO these seem always to be empty atm
@@ -53,7 +53,10 @@ class PointDataset(Dataset):
 
             # get stats about occurances
             unique, counts = np.unique(labels, return_counts=True)
-            total_class_counts += counts
+            for i, unique_i in enumerate(unique):
+                if unique_i not in total_class_counts:
+                    total_class_counts[unique_i] = 0
+                total_class_counts[unique_i] += counts[i]
 
             # save samples and stats
             self.room_points.append(points)
@@ -62,10 +65,20 @@ class PointDataset(Dataset):
             self.room_coord_max.append(coord_max)
             n_point_rooms.append(labels.size)
 
-        # TODO this can be wrong if one room doesn't contain all classes (but is unlikely to happen)
-        self.n_classes = len(unique)
+        # # normalize points individually over x and y, but use the highest/lowest values for z across all rooms
+        min_z = np.min(np.array(self.room_coord_min)[:, 2], 0)
+        max_z = np.max(np.array(self.room_coord_max)[:, 2], 0)
+        for points, coord_min, coord_max in zip(self.room_points, self.room_coord_min, self.room_coord_max):
+            # override local z with global z
+            coord_min[2] = min_z
+            coord_max[2] = max_z
+            # apply min-max normalization
+            points[:, :3] = (points[:, :3] - coord_min) / (coord_max - coord_min)
 
-        total_class_counts = total_class_counts.astype(np.float32)
+        self.n_classes = len(total_class_counts)
+
+        # sort keys and save as array
+        total_class_counts = np.array([count[1] for count in sorted(total_class_counts.items())]).astype(np.float32)
         # class weighting 1/(C*|S_k|)
         self.class_weights = 1 / (total_class_counts * self.n_classes)
         print(f"label weights: {self.class_weights}")
