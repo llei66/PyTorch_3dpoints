@@ -13,6 +13,12 @@ Ubuntu 16.04
 Python 3.6.7 
 Pytorch >= 11.5.1+cu92
 ```
+
+#### Change to test_ll branch 
+> This branch is easier to read, speed up and optimize the entire process.
+```buildoutcfg
+git checkout -b test_ll origin/test_ll
+```
 #### Choice
 1. If you want to process the original .laz data, please step by step
 2. If you want to train directly with samples, go [Semantic Segmentation](#jump)
