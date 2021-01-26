@@ -1,5 +1,4 @@
 # TODO add more comments on what is happening
-# TODO make logging look nicer or move it to tensorboard
 
 import argparse
 import datetime
@@ -7,7 +6,7 @@ import logging
 import os
 import sys
 from pathlib import Path
-
+from tensorboardX import SummaryWriter
 import numpy as np
 import torch
 from tqdm import tqdm
@@ -55,13 +54,14 @@ def parse_args():
     parser.add_argument('--n-data-worker', type=int, default=4,
                         help='data preprocessing threads [default: 4]')
     parser.add_argument('--no-rgb', action='store_true', default=False, help="ignores RBG if used")
+    parser.add_argument('--save-epoch', type=int, default=10, help='internal of saving model [default: every 10 epochs]')
 
     return parser.parse_args()
 
 
 class Trainer:
     def __init__(self, model_name, optimizer_name, n_classes, learning_rate, decay_rate,
-                 step_size, class_weights, logger, checkpoint_dir, use_rgb):
+                 step_size, class_weights, logger, checkpoint_dir, use_rgb, save_epoch):
         # set hyperparameter
         # set visible devices (how many GPUs are used for training)
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -81,7 +81,7 @@ class Trainer:
 
         # TODO this should be optional through parameters (and will never happen since experiment folders are created with timestamp
         try:
-            checkpoint = torch.load(str(self.checkpoints_dir) + '/checkpoints/best_model.pth')
+            checkpoint = torch.load(str(self.checkpoints_dir) + '/best_model.pth')
             self.start_epoch = checkpoint['epoch']
             self.model.load_state_dict(checkpoint['model_state_dict'])
             self.logger.info('Use pretrain model')
@@ -269,6 +269,10 @@ def init_logging(log_dir, model_name):
     log_dir = experiment_dir.joinpath('logs/')
     log_dir.mkdir(exist_ok=True)
 
+    #init tensorboard
+    tensorboard_dir = experiment_dir.joinpath('tensorboard')
+    tensorboard_dir.mkdir(exist_ok=True)
+
     # init logger
     logger = logging.getLogger("Model")
     logger.setLevel(logging.INFO)
@@ -314,7 +318,7 @@ def main(args):
 
     # init logger
     logger, checkpoint_dir = init_logging(args.log_dir, args.model)
-
+    save_epoch = args.save_epoch
     # init data loader
     # tuple for normalized sampling area (e.g., if 1km = 1, 200m = 0.2)
     block_size = (args.block_size_x, args.block_size_y)
@@ -330,12 +334,20 @@ def main(args):
         1, args.blocks_per_epoch, args.eval_points_per_sample, block_size, args.data_path, "test",
         global_z=train_loader.dataset.get_global_z(), use_rgb=not args.no_rgb, training=False,
     )
+    validate_loader = get_data_loader(
+        1, args.blocks_per_epoch, args.eval_points_per_sample, block_size, args.data_path, "validate",
+        global_z= train_loader.dataset.get_global_z(), use_rgb=not args.no_rgb, training=False,
+    )
 
     # determine weighting method for loss function
     class_weights = None
     if args.weighting == "class":
         # load already inverted weights TODO might be cleaner to invert them here
         class_weights = torch.Tensor(train_loader.dataset.class_weights)
+
+    ## import tensorboard to view
+
+    writer = SummaryWriter(str(checkpoint_dir)+"/tensorboard")
 
     # init model and optimizer
     trainer = Trainer(
@@ -348,7 +360,8 @@ def main(args):
         decay_rate=args.decay_rate,
         step_size=args.step_size,
         class_weights=class_weights,
-        use_rgb=not args.no_rgb
+        use_rgb=not args.no_rgb,
+        save_epoch = args.save_epoch
     )
     logger.info('Parameters ...')
     logger.info(args)
@@ -365,15 +378,21 @@ def main(args):
         loss, accuracy = trainer.train(train_loader)
         log_training(logger, loss, accuracy)
 
-        # evaluate TODO do this on a validation set instead
+        # evaluate
         logger.info('---- Epoch %03d Evaluation ----' % (global_epoch + 1))
         (
             eval_loss, mIoU, accuracy, class_acc,
             total_correct_class, total_iou_deno_class, class_distribution
-        ) = trainer.eval(test_loader)
+        ) = trainer.eval(validate_loader)
 
         log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
                  total_correct_class, total_iou_deno_class, class_distribution)
+
+        ## write to tensorboard
+
+        writer.add_scalar('Loss', loss, epoch)
+        writer.add_scalar('eval_Loss', eval_loss, epoch)
+        writer.add_scalar('mIoU', mIoU, epoch)
 
         # save as best model if mIoU is better
         if mIoU >= best_iou:
@@ -381,15 +400,26 @@ def main(args):
             trainer.save_model(epoch, mIoU, "best_model")
 
         # save model every 5 epochs
-        if epoch % 5 == 0:  # TODO this should be a parameter inside Trainer
-            trainer.save_model(epoch, mIoU)
+        if epoch % save_epoch == 0:
+            trainer.save_model(epoch, mIoU, str(epoch))
 
         logger.info('Best mIoU: %f' % best_iou)
         global_epoch += 1
 
-    # evaluate on test data TODO
+    # evaluate on test data with each 30 epoches
+        if epoch % 30 == 0:
+            logger.info('---- Epoch %03d Evaluation ----' % (global_epoch + 1))
+            (
+                eval_loss, mIoU, accuracy, class_acc,
+                total_correct_class, total_iou_deno_class, class_distribution
+            ) = trainer.eval(test_loader)
+
+            log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
+                     total_correct_class, total_iou_deno_class, class_distribution)
+    writer.close()
 
 
 if __name__ == '__main__':
     args = parse_args()
     main(args)
+

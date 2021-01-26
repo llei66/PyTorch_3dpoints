@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from torch.utils.data import Dataset
+import warnings
+import pdb
 
 
 class PointDataset(Dataset):
@@ -110,6 +112,9 @@ class PointDataset(Dataset):
     def get_global_z(self):
         return self.room_coord_min[0][2], self.room_coord_max[0][2]
 
+    # def get_partition_index:
+
+
     def __getitem__(self, idx):
         room_idx, sample_idx = self.room_idxs[idx]
         points = self.room_points[room_idx]  # N * 6
@@ -133,6 +138,7 @@ class PointDataset(Dataset):
             if point_idxs.size >= self.points_per_sample:
                 # take closest to center points
                 # TODO this might compromise the block size but at least doesn't change the point density
+                warnings.filterwarnings('ignore')
                 nn = NearestNeighbors(self.points_per_sample, algorithm="brute")
                 nn.fit(points[point_idxs][:, :2])
                 idx = nn.kneighbors(center[None, :2], return_distance=False)[0]
@@ -140,8 +146,16 @@ class PointDataset(Dataset):
             else:
                 # oversample if too few points (this should only rarely happen, otherwise increase block size)
                 point_idxs = np.random.choice(point_idxs, self.points_per_sample, replace=True)
+
+            selected_points = points[point_idxs]
+            selected_labels = labels[point_idxs]
+            if self.transform is not None:
+                selected_points, selected_labels = self.transform(selected_points, selected_labels)
+            return selected_points, selected_labels
+
         else:  # load partition
             i, j = sample_idx
+
             block_min = [i * self.split_values[room_idx], j * self.split_values[room_idx]]
             block_max = [(i + 1) * self.split_values[room_idx], (j + 1) * self.split_values[room_idx]]
 
@@ -150,15 +164,24 @@ class PointDataset(Dataset):
                 & (points[:, 1] >= block_min[1]) & (points[:, 1] < block_max[1])
             )[0]
 
-        # select from query
-        selected_points = points[point_idxs]
-        selected_labels = labels[point_idxs]
+            ## refine if there are empty in some samples
+            if point_idxs.size > 200:
+                replace_1 = False if (point_idxs.size - self.points_per_sample >= 0) else True
+                # replace_1 = False if (self.points_per_sample - point_idxs.size  >= point_idxs.size) else True
 
-        # apply transforms
-        if self.transform is not None:
-            selected_points, selected_labels = self.transform(selected_points, selected_labels)
-
-        return selected_points, selected_labels
+                print(point_idxs.size)
+                print(self.points_per_sample)
+                print(replace_1)
+                if replace_1:
+                    point_idxs_repeat = np.random.choice( point_idxs, self.points_per_sample-point_idxs.size, replace=replace_1)
+                    point_idxs = np.concatenate((point_idxs, point_idxs_repeat))
+                # np.random.shuffle(point_idxs)
+            selected_points = points[point_idxs]
+            selected_labels = labels[point_idxs]
+            # apply transforms
+            if self.transform is not None:
+                selected_points, selected_labels = self.transform(selected_points, selected_labels)
+            return selected_points, selected_labels
 
     def __len__(self):
         return len(self.room_idxs)
