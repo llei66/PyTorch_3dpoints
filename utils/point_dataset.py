@@ -122,7 +122,6 @@ class PointDataset(Dataset):
         n_points = points.shape[0]
 
         # sample random point and area around it
-        # TODO this is only ok for training. Idea: during testing we could divide the room into overlapping scenes
         if self.training:
             center = points[np.random.choice(n_points)][:3]
             block_min = center[:2] - self.block_size / 2.0
@@ -164,18 +163,21 @@ class PointDataset(Dataset):
                 & (points[:, 1] >= block_min[1]) & (points[:, 1] < block_max[1])
             )[0]
 
-            ## refine if there are empty in some samples
-            if point_idxs.size > 200:
-                replace_1 = False if (point_idxs.size - self.points_per_sample >= 0) else True
-                # replace_1 = False if (self.points_per_sample - point_idxs.size  >= point_idxs.size) else True
+            # TODO catch this in the initialization of the loader not here. only remove empty partitions or merge very small partitions. We do not need to fill all self.points_per_sample!
+            # # ## refine if there are empty in some samples
+            # if point_idxs.size > 200:
+            #     replace_1 = False if (point_idxs.size - self.points_per_sample >= 0) else True
+            #     # replace_1 = False if (self.points_per_sample - point_idxs.size  >= point_idxs.size) else True
+            #
+            #     print(point_idxs.size)
+            #     print(self.points_per_sample)
+            #     print(replace_1)
+            #     if replace_1:
+            #         point_idxs_repeat = np.random.choice( point_idxs, self.points_per_sample-point_idxs.size, replace=replace_1)
+            #         point_idxs = np.concatenate((point_idxs, point_idxs_repeat))
+            #     # np.random.shuffle(point_idxs)
 
-                print(point_idxs.size)
-                print(self.points_per_sample)
-                print(replace_1)
-                if replace_1:
-                    point_idxs_repeat = np.random.choice( point_idxs, self.points_per_sample-point_idxs.size, replace=replace_1)
-                    point_idxs = np.concatenate((point_idxs, point_idxs_repeat))
-                # np.random.shuffle(point_idxs)
+
             selected_points = points[point_idxs]
             selected_labels = labels[point_idxs]
             # apply transforms
