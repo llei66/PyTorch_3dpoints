@@ -5,14 +5,21 @@ from models.pointnet2.util import PointNetSetAbstractionMsg, PointNetFeatureProp
 
 
 class PointNet2MSG(nn.Module):
-    def __init__(self, num_classes, info_channel=0):
+    def __init__(self, num_classes, info_channel=0, radi_scaler=0.1):
         super(PointNet2MSG, self).__init__()
 
-        self.sa1 = PointNetSetAbstractionMsg(1024, [0.05, 0.1], [16, 32], 3 + info_channel,
-                                             [[16, 16, 32], [32, 32, 64]])
-        self.sa2 = PointNetSetAbstractionMsg(256, [0.1, 0.2], [16, 32], 32 + 64, [[64, 64, 128], [64, 96, 128]])
-        self.sa3 = PointNetSetAbstractionMsg(64, [0.2, 0.4], [16, 32], 128 + 128, [[128, 196, 256], [128, 196, 256]])
-        self.sa4 = PointNetSetAbstractionMsg(16, [0.4, 0.8], [16, 32], 256 + 256, [[256, 256, 512], [256, 384, 512]])
+        self.sa1 = PointNetSetAbstractionMsg(
+            1024, [radi_scaler * 0.05, radi_scaler * 0.1], [16, 32], 3 + info_channel, [[16, 16, 32], [32, 32, 64]]
+        )
+        self.sa2 = PointNetSetAbstractionMsg(
+            256, [radi_scaler * 0.1, radi_scaler * 0.2], [16, 32], 32 + 64, [[64, 64, 128], [64, 96, 128]]
+        )
+        self.sa3 = PointNetSetAbstractionMsg(
+            64, [radi_scaler * 0.2, radi_scaler * 0.4], [16, 32], 128 + 128, [[128, 196, 256], [128, 196, 256]]
+        )
+        self.sa4 = PointNetSetAbstractionMsg(
+            16, [radi_scaler * 0.4, radi_scaler * 0.8], [16, 32], 256 + 256, [[256, 256, 512], [256, 384, 512]]
+        )
         self.fp4 = PointNetFeaturePropagation(512 + 512 + 256 + 256, [256, 256])
         self.fp3 = PointNetFeaturePropagation(128 + 128 + 256, [256, 256])
         self.fp2 = PointNetFeaturePropagation(32 + 64 + 256, [256, 128])

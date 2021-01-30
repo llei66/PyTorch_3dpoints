@@ -1,12 +1,11 @@
 import os
+import warnings
 from itertools import product
 
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from torch.utils.data import Dataset
-import warnings
-import pdb
 
 
 class PointDataset(Dataset):
@@ -114,7 +113,6 @@ class PointDataset(Dataset):
 
     # def get_partition_index:
 
-
     def __getitem__(self, idx):
         room_idx, sample_idx = self.room_idxs[idx]
         points = self.room_points[room_idx]  # N * 6
@@ -123,9 +121,9 @@ class PointDataset(Dataset):
 
         # sample random point and area around it
         if self.training:
-            center = points[np.random.choice(n_points)][:3]
-            block_min = center[:2] - self.block_size / 2.0
-            block_max = center[:2] + self.block_size / 2.0
+            center = points[np.random.choice(n_points)][:2]
+            block_min = center - self.block_size / 2.0
+            block_max = center + self.block_size / 2.0
 
             # query around points
             point_idxs = np.where(
@@ -137,10 +135,9 @@ class PointDataset(Dataset):
             if point_idxs.size >= self.points_per_sample:
                 # take closest to center points
                 # TODO this might compromise the block size but at least doesn't change the point density
-                warnings.filterwarnings('ignore')
                 nn = NearestNeighbors(self.points_per_sample, algorithm="brute")
                 nn.fit(points[point_idxs][:, :2])
-                idx = nn.kneighbors(center[None, :2], return_distance=False)[0]
+                idx = nn.kneighbors(center[None, :], return_distance=False)[0]
                 point_idxs = point_idxs[idx]
             else:
                 # oversample if too few points (this should only rarely happen, otherwise increase block size)
@@ -148,15 +145,21 @@ class PointDataset(Dataset):
 
             selected_points = points[point_idxs]
             selected_labels = labels[point_idxs]
+
+            # center the samples around the center point
+            selected_points[:, :2] = selected_points[:, :2] - center
+
             if self.transform is not None:
+                # apply data augmentation TODO more than one transform should be possible
                 selected_points, selected_labels = self.transform(selected_points, selected_labels)
             return selected_points, selected_labels
 
-        else:  # load partition
+        else:  # load partition for testing (no augmentations here)
             i, j = sample_idx
 
-            block_min = [i * self.split_values[room_idx], j * self.split_values[room_idx]]
-            block_max = [(i + 1) * self.split_values[room_idx], (j + 1) * self.split_values[room_idx]]
+            block_min = np.array([i * self.split_values[room_idx], j * self.split_values[room_idx]])
+            block_max = np.array([(i + 1) * self.split_values[room_idx], (j + 1) * self.split_values[room_idx]])
+            block_center = (block_min + block_max) / 2
 
             point_idxs = np.where(
                 (points[:, 0] >= block_min[0]) & (points[:, 0] < block_max[0])
@@ -177,12 +180,12 @@ class PointDataset(Dataset):
             #         point_idxs = np.concatenate((point_idxs, point_idxs_repeat))
             #     # np.random.shuffle(point_idxs)
 
-
             selected_points = points[point_idxs]
             selected_labels = labels[point_idxs]
-            # apply transforms
-            if self.transform is not None:
-                selected_points, selected_labels = self.transform(selected_points, selected_labels)
+
+            # center around center of partitition
+            selected_points[:, :2] = selected_points[:, :2] - block_center
+
             return selected_points, selected_labels
 
     def __len__(self):
@@ -204,11 +207,11 @@ if __name__ == '__main__':
 
     point_data_train = PointDataset(split='train', data_root=data_root, blocks_per_epoch=blocks_per_epoch,
                                     training=True, points_per_sample=points_per_sample, block_size=block_size,
-                                    transform=None)
+                                    transform=None, use_rgb=False)
 
     point_data_test = PointDataset(split='test', data_root=data_root, blocks_per_epoch=blocks_per_epoch,
                                    training=False, points_per_sample=points_per_sample, block_size=block_size,
-                                   transform=None)
+                                   transform=None, use_rgb=False)
 
     # TODO this took too long
     # check avg distance between points

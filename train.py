@@ -346,13 +346,9 @@ def main(args):
         args.batch_size, args.blocks_per_epoch, args.points_per_sample, block_size, args.data_path, "train",
         use_rgb=not args.no_rgb, training=True
     )
-    logger.info("start loading test data ...")
-    # test loader has to use batch size of 1 to allow for varying point clouds
-    test_loader = get_data_loader(
-        1, args.blocks_per_epoch, args.eval_points_per_sample, block_size, args.data_path, "test",
-        global_z=train_loader.dataset.get_global_z(), use_rgb=not args.no_rgb, training=False,
-    )
-    validate_loader = get_data_loader(
+    logger.info("start loading validation data ...")
+    # val loader has to use batch size of 1 to allow for varying point clouds
+    val_loader = get_data_loader(
         1, args.blocks_per_epoch, args.eval_points_per_sample, block_size, args.data_path, "validate",
         global_z=train_loader.dataset.get_global_z(), use_rgb=not args.no_rgb, training=False,
     )
@@ -401,7 +397,7 @@ def main(args):
         (
             eval_loss, mIoU, accuracy, class_acc,
             total_correct_class, total_iou_deno_class, class_distribution
-        ) = trainer.eval(validate_loader)
+        ) = trainer.eval(val_loader)
 
         log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
                  total_correct_class, total_iou_deno_class, class_distribution)
@@ -426,6 +422,13 @@ def main(args):
 
     # load best model
     trainer.load_model("best_model")
+
+    logger.info("start loading test data ...")
+    # test loader has to use batch size of 1 to allow for varying point clouds
+    test_loader = get_data_loader(
+        1, args.blocks_per_epoch, args.eval_points_per_sample, block_size, args.data_path, "test",
+        global_z=train_loader.dataset.get_global_z(), use_rgb=not args.no_rgb, training=False,
+    )
 
     # evaluate on test data only once (everything else is cheating ;)
     logger.info('---- Epoch Test Evaluation ----')
