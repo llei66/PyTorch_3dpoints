@@ -1,30 +1,29 @@
 import os
-import warnings
 from itertools import product
 
-import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
-from torch.utils.data import Dataset
+from torch.cuda import is_available
+from torch.utils.data import Dataset, DataLoader
+
+CLASSES = ['ground', 'vegetation', 'building', 'water']
 
 
-class PointDataset(Dataset):
-    def __init__(self, split, data_root, blocks_per_epoch, points_per_sample, use_rgb: bool,
-                 training: bool, block_size=(1., 1.), transform=None, global_z=None):
+class PointDatasetBase(Dataset):
+    def __init__(self, split, data_root, points_per_sample, use_rgb: bool, global_z=None):
         super().__init__()
-        if isinstance(block_size, float):
-            block_size = [block_size] * 2
-        self.block_size = np.array(block_size)
-        self.blocks_per_epoch = blocks_per_epoch
-        self.points_per_sample = points_per_sample
-        self.training = training
+        # init some constant to know label names
+        self.classes = CLASSES
 
-        self.transform = transform
+        # save args
+        self.points_per_sample = points_per_sample
+
         self.path = os.path.join(data_root, split)
 
         self.room_points, self.room_labels = [], []
         self.room_coord_min, self.room_coord_max = [], []
         self.use_rgb = use_rgb
+        self.room_paths = []
         n_point_rooms = []
         total_class_counts = {}
 
@@ -64,14 +63,14 @@ class PointDataset(Dataset):
             self.room_labels.append(labels)
             self.room_coord_min.append(coord_min)
             self.room_coord_max.append(coord_max)
+            self.room_paths.append(room_path)
             n_point_rooms.append(labels.size)
+        self.n_point_rooms = n_point_rooms
 
-        # # normalize points individually over x and y, but use the highest/lowest values for z across all rooms
+        # give global_z from training set
         if global_z is None:
-            min_z = np.min(np.array(self.room_coord_min)[:, 2], 0)
-            max_z = np.max(np.array(self.room_coord_max)[:, 2], 0)
-        else:
-            min_z, max_z = global_z
+            global_z = np.min(np.array(self.room_coord_min)[:, 2], 0), np.max(np.array(self.room_coord_max)[:, 2], 0)
+        min_z, max_z = self.global_z = global_z
         for points, coord_min, coord_max in zip(self.room_points, self.room_coord_min, self.room_coord_max):
             # override local z with global z
             coord_min[2] = min_z
@@ -89,27 +88,41 @@ class PointDataset(Dataset):
         print(f"class counts : {total_class_counts}")
         print(f"class distribution : {total_class_counts / total_class_counts.sum()}")
 
-        room_idxs = []
-        if training:
-            sample_prob = n_point_rooms / np.sum(n_point_rooms)
-            for room_i in range(len(n_point_rooms)):
-                room_idxs.extend([[room_i, i] for i in range(int(round(sample_prob[room_i] * self.blocks_per_epoch)))])
-            self.room_idxs = room_idxs
-        else:  # partition rooms
-            self.split_values = []
-            # each room is scaled between 0 and 1 so just try to have similar point counts
-            for room_i, n_point_i in enumerate(n_point_rooms):
-                n_split = n_point_i / points_per_sample
-                n_split_2d = int(np.ceil(n_split ** .5))
-                split_value = 1 / n_split_2d  # take the root since we want to partition in 2d
-                room_idxs.extend([[room_i, (i, j)] for i, j in product(range(n_split_2d), range(n_split_2d))])
-                self.split_values.append(split_value)
-            self.room_idxs = room_idxs
-
-        print("Totally {} samples in {} set.".format(len(self.room_idxs), split))
-
     def get_global_z(self):
         return self.room_coord_min[0][2], self.room_coord_max[0][2]
+
+    def get_denormalized_dataset(self):
+        ''' denormalize data with saved stats '''
+        rooms = []
+        for points, coord_min, coord_max in zip(self.room_points, self.room_coord_min, self.room_coord_max):
+            points = np.copy(points)
+            points[:, :3] = points[:, :3] * (coord_max - coord_min) + coord_min
+            if self.use_rgb:
+                points[:, 3:] *= 255
+
+            rooms.append(points)
+        return rooms
+
+
+class PointDatasetTrain(PointDatasetBase):
+    def __init__(self, split, data_root, blocks_per_epoch, points_per_sample, use_rgb: bool,
+                 block_size=(1., 1.), transform=None):
+        super().__init__(split, data_root, points_per_sample, use_rgb, None)
+
+        # save args
+        if isinstance(block_size, float):
+            block_size = [block_size] * 2
+        self.block_size = np.array(block_size)
+        self.blocks_per_epoch = blocks_per_epoch
+        self.transform = transform
+
+        room_idxs = []
+        sample_prob = self.n_point_rooms / np.sum(self.n_point_rooms)
+        for room_i in range(len(self.n_point_rooms)):
+            room_idxs.extend([[room_i, i] for i in range(int(round(sample_prob[room_i] * self.blocks_per_epoch)))])
+        self.room_idxs = room_idxs
+
+        print("Total of {} samples in {} set.".format(len(self.room_idxs), split))
 
     # def get_partition_index:
 
@@ -120,76 +133,109 @@ class PointDataset(Dataset):
         n_points = points.shape[0]
 
         # sample random point and area around it
-        if self.training:
-            center = points[np.random.choice(n_points)][:2]
-            block_min = center - self.block_size / 2.0
-            block_max = center + self.block_size / 2.0
+        center = points[np.random.choice(n_points)][:2]
+        block_min = center - self.block_size / 2.0
+        block_max = center + self.block_size / 2.0
 
-            # query around points
-            point_idxs = np.where(
-                (points[:, 0] >= block_min[0]) & (points[:, 0] <= block_max[0])
-                & (points[:, 1] >= block_min[1]) & (points[:, 1] <= block_max[1])
-            )[0]
+        # query around points
+        point_idxs = np.where(
+            (points[:, 0] >= block_min[0]) & (points[:, 0] <= block_max[0])
+            & (points[:, 1] >= block_min[1]) & (points[:, 1] <= block_max[1])
+        )[0]
 
-            # ensure same number of points per batch TODO either make this variable or large enough to not matter
-            if point_idxs.size >= self.points_per_sample:
-                # take closest to center points
-                # TODO this might compromise the block size but at least doesn't change the point density
-                nn = NearestNeighbors(self.points_per_sample, algorithm="brute")
-                nn.fit(points[point_idxs][:, :2])
-                idx = nn.kneighbors(center[None, :], return_distance=False)[0]
-                point_idxs = point_idxs[idx]
-            else:
-                # oversample if too few points (this should only rarely happen, otherwise increase block size)
-                point_idxs = np.random.choice(point_idxs, self.points_per_sample, replace=True)
+        # ensure same number of points per batch TODO either make this variable or large enough to not matter
+        if point_idxs.size >= self.points_per_sample:
+            # take closest to center points
+            # TODO this might compromise the block size but at least doesn't change the point density
+            nn = NearestNeighbors(self.points_per_sample, algorithm="brute")
+            nn.fit(points[point_idxs][:, :2])
+            idx = nn.kneighbors(center[None, :], return_distance=False)[0]
+            point_idxs = point_idxs[idx]
+        else:
+            # oversample if too few points (this should only rarely happen, otherwise increase block size)
+            point_idxs = np.random.choice(point_idxs, self.points_per_sample, replace=True)
 
-            selected_points = points[point_idxs]
-            selected_labels = labels[point_idxs]
+        selected_points = points[point_idxs]
+        selected_labels = labels[point_idxs]
 
-            # center the samples around the center point
-            selected_points[:, :2] = selected_points[:, :2] - center
+        # center the samples around the center point
+        selected_points[:, :2] = selected_points[:, :2] - center
 
-            if self.transform is not None:
-                # apply data augmentation TODO more than one transform should be possible
-                selected_points, selected_labels = self.transform(selected_points, selected_labels)
-            return selected_points, selected_labels
-
-        else:  # load partition for testing (no augmentations here)
-            i, j = sample_idx
-
-            block_min = np.array([i * self.split_values[room_idx], j * self.split_values[room_idx]])
-            block_max = np.array([(i + 1) * self.split_values[room_idx], (j + 1) * self.split_values[room_idx]])
-            block_center = (block_min + block_max) / 2
-
-            point_idxs = np.where(
-                (points[:, 0] >= block_min[0]) & (points[:, 0] < block_max[0])
-                & (points[:, 1] >= block_min[1]) & (points[:, 1] < block_max[1])
-            )[0]
-
-            # TODO catch this in the initialization of the loader not here. only remove empty partitions or merge very small partitions. We do not need to fill all self.points_per_sample!
-            # # ## refine if there are empty in some samples
-            # if point_idxs.size > 200:
-            #     replace_1 = False if (point_idxs.size - self.points_per_sample >= 0) else True
-            #     # replace_1 = False if (self.points_per_sample - point_idxs.size  >= point_idxs.size) else True
-            #
-            #     print(point_idxs.size)
-            #     print(self.points_per_sample)
-            #     print(replace_1)
-            #     if replace_1:
-            #         point_idxs_repeat = np.random.choice( point_idxs, self.points_per_sample-point_idxs.size, replace=replace_1)
-            #         point_idxs = np.concatenate((point_idxs, point_idxs_repeat))
-            #     # np.random.shuffle(point_idxs)
-
-            selected_points = points[point_idxs]
-            selected_labels = labels[point_idxs]
-
-            # center around center of partitition
-            selected_points[:, :2] = selected_points[:, :2] - block_center
-
-            return selected_points, selected_labels
+        if self.transform is not None:
+            # apply data augmentation TODO more than one transform should be possible
+            selected_points, selected_labels = self.transform(selected_points, selected_labels)
+        return selected_points, selected_labels
 
     def __len__(self):
         return len(self.room_idxs)
+
+
+class PointDatasetTest(PointDatasetBase):
+    def __init__(self, split, data_root, points_per_sample, use_rgb: bool, global_z):
+        super().__init__(split, data_root, points_per_sample, use_rgb, global_z)
+
+        room_idxs = []
+        # partition rooms
+        self.split_values = []
+        # each room is scaled between 0 and 1 so just try to have similar point counts
+        for room_i, n_point_i in enumerate(self.n_point_rooms):
+            n_split = n_point_i / points_per_sample
+            n_split_2d = int(np.ceil(n_split ** .5))
+            split_value = 1 / n_split_2d  # take the root since we want to partition in 2d
+            room_idxs.extend([[room_i, (i, j)] for i, j in product(range(n_split_2d), range(n_split_2d))])
+            # TODO test how many points are actually in the partitions and merge/expand them if necessary
+            self.split_values.append(split_value)
+        self.room_idxs = room_idxs
+
+        print("Total of {} samples in {} set.".format(len(self.room_idxs), split))
+
+    # def get_partition_index:
+    def __getitem__(self, idx):
+        room_idx, sample_idx = self.room_idxs[idx]
+        points = self.room_points[room_idx]  # N * 6
+        labels = self.room_labels[room_idx]  # N
+
+        # load partition for testing (no augmentations here)
+        i, j = sample_idx
+
+        block_min = np.array([i * self.split_values[room_idx], j * self.split_values[room_idx]])
+        block_max = np.array([(i + 1) * self.split_values[room_idx], (j + 1) * self.split_values[room_idx]])
+        block_center = (block_min + block_max) / 2
+
+        point_idxs = np.where(
+            (points[:, 0] >= block_min[0]) & (points[:, 0] < block_max[0])
+            & (points[:, 1] >= block_min[1]) & (points[:, 1] < block_max[1])
+        )[0]
+
+        selected_points = points[point_idxs]
+        selected_labels = labels[point_idxs]
+
+        # center around center of partitition
+        selected_points[:, :2] = selected_points[:, :2] - block_center
+
+        return selected_points, selected_labels
+
+    def __len__(self):
+        return len(self.room_idxs)
+
+
+def get_data_loader(batch_size, points_per_sample, data_path, split, use_rgb, training, n_data_worker,
+                    blocks_per_epoch=None, block_size=None, global_z=None):
+    if training:
+        dataset = PointDatasetTrain(
+            split=split, data_root=data_path, blocks_per_epoch=blocks_per_epoch, use_rgb=use_rgb,
+            points_per_sample=points_per_sample, block_size=block_size, transform=None
+        )
+    else:
+        dataset = PointDatasetTest(
+            split=split, data_root=data_path, use_rgb=use_rgb, global_z=global_z,
+            points_per_sample=points_per_sample,
+        )
+    loader = DataLoader(
+        dataset, batch_size=batch_size, shuffle=training, num_workers=n_data_worker,
+        pin_memory=is_available() and training, drop_last=training
+    )
+    return loader
 
 
 if __name__ == '__main__':
@@ -205,20 +251,18 @@ if __name__ == '__main__':
           f"points per sample: {points_per_sample}, \n"
           f"block size: {block_size}")
 
-    point_data_train = PointDataset(split='train', data_root=data_root, blocks_per_epoch=blocks_per_epoch,
-                                    training=True, points_per_sample=points_per_sample, block_size=block_size,
-                                    transform=None, use_rgb=False)
+    point_data_train = PointDatasetTrain(split='train', data_root=data_root, blocks_per_epoch=blocks_per_epoch,
+                                         points_per_sample=points_per_sample, block_size=block_size,
+                                         transform=None, use_rgb=False)
 
-    point_data_test = PointDataset(split='test', data_root=data_root, blocks_per_epoch=blocks_per_epoch,
-                                   training=False, points_per_sample=points_per_sample, block_size=block_size,
-                                   transform=None, use_rgb=False)
+    point_data_test = PointDatasetTest(split='test', data_root=data_root, points_per_sample=points_per_sample,
+                                       use_rgb=False, global_z=point_data_train.get_global_z())
 
-    # TODO this took too long
-    # check avg distance between points
-    # points = point_data.room_points[0]
-    # from sklearn.neighbors import kneighbors_graph
-    # distances = kneighbors_graph(points, 1, mode='distance', include_self=False, n_jobs=-1)
-    # print(f"Median distance between closest points: {np.median(distances)}")
+    import numpy as np
+
+    # verify denorm works
+    xx = pd.read_csv(point_data_test.room_paths[0], sep=" ", header=None).values
+    print(f"Denorm is close to original: {np.isclose(xx[:, :3], point_data_test.room_points[0]).all()}")
 
     # save a sample from the dataset
     for i, (points, labels) in enumerate(point_data_train):
@@ -235,7 +279,7 @@ if __name__ == '__main__':
     torch.manual_seed(manual_seed)
     torch.cuda.manual_seed_all(manual_seed)
 
-    train_loader = torch.utils.data.DataLoader(
+    train_loader = DataLoader(
         point_data_train, batch_size=4, shuffle=True, num_workers=4, pin_memory=True
     )
     start = time.time()
@@ -243,7 +287,7 @@ if __name__ == '__main__':
         print('time: {}/{}--{}'.format(i + 1, len(train_loader), time.time() - start))
         start = time.time()
 
-    test_loader = torch.utils.data.DataLoader(
+    test_loader = DataLoader(
         point_data_test, batch_size=1, shuffle=False, num_workers=4, pin_memory=False
     )
     print("Checking average test sample size")

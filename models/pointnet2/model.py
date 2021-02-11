@@ -51,12 +51,12 @@ class PointNet2MSG(nn.Module):
 
 
 class PointNet2SSG(nn.Module):
-    def __init__(self, num_classes, info_channel=0):
+    def __init__(self, num_classes, info_channel=0, radi_scaler=0.1):
         super(PointNet2SSG, self).__init__()
-        self.sa1 = PointNetSetAbstraction(1024, 0.1, 32, 3 + info_channel + 3, [32, 32, 64], False)
-        self.sa2 = PointNetSetAbstraction(256, 0.2, 32, 64 + 3, [64, 64, 128], False)
-        self.sa3 = PointNetSetAbstraction(64, 0.4, 32, 128 + 3, [128, 128, 256], False)
-        self.sa4 = PointNetSetAbstraction(16, 0.8, 32, 256 + 3, [256, 256, 512], False)
+        self.sa1 = PointNetSetAbstraction(1024, radi_scaler * 0.1, 32, 3 + info_channel + 3, [32, 32, 64], False)
+        self.sa2 = PointNetSetAbstraction(256, radi_scaler * 0.2, 32, 64 + 3, [64, 64, 128], False)
+        self.sa3 = PointNetSetAbstraction(64, radi_scaler * 0.4, 32, 128 + 3, [128, 128, 256], False)
+        self.sa4 = PointNetSetAbstraction(16, radi_scaler * 0.8, 32, 256 + 3, [256, 256, 512], False)
         self.fp4 = PointNetFeaturePropagation(768, [256, 256])
         self.fp3 = PointNetFeaturePropagation(384, [256, 256])
         self.fp2 = PointNetFeaturePropagation(320, [256, 128])
