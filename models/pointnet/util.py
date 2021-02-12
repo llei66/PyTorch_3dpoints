@@ -9,7 +9,7 @@ def point_block(in_dims, out_dims, activation=None):
     helper function to create a conv1d layer with kernel size 1, batch norm, and activation
     '''
     modules = [
-        nn.Conv1d(in_dims, out_dims, 1),
+        nn.Conv1d(in_dims, out_dims, 1, bias=False),
         nn.BatchNorm1d(out_dims),
     ]
 
