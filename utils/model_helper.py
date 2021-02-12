@@ -175,7 +175,7 @@ class TrainModel:
         optimizer_name = optimizer_name.lower()
         if optimizer_name == 'adam':
             self.optimizer = torch.optim.AdamW(
-                self.model.parameters(), lr=lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=weight_decay
+                self.model.parameters(), lr=lr, betas=(0.9, 0.999), eps=1e-05, weight_decay=weight_decay
             )
         elif optimizer_name == "sgd":
             self.optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9)
