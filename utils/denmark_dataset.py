@@ -1,11 +1,11 @@
 import os
 from itertools import product
 
+import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from torch.cuda import is_available
 from torch.utils.data import Dataset, DataLoader
-import numpy as np
 
 CLASSES = ['ground', 'vegetation', 'building', 'water']
 
@@ -160,7 +160,8 @@ class DenmarkDatasetTrain(DenmarkDatasetBase):
         selected_labels = labels[point_idxs]
 
         # center the samples around the center point
-        selected_points[:, :2] = selected_points[:, :2] - center
+        selected_points[:, :2] -= center
+        selected_points[:, 2] -= selected_points[:, 2].mean()
 
         if self.transform is not None:
             # apply data augmentation TODO more than one transform should be possible
@@ -215,6 +216,7 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
 
         # center around center of partitition
         selected_points[:, :2] = selected_points[:, :2] - block_center
+        selected_points[:, 2] -= selected_points[:, 2].mean()
 
         if self.return_idx:
             return selected_points, selected_labels, point_idxs, room_idx
