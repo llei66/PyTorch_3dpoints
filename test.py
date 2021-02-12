@@ -27,6 +27,10 @@ def parse_args():
     parser.add_argument('--n-data-worker', type=int, default=4,
                         help='data preprocessing threads [default: 4]')
     parser.add_argument('--no-rgb', action='store_true', default=False, help="ignores RBG if used")
+    parser.add_argument('--no-console-logging', type=bool, default=False, action='store_true',
+                        help='deactivates most console output')
+    parser.add_argument('--no-file-logging', type=bool, default=False, action='store_true',
+                        help='deactivates logging into a file')
 
     return parser.parse_args()
 
@@ -36,7 +40,9 @@ def main(args):
     args = parse_args()
 
     # init logger
-    logger, checkpoint_dir = init_logging(args.log_dir, args.model, "test")
+    logger, checkpoint_dir = init_logging(
+        args.log_dir, args.model, not args.no_console_logging, not args.no_file_logging, "test"
+    )
     # init data loader
     # tuple for normalized sampling area (e.g., if 1km = 1, 200m = 0.2)
     block_size = (1, 1)

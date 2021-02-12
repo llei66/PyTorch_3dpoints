@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 
 
-def init_logging(exp_dir, model_name, output_file_suffix="train"):
+def init_logging(exp_dir, model_name, to_console: bool, to_file: bool, output_file_suffix="train"):
     # define log dir
     experiment_dir = Path(exp_dir)
     experiment_dir.mkdir(exist_ok=True)
@@ -23,19 +23,21 @@ def init_logging(exp_dir, model_name, output_file_suffix="train"):
     # init logger
     logger = logging.getLogger("Model")
     logger.setLevel(logging.INFO)
-    file_formatter = logging.Formatter('%(message)s')
-    console_formatter = logging.Formatter('%(message)s')
 
-    # add file output
-    file_handler = logging.FileHandler('%s/%s_%s.txt' % (log_dir, model_name, output_file_suffix))
-    file_handler.setLevel(logging.INFO)
-    file_handler.setFormatter(file_formatter)
-    logger.addHandler(file_handler)
+    if to_file:
+        # add file output
+        file_formatter = logging.Formatter('%(message)s')
+        file_handler = logging.FileHandler('%s/%s_%s.txt' % (log_dir, model_name, output_file_suffix))
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(file_formatter)
+        logger.addHandler(file_handler)
 
-    # add console output
-    consoleHandler = logging.StreamHandler()
-    consoleHandler.setFormatter(console_formatter)
-    logger.addHandler(consoleHandler)
+    if to_console:
+        # add console output
+        console_formatter = logging.Formatter('%(message)s')
+        consoleHandler = logging.StreamHandler()
+        consoleHandler.setFormatter(console_formatter)
+        logger.addHandler(consoleHandler)
     return logger, experiment_dir
 
 
