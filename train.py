@@ -2,18 +2,13 @@
 
 import argparse
 import os
-import sys
 
 import torch
 from torch.utils.tensorboard import SummaryWriter
 
+from utils.denmark_dataset import get_data_loader
 from utils.logger import init_logging, log_training, log_eval
-from utils.model_helper import Model
-from utils.point_dataset import get_data_loader
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = BASE_DIR
-sys.path.append(os.path.join(ROOT_DIR, 'models'))
+from utils.model_helper import TrainModel
 
 
 def parse_args():
@@ -94,7 +89,7 @@ def main(args):
     writer = SummaryWriter(str(checkpoint_dir) + "/tensorboard")
 
     # init model and optimizer
-    model = Model(
+    model = TrainModel(
         logger=logger,
         checkpoint_dir=checkpoint_dir,
         model_name=args.model,
@@ -135,7 +130,7 @@ def main(args):
 
         writer.add_scalar('Loss', loss, epoch)
         writer.add_scalar('eval_Loss', eval_loss, epoch)
-        writer.add_scalar('mIoU', mIoU, epoch)
+        writer.add_scalar('eval_mIoU', mIoU, epoch)
 
         # save as best model if mIoU is better
         if mIoU >= best_iou:

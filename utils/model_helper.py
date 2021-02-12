@@ -38,7 +38,105 @@ def get_model(model_name: str, n_classes: int, use_rgb: bool):
     return model, criterion
 
 
-class Model:
+class TestModel:
+    '''
+     Wrapper to hide the low-level pytorch calls
+     '''
+
+    def __init__(self, model_name, n_classes, logger, checkpoint_dir, use_rgb):
+        # set hyperparameter
+        # set visible devices (how many GPUs are used for training)
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.n_classes = n_classes
+
+        self.logger, self.checkpoint_dir = logger, checkpoint_dir
+
+        # init model
+        model, criterion = get_model(model_name, self.n_classes, use_rgb)
+
+        # push to correct device
+        self.model = model.to(self.device)
+        self.criterion = criterion
+
+        # TODO this should be optional through parameters
+        try:
+            checkpoint = torch.load(str(self.checkpoint_dir) + '/best_model.pth')
+            self.start_epoch = checkpoint['epoch']
+            self.model.load_state_dict(checkpoint['model_state_dict'])
+            self.logger.info('Use pretrain model')
+        except:
+            self.logger.info('No existing model, starting training from scratch...')
+            self.start_epoch = 0
+            self.model = model.apply(weights_init)
+
+    def load_model(self, name):
+        savepath = f"{str(self.checkpoint_dir)}/{name}.pth"
+        self.logger.info('Load model from %s' % savepath)
+        state = torch.load(savepath, map_location="cpu")
+        self.model.load_state_dict(state["model_state_dict"])
+
+    def eval(self, loader):
+        '''Evaluate on all scenes'''
+        num_batches = len(loader)
+        total_correct = 0
+        total_seen = 0
+        loss_sum = 0
+        class_distribution = np.zeros(self.n_classes)
+        total_seen_class = np.zeros(self.n_classes)
+        total_correct_class = np.zeros(self.n_classes)
+        total_iou_deno_class = np.zeros(self.n_classes)
+        predictions = [np.zeros_like(room) for room in loader.dataset.room_labels]
+
+        self.model.eval()
+        with torch.no_grad():  # no gradient required
+            for i, (points, target, point_idxs, room_idxs) in tqdm(enumerate(loader), total=len(loader), smoothing=0.9):
+                # skip empty slices (no points)
+                if points.shape[1] == 0:
+                    num_batches -= 1  # since we skip a batch
+                    continue
+                points, target = points.float().to(self.device), target.long().to(self.device)
+                points = points.transpose(2, 1)
+                bs = points.shape[0]  # should be 1
+                n_points = points.shape[-1]
+
+                # apply model
+                seg_pred, trans_feat = self.model(points)
+
+                for bi in range(bs):
+                    point_idx, room_idx = point_idxs[bi], room_idxs[bi]
+                    predictions[room_idx][point_idx] = seg_pred[bi].argmax(1).cpu().numpy()
+
+                # calculate eval scores
+                pred_val = seg_pred.cpu().data.numpy()
+                seg_pred = seg_pred.view(-1, self.n_classes)
+                batch_label = target.cpu().data.numpy()
+                target = target.view(-1, 1)[:, 0]
+                # # no need to use weighting in evaluation (set to None)
+                loss = self.criterion(seg_pred, target, trans_feat, None)
+                loss_sum += loss
+                pred_val = np.argmax(pred_val, 2)
+                correct = np.sum((pred_val == batch_label))
+                total_correct += correct
+                total_seen += (bs * n_points)
+                counts, _ = np.histogram(batch_label, range(self.n_classes + 1))
+                class_distribution += counts
+                for j in range(self.n_classes):
+                    total_seen_class[j] += np.sum((batch_label == j))
+                    total_correct_class[j] += np.sum((pred_val == j) & (batch_label == j))
+                    total_iou_deno_class[j] += np.sum(((pred_val == j) | (batch_label == j)))
+
+        eval_loss = loss_sum / float(num_batches)
+        class_distribution = class_distribution.astype(np.float32) / np.sum(class_distribution.astype(np.float32))
+        mIoU = np.mean(np.array(total_correct_class) / (np.array(total_iou_deno_class, dtype=np.float) + 1e-6))
+        acc = total_correct / float(total_seen)
+        class_acc = np.mean(np.array(total_correct_class) / (np.array(total_seen_class, dtype=np.float) + 1e-6))
+        return (
+            eval_loss, mIoU, acc, class_acc, total_correct_class,
+            total_iou_deno_class, class_distribution, predictions
+        )
+
+
+class TrainModel:
     '''
     Wrapper to hide the low-level pytorch calls
     '''
@@ -106,6 +204,13 @@ class Model:
         self.logger.info('BN momentum updated to: %f' % momentum)
         self.model = self.model.apply(lambda x: bn_momentum_adjust(x, momentum))
 
+    def load_model(self, name):
+        savepath = f"{str(self.checkpoint_dir)}/{name}.pth"
+        self.logger.info('Load model from %s' % savepath)
+        state = torch.load(savepath, map_location="cpu")
+        self.model.load_state_dict(state["model_state_dict"])
+        self.optimizer.load_state_dict(state["optimizer_state_dict"])
+
     def save_model(self, epoch, mIoU, name="model"):
         savepath = f"{str(self.checkpoint_dir)}/{name}.pth"
         self.logger.info('Saving model to %s' % savepath)
@@ -116,13 +221,6 @@ class Model:
             'miou': mIoU,
         }
         torch.save(state, savepath)
-
-    def load_model(self, name):
-        savepath = f"{str(self.checkpoint_dir)}/{name}.pth"
-        self.logger.info('Load model from %s' % savepath)
-        state = torch.load(savepath, map_location="cpu")
-        self.model.load_state_dict(state["model_state_dict"])
-        self.optimizer.load_state_dict(state["optimizer_state_dict"])
 
     def train(self, loader):
         '''Train on chopped scenes'''
@@ -156,7 +254,7 @@ class Model:
 
         return loss_sum / num_batches, total_correct / float(total_seen)
 
-    def eval(self, loader, return_predictions=False):
+    def eval(self, loader):
         '''Evaluate on all scenes'''
         num_batches = len(loader)
         total_correct = 0
@@ -166,7 +264,6 @@ class Model:
         total_seen_class = np.zeros(self.n_classes)
         total_correct_class = np.zeros(self.n_classes)
         total_iou_deno_class = np.zeros(self.n_classes)
-        preds = None  # TODO fill with prediction, id, and room
 
         self.model.eval()
         with torch.no_grad():  # no gradient required
@@ -207,7 +304,4 @@ class Model:
         mIoU = np.mean(np.array(total_correct_class) / (np.array(total_iou_deno_class, dtype=np.float) + 1e-6))
         acc = total_correct / float(total_seen)
         class_acc = np.mean(np.array(total_correct_class) / (np.array(total_seen_class, dtype=np.float) + 1e-6))
-        if return_predictions:
-            return eval_loss, mIoU, acc, class_acc, total_correct_class, total_iou_deno_class, class_distribution, preds
-        else:
-            return eval_loss, mIoU, acc, class_acc, total_correct_class, total_iou_deno_class, class_distribution
+        return eval_loss, mIoU, acc, class_acc, total_correct_class, total_iou_deno_class, class_distribution

@@ -3,12 +3,14 @@ import torch.nn as nn
 
 def weights_init(m):
     classname = m.__class__.__name__
-    if classname.find('Conv2d') != -1:
+    if 'Conv2d' in classname:
         nn.init.xavier_normal_(m.weight.data)
-        nn.init.constant_(m.bias.data, 0.0)
-    elif classname.find('Linear') != -1:
+        if m.bias is not None:
+            nn.init.constant_(m.bias.data, 0.0)
+    elif 'Linear' in classname:
         nn.init.xavier_normal_(m.weight.data)
-        nn.init.constant_(m.bias.data, 0.0)
+        if m.bias is not None:
+            nn.init.constant_(m.bias.data, 0.0)
 
 
 def bn_momentum_adjust(m, momentum):

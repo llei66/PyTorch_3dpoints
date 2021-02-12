@@ -5,11 +5,12 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from torch.cuda import is_available
 from torch.utils.data import Dataset, DataLoader
+import numpy as np
 
 CLASSES = ['ground', 'vegetation', 'building', 'water']
 
 
-class PointDatasetBase(Dataset):
+class DenmarkDatasetBase(Dataset):
     def __init__(self, split, data_root, points_per_sample, use_rgb: bool, global_z=None):
         super().__init__()
         # init some constant to know label names
@@ -23,7 +24,7 @@ class PointDatasetBase(Dataset):
         self.room_points, self.room_labels = [], []
         self.room_coord_min, self.room_coord_max = [], []
         self.use_rgb = use_rgb
-        self.room_paths = []
+        self.room_names = []
         n_point_rooms = []
         total_class_counts = {}
 
@@ -63,7 +64,7 @@ class PointDatasetBase(Dataset):
             self.room_labels.append(labels)
             self.room_coord_min.append(coord_min)
             self.room_coord_max.append(coord_max)
-            self.room_paths.append(room_path)
+            self.room_names.append(room_name)
             n_point_rooms.append(labels.size)
         self.n_point_rooms = n_point_rooms
 
@@ -104,7 +105,7 @@ class PointDatasetBase(Dataset):
         return rooms
 
 
-class PointDatasetTrain(PointDatasetBase):
+class DenmarkDatasetTrain(DenmarkDatasetBase):
     def __init__(self, split, data_root, blocks_per_epoch, points_per_sample, use_rgb: bool,
                  block_size=(1., 1.), transform=None):
         super().__init__(split, data_root, points_per_sample, use_rgb, None)
@@ -164,14 +165,15 @@ class PointDatasetTrain(PointDatasetBase):
         if self.transform is not None:
             # apply data augmentation TODO more than one transform should be possible
             selected_points, selected_labels = self.transform(selected_points, selected_labels)
+
         return selected_points, selected_labels
 
     def __len__(self):
         return len(self.room_idxs)
 
 
-class PointDatasetTest(PointDatasetBase):
-    def __init__(self, split, data_root, points_per_sample, use_rgb: bool, global_z):
+class DenmarkDatasetTest(DenmarkDatasetBase):
+    def __init__(self, split, data_root, points_per_sample, use_rgb: bool, global_z, return_idx=False):
         super().__init__(split, data_root, points_per_sample, use_rgb, global_z)
 
         room_idxs = []
@@ -186,6 +188,7 @@ class PointDatasetTest(PointDatasetBase):
             # TODO test how many points are actually in the partitions and merge/expand them if necessary
             self.split_values.append(split_value)
         self.room_idxs = room_idxs
+        self.return_idx = return_idx
 
         print("Total of {} samples in {} set.".format(len(self.room_idxs), split))
 
@@ -213,6 +216,9 @@ class PointDatasetTest(PointDatasetBase):
         # center around center of partitition
         selected_points[:, :2] = selected_points[:, :2] - block_center
 
+        if self.return_idx:
+            return selected_points, selected_labels, point_idxs, room_idx
+
         return selected_points, selected_labels
 
     def __len__(self):
@@ -220,16 +226,16 @@ class PointDatasetTest(PointDatasetBase):
 
 
 def get_data_loader(batch_size, points_per_sample, data_path, split, use_rgb, training, n_data_worker,
-                    blocks_per_epoch=None, block_size=None, global_z=None):
+                    blocks_per_epoch=None, block_size=None, global_z=None, return_idx=False):
     if training:
-        dataset = PointDatasetTrain(
+        dataset = DenmarkDatasetTrain(
             split=split, data_root=data_path, blocks_per_epoch=blocks_per_epoch, use_rgb=use_rgb,
             points_per_sample=points_per_sample, block_size=block_size, transform=None
         )
     else:
-        dataset = PointDatasetTest(
+        dataset = DenmarkDatasetTest(
             split=split, data_root=data_path, use_rgb=use_rgb, global_z=global_z,
-            points_per_sample=points_per_sample,
+            points_per_sample=points_per_sample, return_idx=return_idx
         )
     loader = DataLoader(
         dataset, batch_size=batch_size, shuffle=training, num_workers=n_data_worker,
@@ -251,17 +257,15 @@ if __name__ == '__main__':
           f"points per sample: {points_per_sample}, \n"
           f"block size: {block_size}")
 
-    point_data_train = PointDatasetTrain(split='train', data_root=data_root, blocks_per_epoch=blocks_per_epoch,
-                                         points_per_sample=points_per_sample, block_size=block_size,
-                                         transform=None, use_rgb=False)
+    point_data_train = DenmarkDatasetTrain(split='train', data_root=data_root, blocks_per_epoch=blocks_per_epoch,
+                                           points_per_sample=points_per_sample, block_size=block_size,
+                                           transform=None, use_rgb=False)
 
-    point_data_test = PointDatasetTest(split='test', data_root=data_root, points_per_sample=points_per_sample,
-                                       use_rgb=False, global_z=point_data_train.get_global_z())
-
-    import numpy as np
+    point_data_test = DenmarkDatasetTest(split='test', data_root=data_root, points_per_sample=points_per_sample,
+                                         use_rgb=False, global_z=point_data_train.get_global_z())
 
     # verify denorm works
-    xx = pd.read_csv(point_data_test.room_paths[0], sep=" ", header=None).values
+    xx = pd.read_csv(point_data_test.room_names[0], sep=" ", header=None).values
     print(f"Denorm is close to original: {np.isclose(xx[:, :3], point_data_test.room_points[0]).all()}")
 
     # save a sample from the dataset

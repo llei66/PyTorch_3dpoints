@@ -2,18 +2,14 @@
 
 import argparse
 import os
-import sys
+from pathlib import Path
 
+import numpy as np
 import torch
-from torch.utils.tensorboard import SummaryWriter
 
+from utils.denmark_dataset import get_data_loader
 from utils.logger import init_logging, log_eval
-from utils.model_helper import Model
-from utils.point_dataset import get_data_loader
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = BASE_DIR
-sys.path.append(os.path.join(ROOT_DIR, 'models'))
+from utils.model_helper import TestModel
 
 
 def parse_args():
@@ -25,6 +21,7 @@ def parse_args():
                         help='Batch Size during testing (only 1 supported atm) [default: 1]')
     parser.add_argument('--gpu', type=str, default='0', help='GPU to use [default: GPU 0]')
     parser.add_argument('--log-dir', type=str, default="./log", help='Log path [default: "./log"]')
+    parser.add_argument('--pred-dir', type=str, default="./pred", help='where to save predictions [default: "./pred"]')
     parser.add_argument('--eval-points-per-sample', type=int, default=10000,
                         help='points per sample during eval [default: 10000]')
     parser.add_argument('--n-data-worker', type=int, default=4,
@@ -39,7 +36,7 @@ def main(args):
     args = parse_args()
 
     # init logger
-    logger, checkpoint_dir = init_logging(args.log_dir, args.model)
+    logger, checkpoint_dir = init_logging(args.log_dir, args.model, "test")
     # init data loader
     # tuple for normalized sampling area (e.g., if 1km = 1, 200m = 0.2)
     block_size = (1, 1)
@@ -50,29 +47,27 @@ def main(args):
         n_classes = stats["n_classes"]
     except FileNotFoundError:
         logger.info("stats not found: loading training data instead...")
-        # TODO save global_z and n_classes in file
         train_loader = get_data_loader(
-            batch_size=1, blocks_per_epoch=1, points_per_sample=1,
-            block_size=block_size, data_path=args.data_path, split="train",
-            use_rgb=not args.no_rgb, training=True, n_data_worker=1
+            batch_size=1, points_per_sample=1, data_path=args.data_path,
+            split="train", use_rgb=not args.no_rgb, training=True, n_data_worker=1
         )
         global_z = train_loader.dataset.get_global_z()
         n_classes = train_loader.dataset.n_classes
+
+        # save stats for later test runs
+        torch.save({
+            "global_z": train_loader.dataset.global_z,
+            "n_classes": train_loader.dataset.n_classes
+        }, f"{str(checkpoint_dir)}/data_stats.pth")
         del train_loader
 
-    ## import tensorboard to view
-    writer = SummaryWriter(str(checkpoint_dir) + "/tensorboard")
-
     # init model and optimizer
-    model = Model(
+    model = TestModel(
         logger=logger,
         model_name=args.model,
         n_classes=n_classes,
         use_rgb=not args.no_rgb,
         checkpoint_dir=checkpoint_dir,
-
-        # not important for testing #TODO this shouldn't be necessary
-        lr=1, lr_decay=1, weight_decay=1, step_size=1, class_weights=None, optimizer_name="adam",
     )
 
     # load best model
@@ -82,7 +77,8 @@ def main(args):
     # test loader has to use batch size of 1 to allow for varying point clouds
     test_loader = get_data_loader(
         batch_size=1, points_per_sample=args.eval_points_per_sample, data_path=args.data_path, split="test",
-        use_rgb=not args.no_rgb, n_data_worker=args.n_data_worker, global_z=global_z, training=False
+        use_rgb=not args.no_rgb, n_data_worker=args.n_data_worker, global_z=global_z, training=False,
+        return_idx=True
     )
 
     # evaluate on test data only once (everything else is cheating ;)
@@ -91,11 +87,20 @@ def main(args):
         eval_loss, mIoU, accuracy, class_acc,
         total_correct_class, total_iou_deno_class, class_distribution,
         predictions
-    ) = model.eval(test_loader, return_predictions=True)
+    ) = model.eval(test_loader)
+
+    # save predictions for each room
+    logger.info('saving the predictions now ...')
+    pred_dir = Path(args.pred_dir)
+    pred_dir.mkdir(exist_ok=True)
+    pred_dir = pred_dir.joinpath(args.model)
+    pred_dir.mkdir(exist_ok=True)
+    for room_pred, room_path in zip(predictions, test_loader.dataset.room_names):
+        room_pred_path = pred_dir.joinpath(room_path)
+        np.savetxt(room_pred_path, room_pred.astype(int))
 
     log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
              total_correct_class, total_iou_deno_class, class_distribution, test_loader.dataset.classes)
-    writer.close()
 
 
 if __name__ == '__main__':
