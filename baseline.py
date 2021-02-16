@@ -15,10 +15,6 @@ def parse_args():
                         help='path to data [default: "./data/train_test_whole_class_1km"]')
     parser.add_argument('--model', type=str, default='RF', help='model name [default: RF]')
     parser.add_argument('--log-dir', type=str, default="./log", help='Log path [default: "./log"]')
-    parser.add_argument('--block-size-x', type=float, default=0.05,
-                        help='normalized block size for x coordinate [default: 0.05]')
-    parser.add_argument('--block-size-y', type=float, default=0.05,
-                        help='normalized block size for x coordinate [default: 0.05]')
     parser.add_argument('--no-console-logging', default=False, action='store_true',
                         help='deactivates most console output')
     parser.add_argument('--no-file-logging', default=False, action='store_true',
