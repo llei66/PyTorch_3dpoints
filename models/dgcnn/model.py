@@ -54,16 +54,12 @@ class DGCNN(nn.Module):
             x = get_graph_feature(x, k, idx)  # Calc. Edge Features
             x = block(x).max(-1)[0]  # Execute Conv. + max-pool
             xs.append(x)
-        import ipdb;
-        ipdb.set_trace()
 
         ## Execute Embedding
         x = torch.cat(xs, dim=1)
         x = self.emb_conv(x)
         x = torch.cat((x.max(-1)[0], x.mean(-1)), dim=1)
 
-        import ipdb;
-        ipdb.set_trace()
         ## Execute Linears
         x = self.linears(x)
 
