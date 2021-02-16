@@ -20,6 +20,11 @@ def get_model(model_name: str, n_classes: int, use_rgb: bool):
         from models.pointnet2.loss import Loss
         model = PointNet2SSG(n_classes, info_channel)
         criterion = Loss()
+    elif model_name == "dgcnn":
+        from models.dgcnn.model import DGCNN
+        from models.pointnet2.loss import Loss
+        model = DGCNN(info_channel + 3, n_classes)
+        criterion = Loss()  # TODO replace magic constant
     elif model_name in ["pointnet++msg", "pointnet2msg"]:
         from models.pointnet2.model import PointNet2MSG
         from models.pointnet2.loss import Loss
@@ -27,7 +32,7 @@ def get_model(model_name: str, n_classes: int, use_rgb: bool):
         criterion = Loss()
     elif model_name in ["pointnet#", "pointnetsharp"]:
         from models.pointnetsharp.model import PointNet
-        from models.pointnetsharp.loss import Loss
+        from models.pointnet2.loss import Loss
         model = PointNet(n_classes, info_channel)
         criterion = Loss()
     else:

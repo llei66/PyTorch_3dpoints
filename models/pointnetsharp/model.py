@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data
 
-from models.pointnetsharp.util import STN3d, STNkd, point_block
+from .util import STN3d, STNkd, point_block
 
 
 class PointNet(nn.Module):

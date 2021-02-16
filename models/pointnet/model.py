@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data
 
-from models.pointnet.util import PointNetEncoder, point_block
+from .util import PointNetEncoder, point_block
 
 
 class PointNet(nn.Module):

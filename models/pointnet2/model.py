@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
-from models.pointnet2.util import PointNetSetAbstractionMsg, PointNetFeaturePropagation, PointNetSetAbstraction
+from .util import PointNetSetAbstractionMsg, PointNetFeaturePropagation, PointNetSetAbstraction
 
 
 class PointNet2MSG(nn.Module):
