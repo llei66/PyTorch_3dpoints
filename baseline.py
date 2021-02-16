@@ -4,6 +4,7 @@ import os
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.model_selection import GridSearchCV, train_test_split, StratifiedKFold
 
 from utils.denmark_dataset import CLASSES
 from utils.logger import init_logging, log_eval
@@ -59,29 +60,45 @@ def main(args):
 
     logger.info("start loading train data ...")
     X_train, y_train = get_dataset(data_path=args.data_path, split="train")
-
-    # logger.info("start loading val data ...")
-    # X_val, y_val = get_dataset(data_path=args.data_path, split="validate")
+    X_val, y_val = get_dataset(data_path=args.data_path, split="validate")
+    X_train = np.concatenate([X_train, X_val], 0)
+    y_train = np.concatenate([y_train, y_val], 0)
 
     # init model and optimizer
     model_name = args.model.lower().replace(" ", "_").replace("_", "")
     if model_name in ["rf", "randomforest"]:
-        model = RandomForestClassifier(n_jobs=-1)
+        model = RandomForestClassifier(1000, n_jobs=-1)
+        param_grid = {
+            'max_features': [None, "auto"],
+            'max_depth': [10, 50, None],
+            'bootstrap': [True, False]
+        }
     elif model_name in ["et", "extratrees"]:
-        model = ExtraTreesClassifier(n_jobs=-1)
+        model = ExtraTreesClassifier(1000, n_jobs=-1)
+        param_grid = {
+            'max_features': [None, "auto"],
+            'max_depth': [10, 50, None],
+            'bootstrap': [True, False]
+        }
     else:
         raise Exception(f"Unknown baseline model: {args.model}")
 
-    # TODO do parameter selection
-
-    # get a subset for faster training
-    idx = np.arange(len(y_train))
     rs = np.random.RandomState(42)
-    rs.shuffle(idx)
-    idx = idx[:args.max_training_samples]
+    # get a stratified subset for faster training
+    if args.max_training_samples != -1:
+        X_train, _, y_train, _ = train_test_split(
+            X_train, y_train, train_size=args.max_training_samples, random_state=rs,
+            stratify=y_train
+        )
 
+    # do parameter selection on stratified cv sets
     logger.info("Start training")
-    model.fit(X_train[idx], y_train[idx])
+    skf = StratifiedKFold(random_state=rs)
+    clf = GridSearchCV(model, param_grid, scoring="accuracy", cv=skf)
+    clf.fit(X_train, y_train)
+
+    logger.info("Best parameters set found on development set:")
+    logger.info(clf.best_params_)
 
     del X_train, y_train
 
@@ -89,7 +106,7 @@ def main(args):
     X_test, y_test = get_dataset(data_path=args.data_path, split="test")
 
     logger.info("Predicting the test set")
-    y_pred = model.predict(X_test)
+    y_pred = clf.predict(X_test)
 
     n_classes = len(np.unique(y_test))
     total_correct = np.sum((y_test == y_pred))
