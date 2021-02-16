@@ -55,7 +55,7 @@ def main(args):
     args = parse_args()
 
     # init logger
-    logger, checkpoint_dir = init_logging(
+    logger, experiment_dir, checkpoint_dir = init_logging(
         args.log_dir, args.model, not args.no_console_logging, not args.no_file_logging
     )
     save_epoch = args.save_epoch
@@ -74,7 +74,7 @@ def main(args):
     torch.save({
         "global_z": train_loader.dataset.global_z,
         "n_classes": train_loader.dataset.n_classes
-    }, f"{str(checkpoint_dir)}/data_stats.pth")
+    }, f"{str(experiment_dir)}/data_stats.pth")
 
     logger.info("start loading validation data ...")
     # val loader has to use batch size of 1 to allow for varying point clouds
@@ -92,7 +92,7 @@ def main(args):
 
     ## import tensorboard to view
 
-    writer = SummaryWriter(str(checkpoint_dir) + "/tensorboard")
+    writer = SummaryWriter(str(experiment_dir) + "/tensorboard")
 
     # init model and optimizer
     model = TrainModel(

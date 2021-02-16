@@ -38,7 +38,7 @@ def init_logging(exp_dir, model_name, to_console: bool, to_file: bool, output_fi
         consoleHandler = logging.StreamHandler()
         consoleHandler.setFormatter(console_formatter)
         logger.addHandler(consoleHandler)
-    return logger, experiment_dir
+    return logger, experiment_dir, checkpoints_dir
 
 
 def log_training(logger, loss, accuracy):

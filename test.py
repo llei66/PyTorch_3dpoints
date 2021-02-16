@@ -40,7 +40,7 @@ def main(args):
     args = parse_args()
 
     # init logger
-    logger, checkpoint_dir = init_logging(
+    logger, experiment_dir, checkpoint_dir = init_logging(
         args.log_dir, args.model, not args.no_console_logging, not args.no_file_logging, "test"
     )
     # init data loader
@@ -48,7 +48,7 @@ def main(args):
     block_size = (1, 1)
     logger.info("start loading train data stats to acquire global_z scaling and n_classes...")
     try:
-        stats = torch.load(f"{str(checkpoint_dir)}/data_stats.pth")
+        stats = torch.load(f"{str(experiment_dir)}/data_stats.pth")
         global_z = stats["global_z"]
         n_classes = stats["n_classes"]
     except FileNotFoundError:
@@ -64,7 +64,7 @@ def main(args):
         torch.save({
             "global_z": train_loader.dataset.global_z,
             "n_classes": train_loader.dataset.n_classes
-        }, f"{str(checkpoint_dir)}/data_stats.pth")
+        }, f"{str(experiment_dir)}/data_stats.pth")
         del train_loader
 
     # init model and optimizer
