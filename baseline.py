@@ -88,7 +88,7 @@ def main(args):
     if args.max_training_samples != -1:
         X_train, _, y_train, _ = train_test_split(
             X_train, y_train, train_size=args.max_training_samples, random_state=rs,
-            stratify=y_train
+            stratify=y_train, shuffle=True
         )
 
     # do parameter selection on stratified cv sets
