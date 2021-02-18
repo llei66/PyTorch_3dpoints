@@ -123,7 +123,7 @@ class TestModel:
         # calculate eval scores
         for room_preds, room_labels in zip(predictions, room_labels):
             total_correct += np.sum((room_preds == room_labels))
-            total_seen = len(room_preds)
+            total_seen += len(room_preds)
 
             counts, _ = np.histogram(room_labels, range(self.n_classes + 1))
             class_distribution += counts

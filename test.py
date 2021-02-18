@@ -103,6 +103,9 @@ def main(args):
         predictions
     ) = model.eval(test_loader)
 
+    log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
+             total_correct_class, total_iou_deno_class, class_distribution, test_loader.dataset.classes)
+
     # save predictions for each room
     logger.info('saving the predictions now ...')
     pred_dir = Path(args.pred_dir)
@@ -112,9 +115,6 @@ def main(args):
     for room_pred, room_path in zip(predictions, test_loader.dataset.room_names):
         room_pred_path = pred_dir.joinpath(room_path)
         np.savetxt(room_pred_path, room_pred.astype(int))
-
-    log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
-             total_correct_class, total_iou_deno_class, class_distribution, test_loader.dataset.classes)
 
 
 if __name__ == '__main__':

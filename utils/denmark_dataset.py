@@ -76,12 +76,19 @@ class DenmarkDatasetBase(Dataset):
             max_room = np.argmax(np.array(self.room_coord_max)[:, 2] - np.array(self.room_coord_min)[:, 2], 0)
             global_z = np.array(self.room_coord_min)[max_room, 2], np.array(self.room_coord_max)[max_room, 2]
         min_z, max_z = self.global_z = global_z
+        block_scale = np.concatenate([block_size, [1.]])
+        self.room_coord_scale = []
         for points, coord_min, coord_max in zip(self.room_points, self.room_coord_min, self.room_coord_max):
             # override local z with global z
             coord_min[2] = min_z
             coord_max[2] = max_z
             # apply min-max normalization
-            points[:, :3] = (points[:, :3] - coord_min) / (coord_max - coord_min)
+            # center (makes it easier to do the block queries)
+            points[:, :3] = points[:, :3] - coord_min
+            # scale
+            room_scale = (coord_max - coord_min)  # this shouldn't change for our 1k dataset
+            points[:, :3] = points[:, :3] / (room_scale * block_scale)
+            self.room_coord_scale.append(room_scale * block_scale)
 
         self.n_classes = len(total_class_counts)
 
@@ -99,9 +106,9 @@ class DenmarkDatasetBase(Dataset):
     def get_descale_dataset(self):
         ''' descale data with saved stats '''
         rooms = []
-        for points, coord_min, coord_max in zip(self.room_points, self.room_coord_min, self.room_coord_max):
+        for points, c_min, c_scale in zip(self.room_points, self.room_coord_min, self.room_coord_scale):
             points = np.copy(points)
-            points[:, :3] = points[:, :3] * (coord_max - coord_min) + coord_min
+            points[:, :3] = points[:, :3] * c_scale + c_min
             if self.use_rgb:
                 points[:, 3:] *= 255
 
@@ -133,8 +140,8 @@ class DenmarkDatasetTrain(DenmarkDatasetBase):
 
         # sample random point and area around it
         block_center = points[sample_idx][:2]
-        block_min = block_center - self.block_size / 2.0
-        block_max = block_center + self.block_size / 2.0
+        block_min = block_center - .5  # .5 is half the block size
+        block_max = block_center + .5
 
         # query around points
         point_idxs = np.where(
@@ -159,7 +166,7 @@ class DenmarkDatasetTrain(DenmarkDatasetBase):
         selected_labels = labels[point_idxs]
 
         # normalize per block
-        selected_points = normalize_block(selected_points, block_center, self.block_size * 2)
+        selected_points = center_block(selected_points)
 
         if self.transform is not None:
             # apply data augmentation TODO more than one transform should be possible
@@ -179,14 +186,16 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
         super().__init__(split, data_root, use_rgb, block_size, global_z)
         # this works without taking dataset x, y scaling into account since we already scaled to (0, 1)
         self.overlap = overlap  # defines an overlap ratio
-        self.overlap_value = self.block_size * overlap
-        self.overlap_difference = self.block_size - self.overlap_value
+        self.overlap_value = np.array([overlap] * 2)
+        self.overlap_difference = 1 - self.overlap_value
 
         room_idxs = []
         # partition rooms
         # each room is scaled between 0 and 1 so just try to have similar point counts
         for room_i, n_point_i in enumerate(self.n_point_rooms):
-            n_split_2d = (np.ceil(1 / self.overlap_difference)).astype(int)
+            # recover max room length from room and block scaling
+            room_max = ((self.room_coord_max[room_i] - self.room_coord_min[room_i]) / self.room_coord_scale[room_i])[:2]
+            n_split_2d = (np.ceil(room_max / self.overlap_difference)).astype(int)
             room_idxs.extend([[room_i, (i, j)] for i, j in product(range(n_split_2d[0]), range(n_split_2d[1]))])
             # TODO test how many points are actually in the partitions and merge/expand them if necessary
         self.room_idxs = room_idxs
@@ -208,7 +217,6 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
             (i + 1) * self.overlap_difference[0] + self.overlap_value[0],
             (j + 1) * self.overlap_difference[1] + self.overlap_value[1]
         ])
-        block_center = (block_min + block_max) / 2
 
         point_idxs = np.where(
             (points[:, 0] >= block_min[0]) & (points[:, 0] < block_max[0])
@@ -219,7 +227,7 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
         selected_labels = labels[point_idxs]
 
         # normalize per block
-        selected_points = normalize_block(selected_points, block_center, self.block_size * 2)
+        selected_points = center_block(selected_points)
 
         selected_points = selected_points.astype(np.float32).transpose(1, 0)
         selected_labels = selected_labels.astype(np.longlong)
@@ -233,14 +241,15 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
         return len(self.room_idxs)
 
 
-def normalize_block(points, center, scale):
+def center_block(points):
     # center the samples around the center point
     selected_points = np.copy(points)  # make sure we work on a copy
-    selected_points[:, :2] -= center
-    selected_points[:, 2] -= selected_points[:, 2].mean()
+    selected_points[:, :3] -= selected_points[:, :3].mean(0)
 
-    # scale the samples with the scale
-    selected_points[:, :2] /= scale
+    # TODO see if this is better or worse
+    # selected_points[:, :2] -= center # consider using the mean here
+    # selected_points[:, 2] -= selected_points[:, 2].mean()
+
     return selected_points
 
 
