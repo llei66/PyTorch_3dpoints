@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from utils.denmark_dataset import get_data_loader
+from utils.denmark_dataset import get_test_data_loader, get_train_data_loader
 from utils.logger import init_logging, log_eval
 from utils.model_helper import TestModel
 
@@ -22,8 +22,14 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='GPU to use [default: GPU 0]')
     parser.add_argument('--log-dir', type=str, default="./log", help='Log path [default: "./log"]')
     parser.add_argument('--pred-dir', type=str, default="./pred", help='where to save predictions [default: "./pred"]')
-    parser.add_argument('--eval-points-per-sample', type=int, default=10000,
-                        help='points per sample during eval [default: 10000]')
+    parser.add_argument(
+        '--block-size-x', type=float, default=0.05,
+        help='Normalized block size for x coordinate. Should be same as used in training. [default: 0.05]'
+    )
+    parser.add_argument(
+        '--block-size-y', type=float, default=0.05,
+        help='Normalized block size for x coordinate. Should be same as used in training. [default: 0.05]'
+    )
     parser.add_argument('--n-data-worker', type=int, default=4,
                         help='data preprocessing threads [default: 4]')
     parser.add_argument('--no-rgb', action='store_true', default=False, help="ignores RBG if used")
@@ -31,6 +37,8 @@ def parse_args():
                         help='deactivates most console output')
     parser.add_argument('--no-file-logging', default=False, action='store_true',
                         help='deactivates logging into a file')
+    parser.add_argument('--overlap', type=float, default=0.5,
+                        help='Ratio of block overlapping. [default: 0.5]')
 
     return parser.parse_args()
 
@@ -45,7 +53,7 @@ def main(args):
     )
     # init data loader
     # tuple for normalized sampling area (e.g., if 1km = 1, 200m = 0.2)
-    block_size = (1, 1)
+    block_size = (args.block_size_x, args.block_size_y)
     logger.info("start loading train data stats to acquire global_z scaling and n_classes...")
     try:
         stats = torch.load(f"{str(experiment_dir)}/data_stats.pth")
@@ -53,9 +61,9 @@ def main(args):
         n_classes = stats["n_classes"]
     except FileNotFoundError:
         logger.info("stats not found: loading training data instead...")
-        train_loader = get_data_loader(
+        train_loader = get_train_data_loader(
             batch_size=1, points_per_sample=1, data_path=args.data_path,
-            split="train", use_rgb=not args.no_rgb, training=True, n_data_worker=1
+            split="train", use_rgb=not args.no_rgb, n_data_worker=1, block_size=block_size
         )
         global_z = train_loader.dataset.get_global_z()
         n_classes = train_loader.dataset.n_classes
@@ -81,9 +89,9 @@ def main(args):
 
     logger.info("start loading test data ...")
     # test loader has to use batch size of 1 to allow for varying point clouds
-    test_loader = get_data_loader(
-        batch_size=1, points_per_sample=args.eval_points_per_sample, data_path=args.data_path, split="test",
-        use_rgb=not args.no_rgb, n_data_worker=args.n_data_worker, global_z=global_z, training=False,
+    test_loader = get_test_data_loader(
+        batch_size=1, block_size=block_size, data_path=args.data_path, split="test",
+        use_rgb=not args.no_rgb, n_data_worker=args.n_data_worker, global_z=global_z, overlap=args.overlap,
         return_idx=True
     )
 

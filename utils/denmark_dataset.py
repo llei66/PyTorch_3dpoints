@@ -3,22 +3,25 @@ from itertools import product
 
 import numpy as np
 import pandas as pd
+import torch
 from sklearn.neighbors import NearestNeighbors
 from torch.cuda import is_available
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, Sampler
 
 CLASSES = ['ground', 'vegetation', 'building', 'water']
 
 
 class DenmarkDatasetBase(Dataset):
-    def __init__(self, split, data_root, points_per_sample, use_rgb: bool, global_z=None):
+    def __init__(self, split, data_root, use_rgb: bool, block_size, global_z=None):
         super().__init__()
         # init some constant to know label names
         self.classes = CLASSES
 
-        # save args
-        self.points_per_sample = points_per_sample
+        if isinstance(block_size, float):
+            block_size = [block_size] * 2
+        self.block_size = np.array(block_size)
 
+        # save args
         self.path = os.path.join(data_root, split)
 
         self.room_points, self.room_labels = [], []
@@ -41,7 +44,6 @@ class DenmarkDatasetBase(Dataset):
             points, labels = room_data[:, :6], room_data[:, 6]  # xyzrgb, N*6; l, N
 
             # stats for normalization
-            # TODO FIX THIS, rooms will have different scaling in real world
             coord_min, coord_max = np.amin(points, axis=0)[:3], np.amax(points, axis=0)[:3]
 
             # remove rbg channel if not needed:
@@ -70,7 +72,9 @@ class DenmarkDatasetBase(Dataset):
 
         # give global_z from training set
         if global_z is None:
-            global_z = np.min(np.array(self.room_coord_min)[:, 2], 0), np.max(np.array(self.room_coord_max)[:, 2], 0)
+            # choose the room with biggest spatial gap in height for scaling the z-axis
+            max_room = np.argmax(np.array(self.room_coord_max)[:, 2] - np.array(self.room_coord_min)[:, 2], 0)
+            global_z = np.array(self.room_coord_min)[max_room, 2], np.array(self.room_coord_max)[max_room, 2]
         min_z, max_z = self.global_z = global_z
         for points, coord_min, coord_max in zip(self.room_points, self.room_coord_min, self.room_coord_max):
             # override local z with global z
@@ -92,8 +96,8 @@ class DenmarkDatasetBase(Dataset):
     def get_global_z(self):
         return self.room_coord_min[0][2], self.room_coord_max[0][2]
 
-    def get_denormalized_dataset(self):
-        ''' denormalize data with saved stats '''
+    def get_descale_dataset(self):
+        ''' descale data with saved stats '''
         rooms = []
         for points, coord_min, coord_max in zip(self.room_points, self.room_coord_min, self.room_coord_max):
             points = np.copy(points)
@@ -106,24 +110,19 @@ class DenmarkDatasetBase(Dataset):
 
 
 class DenmarkDatasetTrain(DenmarkDatasetBase):
-    def __init__(self, split, data_root, blocks_per_epoch, points_per_sample, use_rgb: bool,
-                 block_size=(1., 1.), transform=None):
-        super().__init__(split, data_root, points_per_sample, use_rgb, None)
+    def __init__(self, split, data_root, points_per_sample, use_rgb: bool,
+                 block_size=(1., 1.), transform=None, global_z=None):
+        super().__init__(split, data_root, use_rgb, block_size, global_z)
 
         # save args
-        if isinstance(block_size, float):
-            block_size = [block_size] * 2
-        self.block_size = np.array(block_size)
-        self.blocks_per_epoch = blocks_per_epoch
+        self.points_per_sample = points_per_sample
         self.transform = transform
 
-        room_idxs = []
-        sample_prob = self.n_point_rooms / np.sum(self.n_point_rooms)
-        for room_i in range(len(self.n_point_rooms)):
-            room_idxs.extend([[room_i, i] for i in range(int(round(sample_prob[room_i] * self.blocks_per_epoch)))])
-        self.room_idxs = room_idxs
+        self.room_idxs = []
+        for room_i, n_point_i in enumerate(self.n_point_rooms):
+            self.room_idxs.extend([[room_i, sample_idx] for sample_idx in range(n_point_i)])
 
-        print("Total of {} samples in {} set.".format(len(self.room_idxs), split))
+        print("Total of {} samples in {} set.".format(np.sum(self.n_point_rooms), split))
 
     # def get_partition_index:
 
@@ -131,12 +130,11 @@ class DenmarkDatasetTrain(DenmarkDatasetBase):
         room_idx, sample_idx = self.room_idxs[idx]
         points = self.room_points[room_idx]  # N * 6
         labels = self.room_labels[room_idx]  # N
-        n_points = points.shape[0]
 
         # sample random point and area around it
-        center = points[np.random.choice(n_points)][:2]
-        block_min = center - self.block_size / 2.0
-        block_max = center + self.block_size / 2.0
+        block_center = points[sample_idx][:2]
+        block_min = block_center - self.block_size / 2.0
+        block_max = block_center + self.block_size / 2.0
 
         # query around points
         point_idxs = np.where(
@@ -150,44 +148,47 @@ class DenmarkDatasetTrain(DenmarkDatasetBase):
             # TODO this might compromise the block size but at least doesn't change the point density
             nn = NearestNeighbors(self.points_per_sample, algorithm="brute")
             nn.fit(points[point_idxs][:, :2])
-            idx = nn.kneighbors(center[None, :], return_distance=False)[0]
+            idx = nn.kneighbors(block_center[None, :], return_distance=False)[0]
             point_idxs = point_idxs[idx]
         else:
             # oversample if too few points (this should only rarely happen, otherwise increase block size)
             point_idxs = np.random.choice(point_idxs, self.points_per_sample, replace=True)
+        # TODO could cache the points in a block to reduce querying (not an issue atm)
 
         selected_points = points[point_idxs]
         selected_labels = labels[point_idxs]
 
-        # center the samples around the center point
-        selected_points[:, :2] -= center
-        selected_points[:, 2] -= selected_points[:, 2].mean()
+        # normalize per block
+        selected_points = normalize_block(selected_points, block_center, self.block_size * 2)
 
         if self.transform is not None:
             # apply data augmentation TODO more than one transform should be possible
             selected_points, selected_labels = self.transform(selected_points, selected_labels)
 
+        selected_points = selected_points.astype(np.float32).transpose(1, 0)
+        selected_labels = selected_labels.astype(np.longlong)
+
         return selected_points, selected_labels
 
     def __len__(self):
-        return len(self.room_idxs)
+        return np.sum(self.n_point_rooms)
 
 
 class DenmarkDatasetTest(DenmarkDatasetBase):
-    def __init__(self, split, data_root, points_per_sample, use_rgb: bool, global_z, return_idx=False):
-        super().__init__(split, data_root, points_per_sample, use_rgb, global_z)
+    def __init__(self, split, data_root, use_rgb: bool, block_size, global_z, overlap, return_idx):
+        super().__init__(split, data_root, use_rgb, block_size, global_z)
+        # this works without taking dataset x, y scaling into account since we already scaled to (0, 1)
+        self.overlap = overlap  # defines an overlap ratio
+        self.overlap_value = self.block_size * overlap
+        self.overlap_difference = self.block_size - self.overlap_value
 
         room_idxs = []
         # partition rooms
-        self.split_values = []
         # each room is scaled between 0 and 1 so just try to have similar point counts
         for room_i, n_point_i in enumerate(self.n_point_rooms):
-            n_split = n_point_i / points_per_sample
-            n_split_2d = int(np.ceil(n_split ** .5))
-            split_value = 1 / n_split_2d  # take the root since we want to partition in 2d
-            room_idxs.extend([[room_i, (i, j)] for i, j in product(range(n_split_2d), range(n_split_2d))])
+            n_split_2d = (np.ceil(1 / self.overlap_difference)).astype(int)
+            room_idxs.extend([[room_i, (i, j)] for i, j in product(range(n_split_2d[0]), range(n_split_2d[1]))])
             # TODO test how many points are actually in the partitions and merge/expand them if necessary
-            self.split_values.append(split_value)
         self.room_idxs = room_idxs
         self.return_idx = return_idx
 
@@ -202,8 +203,11 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
         # load partition for testing (no augmentations here)
         i, j = sample_idx
 
-        block_min = np.array([i * self.split_values[room_idx], j * self.split_values[room_idx]])
-        block_max = np.array([(i + 1) * self.split_values[room_idx], (j + 1) * self.split_values[room_idx]])
+        block_min = np.array([i * self.overlap_difference[0], j * self.overlap_difference[1]])
+        block_max = np.array([
+            (i + 1) * self.overlap_difference[0] + self.overlap_value[0],
+            (j + 1) * self.overlap_difference[1] + self.overlap_value[1]
+        ])
         block_center = (block_min + block_max) / 2
 
         point_idxs = np.where(
@@ -214,9 +218,11 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
         selected_points = points[point_idxs]
         selected_labels = labels[point_idxs]
 
-        # center around center of partitition
-        selected_points[:, :2] = selected_points[:, :2] - block_center
-        selected_points[:, 2] -= selected_points[:, 2].mean()
+        # normalize per block
+        selected_points = normalize_block(selected_points, block_center, self.block_size * 2)
+
+        selected_points = selected_points.astype(np.float32).transpose(1, 0)
+        selected_labels = selected_labels.astype(np.longlong)
 
         if self.return_idx:
             return selected_points, selected_labels, point_idxs, room_idx
@@ -227,23 +233,104 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
         return len(self.room_idxs)
 
 
-def get_data_loader(batch_size, points_per_sample, data_path, split, use_rgb, training, n_data_worker,
-                    blocks_per_epoch=None, block_size=None, global_z=None, return_idx=False):
-    if training:
-        dataset = DenmarkDatasetTrain(
-            split=split, data_root=data_path, blocks_per_epoch=blocks_per_epoch, use_rgb=use_rgb,
-            points_per_sample=points_per_sample, block_size=block_size, transform=None
-        )
+def normalize_block(points, center, scale):
+    # center the samples around the center point
+    selected_points = np.copy(points)  # make sure we work on a copy
+    selected_points[:, :2] -= center
+    selected_points[:, 2] -= selected_points[:, 2].mean()
+
+    # scale the samples with the scale
+    selected_points[:, :2] /= scale
+    return selected_points
+
+
+def get_train_data_loader(batch_size, points_per_sample, data_path, split, use_rgb, n_data_worker,
+                          steps_per_epoch=None, block_size=None, global_z=None):
+    dataset = DenmarkDatasetTrain(
+        split=split, data_root=data_path, use_rgb=use_rgb,
+        points_per_sample=points_per_sample, block_size=block_size, transform=None, global_z=global_z
+    )
+    if steps_per_epoch == -1:
+        num_samples = len(dataset)
     else:
-        dataset = DenmarkDatasetTest(
-            split=split, data_root=data_path, use_rgb=use_rgb, global_z=global_z,
-            points_per_sample=points_per_sample, return_idx=return_idx
-        )
-    loader = DataLoader(
-        dataset, batch_size=batch_size, shuffle=training, num_workers=n_data_worker,
-        pin_memory=is_available() and training, drop_last=training
+        num_samples = steps_per_epoch * batch_size
+    sampler = RandomSampler(dataset, num_samples=num_samples)
+    loader = MultiEpochsDataLoader(
+        dataset, batch_size=batch_size, sampler=sampler, num_workers=n_data_worker,
+        pin_memory=is_available(), drop_last=True
     )
     return loader
+
+
+def get_test_data_loader(batch_size, data_path, split, use_rgb, n_data_worker, overlap,
+                         block_size=None, global_z=None, return_idx=True):
+    dataset = DenmarkDatasetTest(
+        split=split, data_root=data_path, use_rgb=use_rgb, global_z=global_z,
+        block_size=block_size, return_idx=return_idx, overlap=overlap
+    )
+    loader = MultiEpochsDataLoader(
+        dataset, batch_size=batch_size, shuffle=False, num_workers=n_data_worker,
+        pin_memory=False, drop_last=False
+    )
+    return loader
+
+
+class MultiEpochsDataLoader(torch.utils.data.DataLoader):
+    # we need this to avoid the destruction of the iterator (problematic with many datapoints)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._DataLoader__initialized = False
+        self.batch_sampler = _RepeatSampler(self.batch_sampler)
+        self._DataLoader__initialized = True
+        self.iterator = super().__iter__()
+
+    def __len__(self):
+        return len(self.batch_sampler.sampler)
+
+    def __iter__(self):
+        for i in range(len(self)):
+            yield next(self.iterator)
+
+
+class _RepeatSampler(object):
+    """ Sampler that repeats forever.
+    Args:
+        sampler (Sampler)
+    """
+
+    def __init__(self, sampler):
+        self.sampler = sampler
+
+    def __iter__(self):
+        while True:
+            yield from iter(self.sampler)
+
+
+class RandomSampler(Sampler):
+    def __init__(self, data_source, num_samples=None):
+        super().__init__(data_source)
+        self.data_source = data_source
+        self.idx = np.arange(len(data_source))
+        self._num_samples = num_samples
+
+        if not isinstance(self.num_samples, int) or self.num_samples <= 0:
+            raise ValueError(
+                "num_samples should be a positive integer "
+                "value, but got num_samples={}".format(self.num_samples)
+            )
+
+    @property
+    def num_samples(self):
+        # dataset size might change at runtime
+        if self._num_samples is None:
+            return len(self.data_source)
+        return self._num_samples
+
+    def __iter__(self):
+        return iter(np.random.choice(self.idx, self.num_samples).tolist())
+
+    def __len__(self):
+        return self.num_samples
 
 
 if __name__ == '__main__':
@@ -259,16 +346,18 @@ if __name__ == '__main__':
           f"points per sample: {points_per_sample}, \n"
           f"block size: {block_size}")
 
-    point_data_train = DenmarkDatasetTrain(split='train', data_root=data_root, blocks_per_epoch=blocks_per_epoch,
-                                           points_per_sample=points_per_sample, block_size=block_size,
-                                           transform=None, use_rgb=False)
-
-    point_data_test = DenmarkDatasetTest(split='test', data_root=data_root, points_per_sample=points_per_sample,
-                                         use_rgb=False, global_z=point_data_train.get_global_z())
+    point_data_train = DenmarkDatasetTrain(split='train', data_root=data_root, points_per_sample=points_per_sample,
+                                           block_size=block_size, transform=None, use_rgb=False)
+    point_data_test = DenmarkDatasetTest(split='test', data_root=data_root, block_size=block_size,
+                                         use_rgb=False, global_z=None, overlap=.5, return_idx=True)
 
     # verify denorm works
-    xx = pd.read_csv(point_data_test.room_names[0], sep=" ", header=None).values
-    print(f"Denorm is close to original: {np.isclose(xx[:, :3], point_data_test.room_points[0]).all()}")
+    xx = pd.read_csv(os.path.join(data_root, "test", point_data_test.room_names[0]), sep=" ", header=None).values
+    print(f"Scaled points close to original: {np.isclose(xx[:, :3], point_data_test.room_points[0]).all()}")
+    print(f"Descale close to original: {np.isclose(xx[:, :3], point_data_test.get_descale_dataset()[0]).all()}")
+
+    # test if iterating through data throws errors
+    for x in point_data_test: break
 
     # save a sample from the dataset
     for i, (points, labels) in enumerate(point_data_train):
@@ -277,7 +366,7 @@ if __name__ == '__main__':
         np.save(sample_name, sample_np)
         break
 
-    import torch, time, random
+    import time, random
 
     manual_seed = 123
     random.seed(manual_seed)

@@ -6,7 +6,7 @@ import os
 import torch
 from torch.utils.tensorboard import SummaryWriter
 
-from utils.denmark_dataset import get_data_loader
+from utils.denmark_dataset import get_train_data_loader, get_test_data_loader
 from utils.logger import init_logging, log_training, log_eval
 from utils.model_helper import TrainModel
 
@@ -25,9 +25,7 @@ def parse_args():
     parser.add_argument('--log-dir', type=str, default="./log", help='Log path [default: "./log"]')
     parser.add_argument('--weight-decay', type=float, default=1e-4, help='weight decay [default: 1e-4]')
     parser.add_argument('--points-per-sample', type=int, default=4096, help='points per sample [default: 4096]')
-    parser.add_argument('--eval-points-per-sample', type=int, default=10000,
-                        help='points per sample during eval [default: 10000]')
-    parser.add_argument('--blocks-per-epoch', type=int, default=4096, help='blocks per epoch [default: 4096]')
+    parser.add_argument('--steps-per-epoch', type=int, default=4096, help='update steps per epoch [default: 4096]')
     parser.add_argument('--block-size-x', type=float, default=0.05,
                         help='normalized block size for x coordinate [default: 0.05]')
     parser.add_argument('--block-size-y', type=float, default=0.05,
@@ -35,6 +33,10 @@ def parse_args():
     parser.add_argument('--step-size', type=int, default=10,
                         help='Decay step for lr and batch norm mementum decay [default: every 10 epochs]')
     parser.add_argument('--lr-decay', type=float, default=0.7, help='Decay rate for lr decay [default: 0.7]')
+    parser.add_argument('--val-overlap', type=float, default=0.0,
+                        help='Ratio of block overlapping during validation [default: 0.0]')
+    parser.add_argument('--test-overlap', type=float, default=0.5,
+                        help='Ratio of block overlapping during testing [default: 0.5]')
     parser.add_argument('--weighting', type=str, default="equal",
                         help='defines the loss weighting method, either "equal" or "class" [default: "equal"]')
     parser.add_argument('--n-data-worker', type=int, default=4,
@@ -65,10 +67,10 @@ def main(args):
     block_size = (args.block_size_x, args.block_size_y)
     logger.info("start loading train data ...")
     # TODO add back augmentations
-    train_loader = get_data_loader(
-        batch_size=args.batch_size, blocks_per_epoch=args.blocks_per_epoch, points_per_sample=args.points_per_sample,
+    train_loader = get_train_data_loader(
+        batch_size=args.batch_size, steps_per_epoch=args.steps_per_epoch, points_per_sample=args.points_per_sample,
         block_size=block_size, data_path=args.data_path, split="train",
-        use_rgb=not args.no_rgb, training=True, n_data_worker=args.n_data_worker
+        use_rgb=not args.no_rgb, n_data_worker=args.n_data_worker
     )
     # save stats for external testing
     torch.save({
@@ -78,9 +80,9 @@ def main(args):
 
     logger.info("start loading validation data ...")
     # val loader has to use batch size of 1 to allow for varying point clouds
-    val_loader = get_data_loader(
-        batch_size=1, points_per_sample=args.eval_points_per_sample, data_path=args.data_path, split="validate",
-        use_rgb=not args.no_rgb, training=False, n_data_worker=args.n_data_worker,
+    val_loader = get_test_data_loader(
+        batch_size=1, data_path=args.data_path, split="validate", overlap=args.val_overlap,
+        use_rgb=not args.no_rgb, n_data_worker=args.n_data_worker, block_size=block_size,
         global_z=train_loader.dataset.get_global_z(),
     )
 
@@ -125,8 +127,8 @@ def main(args):
         # evaluate
         logger.info('---- Epoch %03d Evaluation ----' % (epoch + 1))
         (
-            eval_loss, mIoU, accuracy, class_acc,
-            total_correct_class, total_iou_deno_class, class_distribution
+            eval_loss, mIoU, accuracy, class_acc, total_correct_class,
+            total_iou_deno_class, class_distribution, predictions
         ) = model.eval(val_loader)
 
         log_eval(logger, eval_loss, mIoU, accuracy, class_acc, total_correct_class,
@@ -155,21 +157,21 @@ def main(args):
 
     logger.info("start loading test data ...")
     # test loader has to use batch size of 1 to allow for varying point clouds
-    test_loader = get_data_loader(
-        batch_size=1, points_per_sample=args.eval_points_per_sample, data_path=args.data_path, split="test",
-        use_rgb=not args.no_rgb, training=False, n_data_worker=args.n_data_worker,
+    test_loader = get_test_data_loader(
+        batch_size=1, block_size=block_size, data_path=args.data_path, split="test",
+        use_rgb=not args.no_rgb, n_data_worker=args.n_data_worker, overlap=args.test_overlap,
         global_z=train_loader.dataset.get_global_z()
     )
 
     # evaluate on test data only once (everything else is cheating ;)
     logger.info('---- Test Evaluation ----')
     (
-        eval_loss, mIoU, accuracy, class_acc,
-        total_correct_class, total_iou_deno_class, class_distribution
+        eval_loss, mIoU, accuracy, class_acc, total_correct_class,
+        total_iou_deno_class, class_distribution, predictions
     ) = model.eval(test_loader)
 
-    log_eval(logger, eval_loss, mIoU, accuracy, class_acc,
-             total_correct_class, total_iou_deno_class, class_distribution, test_loader.dataset.classes)
+    log_eval(logger, eval_loss, mIoU, accuracy, class_acc, total_correct_class, total_iou_deno_class,
+             class_distribution, test_loader.dataset.classes)
     writer.close()
 
 
