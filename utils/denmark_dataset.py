@@ -8,7 +8,7 @@ from sklearn.neighbors import NearestNeighbors
 from torch.cuda import is_available
 from torch.utils.data import Dataset, DataLoader, Sampler
 
-CLASSES = ['ground', 'vegetation', 'building', 'water']
+CLASSES = ["Ground", "Low veg", "Medium Veg", "High Veg", "Building", "Water"]
 
 
 class DenmarkDatasetBase(Dataset):
@@ -41,7 +41,7 @@ class DenmarkDatasetBase(Dataset):
             room_data = pd.read_csv(room_path, sep=" ", header=None).values  # xyzrgbl, N*7
 
             # split into points and labels
-            points, labels = room_data[:, :6], room_data[:, 6]  # xyzrgb, N*6; l, N
+            points, labels = room_data[:, :-1], room_data[:, -1]  # xyzrgb, N*6; l, N
 
             # stats for normalization
             coord_min, coord_max = np.amin(points, axis=0)[:3], np.amax(points, axis=0)[:3]
