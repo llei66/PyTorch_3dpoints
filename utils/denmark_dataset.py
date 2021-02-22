@@ -103,7 +103,7 @@ class DenmarkDatasetBase(Dataset):
     def get_global_z(self):
         return self.room_coord_min[0][2], self.room_coord_max[0][2]
 
-    def get_descale_dataset(self):
+    def get_descaled_dataset(self):
         ''' descale data with saved stats '''
         rooms = []
         for points, c_min, c_scale in zip(self.room_points, self.room_coord_min, self.room_coord_scale):
@@ -127,9 +127,16 @@ class DenmarkDatasetTrain(DenmarkDatasetBase):
 
         self.room_idxs = []
         for room_i, n_point_i in enumerate(self.n_point_rooms):
-            self.room_idxs.extend([[room_i, sample_idx] for sample_idx in range(n_point_i)])
+            room_max = ((self.room_coord_max[room_i] - self.room_coord_min[room_i]) / self.room_coord_scale[room_i])[:2]
+            point_list = []
+            for sample_idx in range(n_point_i):
+                point = self.room_points[room_i][sample_idx]
+                # do not add edge points to the training set
+                if (1 <= point[0] <= room_max[0] - 1) and (1 <= point[1] <= room_max[1] - 1):
+                    point_list.append([room_i, sample_idx])
+            self.room_idxs.extend(point_list)
 
-        print("Total of {} samples in {} set.".format(np.sum(self.n_point_rooms), split))
+        print("Total of {} samples in {} set.".format(len(self), split))
 
     # def get_partition_index:
 
@@ -142,7 +149,6 @@ class DenmarkDatasetTrain(DenmarkDatasetBase):
         block_center = points[sample_idx][:2]
         block_min = block_center - .5  # .5 is half the block size
         block_max = block_center + .5
-
         # query around points
         point_idxs = np.where(
             (points[:, 0] >= block_min[0]) & (points[:, 0] <= block_max[0])
@@ -178,7 +184,7 @@ class DenmarkDatasetTrain(DenmarkDatasetBase):
         return selected_points, selected_labels
 
     def __len__(self):
-        return np.sum(self.n_point_rooms)
+        return len(self.room_idxs)
 
 
 class DenmarkDatasetTest(DenmarkDatasetBase):
@@ -244,7 +250,7 @@ class DenmarkDatasetTest(DenmarkDatasetBase):
 def center_block(points):
     # center the samples around the center point
     selected_points = np.copy(points)  # make sure we work on a copy
-    selected_points[:, :3] -= selected_points[:, :3].mean(0)
+    selected_points[:, :3] -= np.median(selected_points[:, :3], 0)
 
     # TODO see if this is better or worse
     # selected_points[:, :2] -= center # consider using the mean here
@@ -363,7 +369,7 @@ if __name__ == '__main__':
     # verify denorm works
     xx = pd.read_csv(os.path.join(data_root, "test", point_data_test.room_names[0]), sep=" ", header=None).values
     print(f"Scaled points close to original: {np.isclose(xx[:, :3], point_data_test.room_points[0]).all()}")
-    print(f"Descale close to original: {np.isclose(xx[:, :3], point_data_test.get_descale_dataset()[0]).all()}")
+    print(f"Descale close to original: {np.isclose(xx[:, :3], point_data_test.get_descaled_dataset()[0]).all()}")
 
     # test if iterating through data throws errors
     for x in point_data_test: break
