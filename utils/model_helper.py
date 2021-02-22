@@ -110,6 +110,8 @@ class TestModel:
                 # TODO there might be a faster way to do this
                 for bi in range(bs):
                     point_idx, room_idx = point_idxs[bi], room_idxs[bi]
+                    if len(point_idx) == 1:  # edge case if there is only one point in the sample
+                        point_idx = [point_idx]
                     predictions[room_idx][point_idx] += seg_pred[bi].cpu().numpy()
                     n_pred[room_idx][point_idx] += 1
 
