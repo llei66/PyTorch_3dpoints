@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from torch.cuda import is_available
 from torch.utils.data import Dataset, DataLoader
-
+import warnings
 CLASSES = ['ground', 'vegetation', 'building', 'water']
 
 
@@ -133,6 +133,7 @@ class DublinDatasetBase(Dataset):
         if point_idxs.size >= self.points_per_sample:
             # take closest to center points
             # TODO this might compromise the block size but at least doesn't change the point density
+            warnings.filterwarnings("ignore")
             nn = NearestNeighbors(self.points_per_sample, algorithm="brute")
             nn.fit(points[point_idxs][:, :2])
             idx = nn.kneighbors(center[None, :], return_distance=False)[0]
