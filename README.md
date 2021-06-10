@@ -1,3 +1,19 @@
+# Train on geodata
+
+- data path
+[erda](https://sid.erda.dk/cgi-sid/ls.py?share_id=AQVJvwJd1J)  DeepCrop/Datasets/GeoData/202105_train_test_val_set_whole_class/  
+
+- train scrpts
+> sh sh/SB_pointnet_geo.sh [pointnet]
+> sh sh/SB_KPConv_geo.sh
+
+- test and visulate [TODO]
+- Notebook [TODO]
+
+
+- **the detail about environment and usage as follow**
+
+
 <p align="center">
   <img width="40%" src="https://raw.githubusercontent.com/nicolas-chaulet/torch-points3d/master/docs/logo.png" />
 </p>
