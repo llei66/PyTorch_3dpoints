@@ -5,7 +5,10 @@
 
 - train scrpts
 > sh sh/SB_pointnet_geo.sh [pointnet]
-> sh sh/SB_KPConv_geo.sh
+
+> sh sh/SB_KPConv_geo.sh [kpconv]
+
+> sh sh/SB_minkowski_geo.sh [minkoski]
 
 - test and visulate [TODO]
 - Notebook [TODO]
