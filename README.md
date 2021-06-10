@@ -1,3 +1,13 @@
+## Train on geodata
+
+- data path
+[erda](https://sid.erda.dk/cgi-sid/ls.py?share_id=AQVJvwJd1J)  DeepCrop/Datasets/GeoData/202105_train_test_val_set_whole_class/  
+
+> python train_geodata.py
+
+- **the detail about the parameter could be used**
+
+
 
 ![Intro figure](https://github.com/HuguesTHOMAS/KPConv-PyTorch/blob/master/doc/Github_intro.png)
 
