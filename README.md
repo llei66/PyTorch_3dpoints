@@ -4,6 +4,11 @@
 ```
 This branch is to simplify the whole pipeline. 
 We add the Geodata and dublindata training, especially the Geodata.
+
+git branch -m test_ll pointnet_pointnet2
+git fetch origin
+git branch -u origin/pointnet_pointnet2 pointnet_pointnet2
+git remote set-head origin -a
 ```
 ###  Environment
 
