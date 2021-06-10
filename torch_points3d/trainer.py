@@ -26,7 +26,6 @@ from torch_points3d.utils.colors import COLORS
 from torch_points3d.utils.wandb_utils import Wandb
 from torch_points3d.visualization import Visualizer
 
-log = logging.getLogger(__name__)
 
 
 class Trainer:
