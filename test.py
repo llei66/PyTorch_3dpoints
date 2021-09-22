@@ -1,10 +1,5 @@
 import argparse
 import os
-# from data_utils.S3DISDataLoader import S3DISDataset
-# from data_utils.DeDataLoader_600 import S3DISDataset
-
-# from data_utils.ign_dataset_BN1 import GeoData_crop_1
-from data_utils.ign_dataset_BN1_point_rgb import GeoData_crop_1
 
 # from models.pointnet_reg import
 from torch.utils.tensorboard import SummaryWriter
@@ -17,12 +12,13 @@ import sys
 import importlib
 import shutil
 from tqdm import tqdm
-import provider
 import numpy as np
 import time
 import pdb
 
 from sklearn.metrics import r2_score
+
+from data_utils.biomass_dataset import BiomassDataset
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -40,12 +36,11 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='GPU to use [default: GPU 0]')
     parser.add_argument('--optimizer', type=str, default='Adam', help='Adam or SGD [default: Adam]')
     parser.add_argument('--log_dir', type=str, default=None, help='Log path [default: None]')
+    parser.add_argument('--data_dir', type=str, default="./data", help='data path [default: ./data]')
     parser.add_argument('--decay_rate', type=float, default=1e-4, help='weight decay [default: 1e-4]')
     parser.add_argument('--npoint', type=int,  default=4096, help='Point Number [default: 4096]')
     parser.add_argument('--step_size', type=int,  default=80, help='Decay step for lr decay [default: every 10 epochs]')
     parser.add_argument('--lr_decay', type=float,  default=0.7, help='Decay rate for lr decay [default: 0.7]')
-    parser.add_argument('--test_area', type=int, default=5, help='Which area to use for test, option: 1-6 [default: 5]')
-    parser.add_argument('--test_epoch', type=str, default='best_', help='Which area to use for test, option: 1-6 [default: 5]')
 
     return parser.parse_args()
 
@@ -99,27 +94,27 @@ def main(args):
     # NUM_POINT
 
     print("start loading training data ...")
-    TRAIN_DATASET = GeoData_crop_1(split='train', data_root=root, num_point=NUM_POINT,  block_size=Block_size, transform=None)
+    train_dataset = BiomassDataset(args.data_dir, "train_split.csv")
     print("start loading test data ...")
-    TEST_DATASET = GeoData_crop_1(split='test', data_root=test_root, num_point=NUM_POINT,  block_size=Block_size, transform=None)
-    trainDataLoader = torch.utils.data.DataLoader(TRAIN_DATASET, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, pin_memory=True, drop_last=True, worker_init_fn = lambda x: np.random.seed(x+int(time.time())))
-    testDataLoader = torch.utils.data.DataLoader(TEST_DATASET, batch_size=BATCH_SIZE, shuffle=False, num_workers=4, pin_memory=True, drop_last=True)
+    val_dataset = BiomassDataset(args.data_dir, "val_split.csv")
+    train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, pin_memory=True, drop_last=True, worker_init_fn = lambda x: np.random.seed(x+int(time.time())))
+    val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=4, pin_memory=True, drop_last=True)
 
     # weights = torch.Tensor([1,1,1,1]).cude()
 
-    log_string("The number of training data is: %d" % len(TRAIN_DATASET))
-    log_string("The number of test data is: %d" % len(TEST_DATASET))
+    log_string("The number of training data is: %d" % len(train_dataset))
+    log_string("The number of test data is: %d" % len(val_dataset))
 
     '''MODEL LOADING'''
-    MODEL = importlib.import_module(args.model)
+    model = importlib.import_module(args.model)
     shutil.copy('models/%s.py' % args.model, str(experiment_dir))
     shutil.copy('models/pointnet_util.py', str(experiment_dir))
 
     # classifier = MODEL.get_model(NUM_CLASSES).cuda()
     Block_num = 1
-    classifier = MODEL.get_model(Block_num).cuda()
+    classifier = model.get_model(Block_num).cuda()
 
-    criterion = MODEL.get_loss().cuda()
+    criterion = model.get_loss().cuda()
     # criterion = r2_loss().cuda()
 
 
@@ -138,7 +133,7 @@ def main(args):
     target_all = list()
     reg_all = list()
     with torch.no_grad():
-        num_batches = len(testDataLoader)
+        num_batches = len(val_data_loader)
 
         # num_batches = len(trainDataLoader)
         # total_correct = 0
