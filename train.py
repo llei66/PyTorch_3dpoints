@@ -2,6 +2,7 @@ import argparse
 import os
 
 import numpy as np
+from sklearn import metrics
 
 from data_utils.biomass_dataset import BiomassDataset
 from models.regression_model import get_model
@@ -40,14 +41,11 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=16, help='Batch Size during training [default: 16]')
     parser.add_argument('--epoch', default=300, type=int, help='Epoch to run [default: 128]')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='Initial learning rate [default: 0.001]')
-    parser.add_argument('--gpu', type=str, default='0', help='GPU to use [default: GPU 0]')
     parser.add_argument('--optimizer', type=str, default='Adam', help='Adam or SGD [default: Adam]')
     parser.add_argument('--log_dir', type=str, default=None, help='Log path [default: None]')
     parser.add_argument('--data_dir', type=str, default=None, help='data path [default: ./data]')
     parser.add_argument('--decay_rate', type=float, default=1e-4, help='weight decay [default: 1e-4]')
     parser.add_argument('--npoint', type=int, default=4096, help='Point Number [default: 4096]')
-    parser.add_argument('--step_size', type=int, default=80, help='Decay step for lr decay [default: every 10 epochs]')
-    parser.add_argument('--lr_decay', type=float, default=0.7, help='Decay rate for lr decay [default: 0.7]')
 
     return parser.parse_args()
 
@@ -111,13 +109,6 @@ def main(args):
 
     criterion = torch.nn.SmoothL1Loss()
 
-    # criterion = r2_loss().cuda()
-    #     checkpoint = torch.load('log/reg/rgn_point_rgb_old/checkpoints/best_model.pth')
-    #     # start_epoch = checkpoint['epoch']
-    #     classifier.load_state_dict(checkpoint['model_state_dict'])
-    #     log_string('Use pretrain model')
-    #     start_epoch = 0
-
     def weights_init(m):
         classname = m.__class__.__name__
         if classname.find('Conv2d') != -1:
@@ -165,26 +156,24 @@ def main(args):
         loss_sum = 0
 
         model = model.train()
-        for data in tqdm(train_data_loader, total=len(train_data_loader), smoothing=0.9):
+        pbar = tqdm(train_data_loader, total=len(train_data_loader), smoothing=0.9)
+        for data in pbar:
             points, target, features, machines, year_diff, files = data
-            # points[:,:, :3] = provider.rotate_point_cloud_z(points[:,:, :3])
-
-            import ipdb; ipdb.set_trace()
 
             points, target = points.to(device), target.float().to(device)
             optimizer.zero_grad()
-            reg_pred, trans_feat = points(points)
+            reg_pred, trans_feat = model(points)
 
-            loss = criterion(reg_pred, target)
+            loss = criterion(reg_pred.squeeze(1), target)
             loss.backward()
             optimizer.step()
+            pbar.set_postfix_str(f"loss: {loss.item():.3f}")
             loss_sum += loss
         avl_loss = loss_sum / num_batches
 
         writer.add_scalar('Train_Loss', avl_loss, epoch)
 
         log_string('==========Training mean loss: %f ================' % (avl_loss))
-        # log_string('Training accuracy: %f' % (total_correct / float(total_seen)))
 
         if epoch % 50 == 0:
             logger.info('Save model...')
@@ -199,41 +188,35 @@ def main(args):
             torch.save(state, savepath)
             log_string('Saving model....')
 
-        '''Evaluate on chopped scenes'''
+        '''Evaluate'''
         with torch.no_grad():
             num_batches = len(val_data_loader)
-            # total_correct = 0
-            # total_seen = 0
-            loss_sum = 0
-            log_string('---- EPOCH %03d EVALUATION ----' % (global_epoch + 1))
-            for i, data in tqdm(enumerate(val_data_loader), total=len(val_data_loader), smoothing=0.9):
-                points, target = data
-                points = points.data.numpy()
-                points = torch.Tensor(points)
-                # target to tensor
-                target = target.data.numpy()
-                target = torch.Tensor(target)
-                points, target = points.float().cuda(), target.long().cuda()
-                points = points.transpose(2, 1)
-                model = model.eval()
-                reg_pred, trans_feat = model(points)
-                # pred_val = reg_pred.contiguous().cpu().data.numpy()
-                reg_pred = reg_pred.contiguous().view(-1)
-                batch_label = target.cpu().data.numpy()
-                # target = target.view(-1, 1)[:, 0]
 
-                target = target[:, 0]
+            print("this is samples num:", num_batches)
 
-                loss = criterion(reg_pred, target.float(), trans_feat)
-                loss_sum += loss
-            avl_loss = loss_sum / num_batches
-            log_string('===================Test mean loss: %f==============' % (avl_loss))
+            # for i, data in tqdm(enumerate(trainDataLoader), total=len(trainDataLoader), smoothing=0.9):
 
-            writer.add_scalar('Test_Loss', avl_loss, epoch)
+            preds = []
+            ys = []
+            pbar = tqdm(val_data_loader, total=len(val_data_loader), smoothing=0.9)
+            model = model.eval()
+            for data in pbar:
+                points, target, features, machines, year_diff, files = data
+                points, target = points.to(device), target.float().to(device)
+                pred, trans_feat = model(points)
+                pred = pred.squeeze(1)
+                ys.append(target.cpu().numpy())
+                preds.append(pred.cpu().numpy())
+            preds = np.concatenate(preds, 0)
+            ys = np.concatenate(ys, 0)
 
-            # log_string('eval mean loss: %f' % (loss_sum / float(num_batches)))
-            if avl_loss <= best_loss:
-                best_loss = avl_loss
+            test_rmse_score = metrics.mean_squared_error(preds, ys, squared=False)
+            log_string('===================Test RMSE: %f==============' % (test_rmse_score))
+
+            writer.add_scalar('Test_Loss', test_rmse_score, epoch)
+
+            if test_rmse_score <= best_loss:
+                best_loss = test_rmse_score
                 best_epoch = epoch
 
                 logger.info('Save model...')

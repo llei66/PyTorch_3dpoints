@@ -6,13 +6,14 @@ from pathlib import Path
 
 
 class BiomassDataset(Dataset):
-    def __init__(self, root: Path, file_name, x_radius=15., y_radius=15., z_radius=20.):
+    def __init__(self, root: Path, file_name, n_points: int = 4048, x_radius=15., y_radius=15., z_radius=20.):
         super().__init__()
         self.df = pd.read_csv(root / file_name)
         # difference between measurement and pointclouds taken
         self.df.eval("year_diff =  year - super", inplace=True)
         self.las_folder = root
         self.radius = np.array([[x_radius, y_radius, z_radius]])
+        self.n_points = n_points
 
     def __len__(self):
         return len(self.df)
@@ -45,8 +46,17 @@ class BiomassDataset(Dataset):
         # target
         y = df.BMbg_ha
 
+        # get fixed amount of points (TODO this should not happen later)
+        replace = len(x) < self.n_points
+        p_idx = np.arange(len(x))
+        p_idx = np.random.choice(p_idx, self.n_points, replace=replace)
+        x = x[p_idx]
+        features = features[p_idx]
+
+        x = x.astype(np.float32).transpose(1, 0)
+        features = features.astype(np.float32).transpose(1, 0)
+
         # TODO augmentations
-        x.astype(np.float32)
 
         return x, y, features, machine, year_diff, df.las_file
 
@@ -62,8 +72,8 @@ def test():
     dataset = BiomassDataset(root, "train_split.csv")
     for i, (x, y, features, machine, year_diff, las_file) in enumerate(dataset):
         print(f"sample: {i}\n"
-              f"\tmax values \tx: {x.max(0)}\n"
-              f"\tmin values \tx: {x.min(0)}\n"
+              f"\tmax values \tx: {x.max(1)}\n"
+              f"\tmin values \tx: {x.min(1)}\n"
               f"\tbio mass \t{y}\n"
               f"\tmachine \t {machine}\n"
               f"\tyear diff \t {year_diff}\n"
@@ -71,6 +81,10 @@ def test():
 
         if i == 10:
             break
+
+    for i, (x, y, features, machine, year_diff, las_file) in enumerate(dataset):
+        if x.shape[0] == 0: raise Exception(f"empty las file: {las_file}")
+        continue
 
 
 if __name__ == "__main__":
