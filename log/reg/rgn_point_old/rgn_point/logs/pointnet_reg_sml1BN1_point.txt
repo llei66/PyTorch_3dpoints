@@ -1,0 +1,699 @@
+2021-05-26 23:38:07,819 - Model - INFO - PARAMETER ...
+2021-05-26 23:38:07,819 - Model - INFO - Namespace(batch_size=1, decay_rate=0.0001, epoch=100, gpu='0', learning_rate=1e-06, log_dir='rgn_point', lr_decay=0.7, model='pointnet_reg_sml1BN1_point', npoint=400, optimizer='Adam', step_size=2)
+2021-05-26 23:38:08,153 - Model - INFO - The number of training data is: 45
+2021-05-26 23:38:08,153 - Model - INFO - The number of test data is: 21
+2021-05-26 23:38:09,591 - Model - INFO - **** Epoch 1 (1/100) ****
+2021-05-26 23:38:09,591 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:10,086 - Model - INFO - ==========Training mean loss: 0.453300 ================
+2021-05-26 23:38:10,087 - Model - INFO - Save model...
+2021-05-26 23:38:10,087 - Model - INFO - Saving at log/reg/rgn_point/checkpoints/0model.pth
+2021-05-26 23:38:10,114 - Model - INFO - Saving model....
+2021-05-26 23:38:10,114 - Model - INFO - ---- EPOCH 001 EVALUATION ----
+2021-05-26 23:38:10,272 - Model - INFO - =================== Test mean loss: 0.212349 ==============
+2021-05-26 23:38:10,272 - Model - INFO - Save model...
+2021-05-26 23:38:10,273 - Model - INFO - Saving at log/reg/rgn_point/checkpoints/best_model.pth
+2021-05-26 23:38:10,299 - Model - INFO - Saving model....
+2021-05-26 23:38:10,299 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:10,299 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:10,299 - Model - INFO - **** Epoch 2 (2/100) ****
+2021-05-26 23:38:10,299 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:10,788 - Model - INFO - ==========Training mean loss: 0.374857 ================
+2021-05-26 23:38:10,788 - Model - INFO - ---- EPOCH 002 EVALUATION ----
+2021-05-26 23:38:10,947 - Model - INFO - =================== Test mean loss: 0.225982 ==============
+2021-05-26 23:38:10,947 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:10,947 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:10,948 - Model - INFO - **** Epoch 3 (3/100) ****
+2021-05-26 23:38:10,948 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:11,431 - Model - INFO - ==========Training mean loss: 0.378064 ================
+2021-05-26 23:38:11,431 - Model - INFO - ---- EPOCH 003 EVALUATION ----
+2021-05-26 23:38:11,590 - Model - INFO - =================== Test mean loss: 0.240590 ==============
+2021-05-26 23:38:11,591 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:11,591 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:11,591 - Model - INFO - **** Epoch 4 (4/100) ****
+2021-05-26 23:38:11,591 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:12,081 - Model - INFO - ==========Training mean loss: 0.365639 ================
+2021-05-26 23:38:12,081 - Model - INFO - ---- EPOCH 004 EVALUATION ----
+2021-05-26 23:38:12,240 - Model - INFO - =================== Test mean loss: 0.247539 ==============
+2021-05-26 23:38:12,241 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:12,241 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:12,241 - Model - INFO - **** Epoch 5 (5/100) ****
+2021-05-26 23:38:12,241 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:12,720 - Model - INFO - ==========Training mean loss: 0.353809 ================
+2021-05-26 23:38:12,720 - Model - INFO - ---- EPOCH 005 EVALUATION ----
+2021-05-26 23:38:12,881 - Model - INFO - =================== Test mean loss: 0.256524 ==============
+2021-05-26 23:38:12,882 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:12,882 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:12,882 - Model - INFO - **** Epoch 6 (6/100) ****
+2021-05-26 23:38:12,882 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:13,374 - Model - INFO - ==========Training mean loss: 0.363572 ================
+2021-05-26 23:38:13,374 - Model - INFO - ---- EPOCH 006 EVALUATION ----
+2021-05-26 23:38:13,533 - Model - INFO - =================== Test mean loss: 0.253285 ==============
+2021-05-26 23:38:13,534 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:13,534 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:13,534 - Model - INFO - **** Epoch 7 (7/100) ****
+2021-05-26 23:38:13,534 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:14,019 - Model - INFO - ==========Training mean loss: 0.353380 ================
+2021-05-26 23:38:14,019 - Model - INFO - ---- EPOCH 007 EVALUATION ----
+2021-05-26 23:38:14,180 - Model - INFO - =================== Test mean loss: 0.271974 ==============
+2021-05-26 23:38:14,181 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:14,181 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:14,181 - Model - INFO - **** Epoch 8 (8/100) ****
+2021-05-26 23:38:14,181 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:14,667 - Model - INFO - ==========Training mean loss: 0.351145 ================
+2021-05-26 23:38:14,667 - Model - INFO - ---- EPOCH 008 EVALUATION ----
+2021-05-26 23:38:14,825 - Model - INFO - =================== Test mean loss: 0.257473 ==============
+2021-05-26 23:38:14,826 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:14,826 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:14,826 - Model - INFO - **** Epoch 9 (9/100) ****
+2021-05-26 23:38:14,826 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:15,310 - Model - INFO - ==========Training mean loss: 0.327591 ================
+2021-05-26 23:38:15,310 - Model - INFO - ---- EPOCH 009 EVALUATION ----
+2021-05-26 23:38:15,471 - Model - INFO - =================== Test mean loss: 0.270028 ==============
+2021-05-26 23:38:15,472 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:15,472 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:15,472 - Model - INFO - **** Epoch 10 (10/100) ****
+2021-05-26 23:38:15,472 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:15,971 - Model - INFO - ==========Training mean loss: 0.348422 ================
+2021-05-26 23:38:15,971 - Model - INFO - ---- EPOCH 010 EVALUATION ----
+2021-05-26 23:38:16,134 - Model - INFO - =================== Test mean loss: 0.259339 ==============
+2021-05-26 23:38:16,135 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:16,135 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:16,135 - Model - INFO - **** Epoch 11 (11/100) ****
+2021-05-26 23:38:16,135 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:16,674 - Model - INFO - ==========Training mean loss: 0.328662 ================
+2021-05-26 23:38:16,675 - Model - INFO - ---- EPOCH 011 EVALUATION ----
+2021-05-26 23:38:16,882 - Model - INFO - =================== Test mean loss: 0.263988 ==============
+2021-05-26 23:38:16,883 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:16,883 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:16,883 - Model - INFO - **** Epoch 12 (12/100) ****
+2021-05-26 23:38:16,883 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:17,399 - Model - INFO - ==========Training mean loss: 0.353382 ================
+2021-05-26 23:38:17,399 - Model - INFO - ---- EPOCH 012 EVALUATION ----
+2021-05-26 23:38:17,612 - Model - INFO - =================== Test mean loss: 0.267224 ==============
+2021-05-26 23:38:17,612 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:17,613 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:17,613 - Model - INFO - **** Epoch 13 (13/100) ****
+2021-05-26 23:38:17,613 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:18,105 - Model - INFO - ==========Training mean loss: 0.334435 ================
+2021-05-26 23:38:18,105 - Model - INFO - ---- EPOCH 013 EVALUATION ----
+2021-05-26 23:38:18,279 - Model - INFO - =================== Test mean loss: 0.247659 ==============
+2021-05-26 23:38:18,280 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:18,280 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:18,280 - Model - INFO - **** Epoch 14 (14/100) ****
+2021-05-26 23:38:18,280 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:18,787 - Model - INFO - ==========Training mean loss: 0.345688 ================
+2021-05-26 23:38:18,787 - Model - INFO - ---- EPOCH 014 EVALUATION ----
+2021-05-26 23:38:18,982 - Model - INFO - =================== Test mean loss: 0.254123 ==============
+2021-05-26 23:38:18,983 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:18,983 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:18,983 - Model - INFO - **** Epoch 15 (15/100) ****
+2021-05-26 23:38:18,983 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:19,503 - Model - INFO - ==========Training mean loss: 0.357520 ================
+2021-05-26 23:38:19,503 - Model - INFO - ---- EPOCH 015 EVALUATION ----
+2021-05-26 23:38:19,688 - Model - INFO - =================== Test mean loss: 0.240887 ==============
+2021-05-26 23:38:19,689 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:19,689 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:19,689 - Model - INFO - **** Epoch 16 (16/100) ****
+2021-05-26 23:38:19,689 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:20,193 - Model - INFO - ==========Training mean loss: 0.350408 ================
+2021-05-26 23:38:20,193 - Model - INFO - ---- EPOCH 016 EVALUATION ----
+2021-05-26 23:38:20,371 - Model - INFO - =================== Test mean loss: 0.259907 ==============
+2021-05-26 23:38:20,372 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:20,372 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:20,372 - Model - INFO - **** Epoch 17 (17/100) ****
+2021-05-26 23:38:20,372 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:20,881 - Model - INFO - ==========Training mean loss: 0.338109 ================
+2021-05-26 23:38:20,882 - Model - INFO - ---- EPOCH 017 EVALUATION ----
+2021-05-26 23:38:21,065 - Model - INFO - =================== Test mean loss: 0.234913 ==============
+2021-05-26 23:38:21,066 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:21,066 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:21,066 - Model - INFO - **** Epoch 18 (18/100) ****
+2021-05-26 23:38:21,066 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:21,569 - Model - INFO - ==========Training mean loss: 0.333093 ================
+2021-05-26 23:38:21,569 - Model - INFO - ---- EPOCH 018 EVALUATION ----
+2021-05-26 23:38:21,729 - Model - INFO - =================== Test mean loss: 0.245284 ==============
+2021-05-26 23:38:21,730 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:21,731 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:21,731 - Model - INFO - **** Epoch 19 (19/100) ****
+2021-05-26 23:38:21,731 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:22,219 - Model - INFO - ==========Training mean loss: 0.340850 ================
+2021-05-26 23:38:22,219 - Model - INFO - ---- EPOCH 019 EVALUATION ----
+2021-05-26 23:38:22,381 - Model - INFO - =================== Test mean loss: 0.244236 ==============
+2021-05-26 23:38:22,382 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:22,382 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:22,382 - Model - INFO - **** Epoch 20 (20/100) ****
+2021-05-26 23:38:22,382 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:22,869 - Model - INFO - ==========Training mean loss: 0.344667 ================
+2021-05-26 23:38:22,870 - Model - INFO - ---- EPOCH 020 EVALUATION ----
+2021-05-26 23:38:23,034 - Model - INFO - =================== Test mean loss: 0.242289 ==============
+2021-05-26 23:38:23,035 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:23,035 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:23,035 - Model - INFO - **** Epoch 21 (21/100) ****
+2021-05-26 23:38:23,035 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:23,530 - Model - INFO - ==========Training mean loss: 0.327779 ================
+2021-05-26 23:38:23,531 - Model - INFO - ---- EPOCH 021 EVALUATION ----
+2021-05-26 23:38:23,692 - Model - INFO - =================== Test mean loss: 0.244523 ==============
+2021-05-26 23:38:23,692 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:23,692 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:23,692 - Model - INFO - **** Epoch 22 (22/100) ****
+2021-05-26 23:38:23,693 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:24,186 - Model - INFO - ==========Training mean loss: 0.347091 ================
+2021-05-26 23:38:24,186 - Model - INFO - ---- EPOCH 022 EVALUATION ----
+2021-05-26 23:38:24,348 - Model - INFO - =================== Test mean loss: 0.224746 ==============
+2021-05-26 23:38:24,349 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:24,349 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:24,349 - Model - INFO - **** Epoch 23 (23/100) ****
+2021-05-26 23:38:24,349 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:24,853 - Model - INFO - ==========Training mean loss: 0.325522 ================
+2021-05-26 23:38:24,854 - Model - INFO - ---- EPOCH 023 EVALUATION ----
+2021-05-26 23:38:25,017 - Model - INFO - =================== Test mean loss: 0.236019 ==============
+2021-05-26 23:38:25,018 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:25,018 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:25,018 - Model - INFO - **** Epoch 24 (24/100) ****
+2021-05-26 23:38:25,018 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:25,507 - Model - INFO - ==========Training mean loss: 0.328317 ================
+2021-05-26 23:38:25,507 - Model - INFO - ---- EPOCH 024 EVALUATION ----
+2021-05-26 23:38:25,689 - Model - INFO - =================== Test mean loss: 0.232142 ==============
+2021-05-26 23:38:25,690 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:25,690 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:25,690 - Model - INFO - **** Epoch 25 (25/100) ****
+2021-05-26 23:38:25,690 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:26,189 - Model - INFO - ==========Training mean loss: 0.342423 ================
+2021-05-26 23:38:26,189 - Model - INFO - ---- EPOCH 025 EVALUATION ----
+2021-05-26 23:38:26,361 - Model - INFO - =================== Test mean loss: 0.234263 ==============
+2021-05-26 23:38:26,361 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:26,361 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:26,361 - Model - INFO - **** Epoch 26 (26/100) ****
+2021-05-26 23:38:26,361 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:26,853 - Model - INFO - ==========Training mean loss: 0.325616 ================
+2021-05-26 23:38:26,854 - Model - INFO - ---- EPOCH 026 EVALUATION ----
+2021-05-26 23:38:27,029 - Model - INFO - =================== Test mean loss: 0.229778 ==============
+2021-05-26 23:38:27,030 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:27,030 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:27,030 - Model - INFO - **** Epoch 27 (27/100) ****
+2021-05-26 23:38:27,030 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:27,541 - Model - INFO - ==========Training mean loss: 0.325126 ================
+2021-05-26 23:38:27,541 - Model - INFO - ---- EPOCH 027 EVALUATION ----
+2021-05-26 23:38:27,728 - Model - INFO - =================== Test mean loss: 0.225556 ==============
+2021-05-26 23:38:27,728 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:27,729 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:27,729 - Model - INFO - **** Epoch 28 (28/100) ****
+2021-05-26 23:38:27,729 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:28,227 - Model - INFO - ==========Training mean loss: 0.331472 ================
+2021-05-26 23:38:28,227 - Model - INFO - ---- EPOCH 028 EVALUATION ----
+2021-05-26 23:38:28,427 - Model - INFO - =================== Test mean loss: 0.219766 ==============
+2021-05-26 23:38:28,428 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:28,428 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:28,428 - Model - INFO - **** Epoch 29 (29/100) ****
+2021-05-26 23:38:28,428 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:28,921 - Model - INFO - ==========Training mean loss: 0.316353 ================
+2021-05-26 23:38:28,921 - Model - INFO - ---- EPOCH 029 EVALUATION ----
+2021-05-26 23:38:29,104 - Model - INFO - =================== Test mean loss: 0.217661 ==============
+2021-05-26 23:38:29,105 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:29,105 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:29,105 - Model - INFO - **** Epoch 30 (30/100) ****
+2021-05-26 23:38:29,105 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:29,607 - Model - INFO - ==========Training mean loss: 0.316705 ================
+2021-05-26 23:38:29,607 - Model - INFO - ---- EPOCH 030 EVALUATION ----
+2021-05-26 23:38:29,780 - Model - INFO - =================== Test mean loss: 0.222469 ==============
+2021-05-26 23:38:29,781 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:29,781 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:29,781 - Model - INFO - **** Epoch 31 (31/100) ****
+2021-05-26 23:38:29,781 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:30,314 - Model - INFO - ==========Training mean loss: 0.303683 ================
+2021-05-26 23:38:30,314 - Model - INFO - ---- EPOCH 031 EVALUATION ----
+2021-05-26 23:38:30,472 - Model - INFO - =================== Test mean loss: 0.213389 ==============
+2021-05-26 23:38:30,472 - Model - INFO - Best loss: 0.212349
+2021-05-26 23:38:30,472 - Model - INFO - Best loss epoch: 0.000000
+2021-05-26 23:38:30,473 - Model - INFO - **** Epoch 32 (32/100) ****
+2021-05-26 23:38:30,473 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:30,962 - Model - INFO - ==========Training mean loss: 0.307803 ================
+2021-05-26 23:38:30,962 - Model - INFO - ---- EPOCH 032 EVALUATION ----
+2021-05-26 23:38:31,124 - Model - INFO - =================== Test mean loss: 0.208040 ==============
+2021-05-26 23:38:31,125 - Model - INFO - Save model...
+2021-05-26 23:38:31,125 - Model - INFO - Saving at log/reg/rgn_point/checkpoints/best_model.pth
+2021-05-26 23:38:31,409 - Model - INFO - Saving model....
+2021-05-26 23:38:31,410 - Model - INFO - Best loss: 0.208040
+2021-05-26 23:38:31,410 - Model - INFO - Best loss epoch: 31.000000
+2021-05-26 23:38:31,411 - Model - INFO - **** Epoch 33 (33/100) ****
+2021-05-26 23:38:31,411 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:31,945 - Model - INFO - ==========Training mean loss: 0.307749 ================
+2021-05-26 23:38:31,945 - Model - INFO - ---- EPOCH 033 EVALUATION ----
+2021-05-26 23:38:32,136 - Model - INFO - =================== Test mean loss: 0.206640 ==============
+2021-05-26 23:38:32,137 - Model - INFO - Save model...
+2021-05-26 23:38:32,137 - Model - INFO - Saving at log/reg/rgn_point/checkpoints/best_model.pth
+2021-05-26 23:38:32,183 - Model - INFO - Saving model....
+2021-05-26 23:38:32,184 - Model - INFO - Best loss: 0.206640
+2021-05-26 23:38:32,184 - Model - INFO - Best loss epoch: 32.000000
+2021-05-26 23:38:32,184 - Model - INFO - **** Epoch 34 (34/100) ****
+2021-05-26 23:38:32,184 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:32,670 - Model - INFO - ==========Training mean loss: 0.298988 ================
+2021-05-26 23:38:32,670 - Model - INFO - ---- EPOCH 034 EVALUATION ----
+2021-05-26 23:38:32,877 - Model - INFO - =================== Test mean loss: 0.202851 ==============
+2021-05-26 23:38:32,878 - Model - INFO - Save model...
+2021-05-26 23:38:32,878 - Model - INFO - Saving at log/reg/rgn_point/checkpoints/best_model.pth
+2021-05-26 23:38:32,916 - Model - INFO - Saving model....
+2021-05-26 23:38:32,916 - Model - INFO - Best loss: 0.202851
+2021-05-26 23:38:32,916 - Model - INFO - Best loss epoch: 33.000000
+2021-05-26 23:38:32,916 - Model - INFO - **** Epoch 35 (35/100) ****
+2021-05-26 23:38:32,916 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:33,415 - Model - INFO - ==========Training mean loss: 0.312689 ================
+2021-05-26 23:38:33,415 - Model - INFO - ---- EPOCH 035 EVALUATION ----
+2021-05-26 23:38:33,579 - Model - INFO - =================== Test mean loss: 0.194533 ==============
+2021-05-26 23:38:33,580 - Model - INFO - Save model...
+2021-05-26 23:38:33,580 - Model - INFO - Saving at log/reg/rgn_point/checkpoints/best_model.pth
+2021-05-26 23:38:33,682 - Model - INFO - Saving model....
+2021-05-26 23:38:33,682 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:33,683 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:33,683 - Model - INFO - **** Epoch 36 (36/100) ****
+2021-05-26 23:38:33,683 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:34,179 - Model - INFO - ==========Training mean loss: 0.288198 ================
+2021-05-26 23:38:34,179 - Model - INFO - ---- EPOCH 036 EVALUATION ----
+2021-05-26 23:38:34,341 - Model - INFO - =================== Test mean loss: 0.204718 ==============
+2021-05-26 23:38:34,341 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:34,341 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:34,341 - Model - INFO - **** Epoch 37 (37/100) ****
+2021-05-26 23:38:34,341 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:34,833 - Model - INFO - ==========Training mean loss: 0.266388 ================
+2021-05-26 23:38:34,833 - Model - INFO - ---- EPOCH 037 EVALUATION ----
+2021-05-26 23:38:34,992 - Model - INFO - =================== Test mean loss: 0.207898 ==============
+2021-05-26 23:38:34,993 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:34,993 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:34,993 - Model - INFO - **** Epoch 38 (38/100) ****
+2021-05-26 23:38:34,993 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:35,478 - Model - INFO - ==========Training mean loss: 0.283223 ================
+2021-05-26 23:38:35,478 - Model - INFO - ---- EPOCH 038 EVALUATION ----
+2021-05-26 23:38:35,647 - Model - INFO - =================== Test mean loss: 0.199958 ==============
+2021-05-26 23:38:35,649 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:35,649 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:35,649 - Model - INFO - **** Epoch 39 (39/100) ****
+2021-05-26 23:38:35,649 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:36,144 - Model - INFO - ==========Training mean loss: 0.290321 ================
+2021-05-26 23:38:36,144 - Model - INFO - ---- EPOCH 039 EVALUATION ----
+2021-05-26 23:38:36,306 - Model - INFO - =================== Test mean loss: 0.214449 ==============
+2021-05-26 23:38:36,306 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:36,306 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:36,307 - Model - INFO - **** Epoch 40 (40/100) ****
+2021-05-26 23:38:36,307 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:36,803 - Model - INFO - ==========Training mean loss: 0.276824 ================
+2021-05-26 23:38:36,803 - Model - INFO - ---- EPOCH 040 EVALUATION ----
+2021-05-26 23:38:36,966 - Model - INFO - =================== Test mean loss: 0.204379 ==============
+2021-05-26 23:38:36,967 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:36,967 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:36,967 - Model - INFO - **** Epoch 41 (41/100) ****
+2021-05-26 23:38:36,967 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:37,460 - Model - INFO - ==========Training mean loss: 0.258757 ================
+2021-05-26 23:38:37,460 - Model - INFO - ---- EPOCH 041 EVALUATION ----
+2021-05-26 23:38:37,623 - Model - INFO - =================== Test mean loss: 0.200647 ==============
+2021-05-26 23:38:37,624 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:37,624 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:37,624 - Model - INFO - **** Epoch 42 (42/100) ****
+2021-05-26 23:38:37,624 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:38,111 - Model - INFO - ==========Training mean loss: 0.272809 ================
+2021-05-26 23:38:38,111 - Model - INFO - ---- EPOCH 042 EVALUATION ----
+2021-05-26 23:38:38,270 - Model - INFO - =================== Test mean loss: 0.195004 ==============
+2021-05-26 23:38:38,271 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:38,271 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:38,271 - Model - INFO - **** Epoch 43 (43/100) ****
+2021-05-26 23:38:38,271 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:38,763 - Model - INFO - ==========Training mean loss: 0.263145 ================
+2021-05-26 23:38:38,763 - Model - INFO - ---- EPOCH 043 EVALUATION ----
+2021-05-26 23:38:38,927 - Model - INFO - =================== Test mean loss: 0.205531 ==============
+2021-05-26 23:38:38,928 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:38,928 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:38,928 - Model - INFO - **** Epoch 44 (44/100) ****
+2021-05-26 23:38:38,928 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:39,429 - Model - INFO - ==========Training mean loss: 0.272773 ================
+2021-05-26 23:38:39,429 - Model - INFO - ---- EPOCH 044 EVALUATION ----
+2021-05-26 23:38:39,587 - Model - INFO - =================== Test mean loss: 0.196746 ==============
+2021-05-26 23:38:39,588 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:39,588 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:39,588 - Model - INFO - **** Epoch 45 (45/100) ****
+2021-05-26 23:38:39,588 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:40,077 - Model - INFO - ==========Training mean loss: 0.259214 ================
+2021-05-26 23:38:40,077 - Model - INFO - ---- EPOCH 045 EVALUATION ----
+2021-05-26 23:38:40,237 - Model - INFO - =================== Test mean loss: 0.209597 ==============
+2021-05-26 23:38:40,238 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:40,238 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:40,238 - Model - INFO - **** Epoch 46 (46/100) ****
+2021-05-26 23:38:40,238 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:40,734 - Model - INFO - ==========Training mean loss: 0.243654 ================
+2021-05-26 23:38:40,734 - Model - INFO - ---- EPOCH 046 EVALUATION ----
+2021-05-26 23:38:40,893 - Model - INFO - =================== Test mean loss: 0.203744 ==============
+2021-05-26 23:38:40,893 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:40,893 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:40,894 - Model - INFO - **** Epoch 47 (47/100) ****
+2021-05-26 23:38:40,894 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:41,385 - Model - INFO - ==========Training mean loss: 0.236397 ================
+2021-05-26 23:38:41,385 - Model - INFO - ---- EPOCH 047 EVALUATION ----
+2021-05-26 23:38:41,545 - Model - INFO - =================== Test mean loss: 0.205204 ==============
+2021-05-26 23:38:41,546 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:41,546 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:41,546 - Model - INFO - **** Epoch 48 (48/100) ****
+2021-05-26 23:38:41,546 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:42,038 - Model - INFO - ==========Training mean loss: 0.233796 ================
+2021-05-26 23:38:42,039 - Model - INFO - ---- EPOCH 048 EVALUATION ----
+2021-05-26 23:38:42,200 - Model - INFO - =================== Test mean loss: 0.237112 ==============
+2021-05-26 23:38:42,201 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:42,201 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:42,201 - Model - INFO - **** Epoch 49 (49/100) ****
+2021-05-26 23:38:42,201 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:42,688 - Model - INFO - ==========Training mean loss: 0.232938 ================
+2021-05-26 23:38:42,688 - Model - INFO - ---- EPOCH 049 EVALUATION ----
+2021-05-26 23:38:42,848 - Model - INFO - =================== Test mean loss: 0.209112 ==============
+2021-05-26 23:38:42,849 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:42,849 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:42,849 - Model - INFO - **** Epoch 50 (50/100) ****
+2021-05-26 23:38:42,849 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:43,343 - Model - INFO - ==========Training mean loss: 0.220270 ================
+2021-05-26 23:38:43,343 - Model - INFO - ---- EPOCH 050 EVALUATION ----
+2021-05-26 23:38:43,502 - Model - INFO - =================== Test mean loss: 0.230785 ==============
+2021-05-26 23:38:43,503 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:43,503 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:43,503 - Model - INFO - **** Epoch 51 (51/100) ****
+2021-05-26 23:38:43,503 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:43,999 - Model - INFO - ==========Training mean loss: 0.235983 ================
+2021-05-26 23:38:43,999 - Model - INFO - Save model...
+2021-05-26 23:38:43,999 - Model - INFO - Saving at log/reg/rgn_point/checkpoints/50model.pth
+2021-05-26 23:38:44,028 - Model - INFO - Saving model....
+2021-05-26 23:38:44,028 - Model - INFO - ---- EPOCH 051 EVALUATION ----
+2021-05-26 23:38:44,189 - Model - INFO - =================== Test mean loss: 0.220098 ==============
+2021-05-26 23:38:44,189 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:44,190 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:44,190 - Model - INFO - **** Epoch 52 (52/100) ****
+2021-05-26 23:38:44,190 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:44,676 - Model - INFO - ==========Training mean loss: 0.206427 ================
+2021-05-26 23:38:44,677 - Model - INFO - ---- EPOCH 052 EVALUATION ----
+2021-05-26 23:38:44,838 - Model - INFO - =================== Test mean loss: 0.236079 ==============
+2021-05-26 23:38:44,839 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:44,839 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:44,839 - Model - INFO - **** Epoch 53 (53/100) ****
+2021-05-26 23:38:44,839 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:45,332 - Model - INFO - ==========Training mean loss: 0.211286 ================
+2021-05-26 23:38:45,333 - Model - INFO - ---- EPOCH 053 EVALUATION ----
+2021-05-26 23:38:45,492 - Model - INFO - =================== Test mean loss: 0.261742 ==============
+2021-05-26 23:38:45,493 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:45,493 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:45,493 - Model - INFO - **** Epoch 54 (54/100) ****
+2021-05-26 23:38:45,493 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:45,991 - Model - INFO - ==========Training mean loss: 0.212468 ================
+2021-05-26 23:38:45,991 - Model - INFO - ---- EPOCH 054 EVALUATION ----
+2021-05-26 23:38:46,152 - Model - INFO - =================== Test mean loss: 0.239676 ==============
+2021-05-26 23:38:46,153 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:46,153 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:46,153 - Model - INFO - **** Epoch 55 (55/100) ****
+2021-05-26 23:38:46,153 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:46,644 - Model - INFO - ==========Training mean loss: 0.197535 ================
+2021-05-26 23:38:46,644 - Model - INFO - ---- EPOCH 055 EVALUATION ----
+2021-05-26 23:38:46,804 - Model - INFO - =================== Test mean loss: 0.240374 ==============
+2021-05-26 23:38:46,805 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:46,805 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:46,805 - Model - INFO - **** Epoch 56 (56/100) ****
+2021-05-26 23:38:46,805 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:47,291 - Model - INFO - ==========Training mean loss: 0.210899 ================
+2021-05-26 23:38:47,291 - Model - INFO - ---- EPOCH 056 EVALUATION ----
+2021-05-26 23:38:47,454 - Model - INFO - =================== Test mean loss: 0.259827 ==============
+2021-05-26 23:38:47,455 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:47,455 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:47,455 - Model - INFO - **** Epoch 57 (57/100) ****
+2021-05-26 23:38:47,455 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:47,949 - Model - INFO - ==========Training mean loss: 0.205793 ================
+2021-05-26 23:38:47,950 - Model - INFO - ---- EPOCH 057 EVALUATION ----
+2021-05-26 23:38:48,108 - Model - INFO - =================== Test mean loss: 0.249846 ==============
+2021-05-26 23:38:48,109 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:48,109 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:48,109 - Model - INFO - **** Epoch 58 (58/100) ****
+2021-05-26 23:38:48,109 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:48,590 - Model - INFO - ==========Training mean loss: 0.183719 ================
+2021-05-26 23:38:48,590 - Model - INFO - ---- EPOCH 058 EVALUATION ----
+2021-05-26 23:38:48,752 - Model - INFO - =================== Test mean loss: 0.280782 ==============
+2021-05-26 23:38:48,753 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:48,753 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:48,753 - Model - INFO - **** Epoch 59 (59/100) ****
+2021-05-26 23:38:48,753 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:49,248 - Model - INFO - ==========Training mean loss: 0.200537 ================
+2021-05-26 23:38:49,249 - Model - INFO - ---- EPOCH 059 EVALUATION ----
+2021-05-26 23:38:49,410 - Model - INFO - =================== Test mean loss: 0.297039 ==============
+2021-05-26 23:38:49,411 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:49,411 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:49,411 - Model - INFO - **** Epoch 60 (60/100) ****
+2021-05-26 23:38:49,411 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:49,901 - Model - INFO - ==========Training mean loss: 0.207360 ================
+2021-05-26 23:38:49,902 - Model - INFO - ---- EPOCH 060 EVALUATION ----
+2021-05-26 23:38:50,062 - Model - INFO - =================== Test mean loss: 0.270341 ==============
+2021-05-26 23:38:50,063 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:50,063 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:50,063 - Model - INFO - **** Epoch 61 (61/100) ****
+2021-05-26 23:38:50,063 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:50,546 - Model - INFO - ==========Training mean loss: 0.201832 ================
+2021-05-26 23:38:50,547 - Model - INFO - ---- EPOCH 061 EVALUATION ----
+2021-05-26 23:38:50,709 - Model - INFO - =================== Test mean loss: 0.279569 ==============
+2021-05-26 23:38:50,710 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:50,710 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:50,710 - Model - INFO - **** Epoch 62 (62/100) ****
+2021-05-26 23:38:50,710 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:51,208 - Model - INFO - ==========Training mean loss: 0.175546 ================
+2021-05-26 23:38:51,208 - Model - INFO - ---- EPOCH 062 EVALUATION ----
+2021-05-26 23:38:51,388 - Model - INFO - =================== Test mean loss: 0.320152 ==============
+2021-05-26 23:38:51,389 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:51,389 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:51,389 - Model - INFO - **** Epoch 63 (63/100) ****
+2021-05-26 23:38:51,389 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:51,886 - Model - INFO - ==========Training mean loss: 0.190333 ================
+2021-05-26 23:38:51,886 - Model - INFO - ---- EPOCH 063 EVALUATION ----
+2021-05-26 23:38:52,057 - Model - INFO - =================== Test mean loss: 0.298646 ==============
+2021-05-26 23:38:52,058 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:52,058 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:52,058 - Model - INFO - **** Epoch 64 (64/100) ****
+2021-05-26 23:38:52,058 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:52,562 - Model - INFO - ==========Training mean loss: 0.195728 ================
+2021-05-26 23:38:52,562 - Model - INFO - ---- EPOCH 064 EVALUATION ----
+2021-05-26 23:38:52,728 - Model - INFO - =================== Test mean loss: 0.306619 ==============
+2021-05-26 23:38:52,728 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:52,728 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:52,729 - Model - INFO - **** Epoch 65 (65/100) ****
+2021-05-26 23:38:52,729 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:53,218 - Model - INFO - ==========Training mean loss: 0.188199 ================
+2021-05-26 23:38:53,219 - Model - INFO - ---- EPOCH 065 EVALUATION ----
+2021-05-26 23:38:53,398 - Model - INFO - =================== Test mean loss: 0.295667 ==============
+2021-05-26 23:38:53,399 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:53,399 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:53,399 - Model - INFO - **** Epoch 66 (66/100) ****
+2021-05-26 23:38:53,399 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:53,899 - Model - INFO - ==========Training mean loss: 0.182456 ================
+2021-05-26 23:38:53,900 - Model - INFO - ---- EPOCH 066 EVALUATION ----
+2021-05-26 23:38:54,098 - Model - INFO - =================== Test mean loss: 0.306452 ==============
+2021-05-26 23:38:54,099 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:54,099 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:54,099 - Model - INFO - **** Epoch 67 (67/100) ****
+2021-05-26 23:38:54,099 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:54,588 - Model - INFO - ==========Training mean loss: 0.181823 ================
+2021-05-26 23:38:54,588 - Model - INFO - ---- EPOCH 067 EVALUATION ----
+2021-05-26 23:38:54,747 - Model - INFO - =================== Test mean loss: 0.302069 ==============
+2021-05-26 23:38:54,747 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:54,747 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:54,748 - Model - INFO - **** Epoch 68 (68/100) ****
+2021-05-26 23:38:54,748 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:55,241 - Model - INFO - ==========Training mean loss: 0.185324 ================
+2021-05-26 23:38:55,241 - Model - INFO - ---- EPOCH 068 EVALUATION ----
+2021-05-26 23:38:55,403 - Model - INFO - =================== Test mean loss: 0.312317 ==============
+2021-05-26 23:38:55,404 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:55,404 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:55,404 - Model - INFO - **** Epoch 69 (69/100) ****
+2021-05-26 23:38:55,404 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:55,896 - Model - INFO - ==========Training mean loss: 0.174440 ================
+2021-05-26 23:38:55,896 - Model - INFO - ---- EPOCH 069 EVALUATION ----
+2021-05-26 23:38:56,056 - Model - INFO - =================== Test mean loss: 0.316671 ==============
+2021-05-26 23:38:56,057 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:56,057 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:56,057 - Model - INFO - **** Epoch 70 (70/100) ****
+2021-05-26 23:38:56,057 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:56,547 - Model - INFO - ==========Training mean loss: 0.181034 ================
+2021-05-26 23:38:56,547 - Model - INFO - ---- EPOCH 070 EVALUATION ----
+2021-05-26 23:38:56,708 - Model - INFO - =================== Test mean loss: 0.346170 ==============
+2021-05-26 23:38:56,709 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:56,709 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:56,709 - Model - INFO - **** Epoch 71 (71/100) ****
+2021-05-26 23:38:56,709 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:57,206 - Model - INFO - ==========Training mean loss: 0.191281 ================
+2021-05-26 23:38:57,206 - Model - INFO - ---- EPOCH 071 EVALUATION ----
+2021-05-26 23:38:57,366 - Model - INFO - =================== Test mean loss: 0.289514 ==============
+2021-05-26 23:38:57,367 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:57,367 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:57,367 - Model - INFO - **** Epoch 72 (72/100) ****
+2021-05-26 23:38:57,368 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:57,857 - Model - INFO - ==========Training mean loss: 0.190380 ================
+2021-05-26 23:38:57,857 - Model - INFO - ---- EPOCH 072 EVALUATION ----
+2021-05-26 23:38:58,016 - Model - INFO - =================== Test mean loss: 0.323287 ==============
+2021-05-26 23:38:58,017 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:58,017 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:58,017 - Model - INFO - **** Epoch 73 (73/100) ****
+2021-05-26 23:38:58,017 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:58,515 - Model - INFO - ==========Training mean loss: 0.189140 ================
+2021-05-26 23:38:58,515 - Model - INFO - ---- EPOCH 073 EVALUATION ----
+2021-05-26 23:38:58,675 - Model - INFO - =================== Test mean loss: 0.337407 ==============
+2021-05-26 23:38:58,676 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:58,676 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:58,676 - Model - INFO - **** Epoch 74 (74/100) ****
+2021-05-26 23:38:58,676 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:59,176 - Model - INFO - ==========Training mean loss: 0.185811 ================
+2021-05-26 23:38:59,176 - Model - INFO - ---- EPOCH 074 EVALUATION ----
+2021-05-26 23:38:59,338 - Model - INFO - =================== Test mean loss: 0.299716 ==============
+2021-05-26 23:38:59,339 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:38:59,339 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:38:59,339 - Model - INFO - **** Epoch 75 (75/100) ****
+2021-05-26 23:38:59,339 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:38:59,853 - Model - INFO - ==========Training mean loss: 0.189193 ================
+2021-05-26 23:38:59,853 - Model - INFO - ---- EPOCH 075 EVALUATION ----
+2021-05-26 23:39:00,034 - Model - INFO - =================== Test mean loss: 0.325925 ==============
+2021-05-26 23:39:00,035 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:00,035 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:00,035 - Model - INFO - **** Epoch 76 (76/100) ****
+2021-05-26 23:39:00,035 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:00,526 - Model - INFO - ==========Training mean loss: 0.194711 ================
+2021-05-26 23:39:00,526 - Model - INFO - ---- EPOCH 076 EVALUATION ----
+2021-05-26 23:39:00,710 - Model - INFO - =================== Test mean loss: 0.337259 ==============
+2021-05-26 23:39:00,711 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:00,711 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:00,711 - Model - INFO - **** Epoch 77 (77/100) ****
+2021-05-26 23:39:00,711 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:01,231 - Model - INFO - ==========Training mean loss: 0.191786 ================
+2021-05-26 23:39:01,231 - Model - INFO - ---- EPOCH 077 EVALUATION ----
+2021-05-26 23:39:01,409 - Model - INFO - =================== Test mean loss: 0.349604 ==============
+2021-05-26 23:39:01,410 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:01,410 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:01,410 - Model - INFO - **** Epoch 78 (78/100) ****
+2021-05-26 23:39:01,410 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:01,915 - Model - INFO - ==========Training mean loss: 0.165329 ================
+2021-05-26 23:39:01,915 - Model - INFO - ---- EPOCH 078 EVALUATION ----
+2021-05-26 23:39:02,085 - Model - INFO - =================== Test mean loss: 0.367486 ==============
+2021-05-26 23:39:02,086 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:02,086 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:02,086 - Model - INFO - **** Epoch 79 (79/100) ****
+2021-05-26 23:39:02,086 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:02,589 - Model - INFO - ==========Training mean loss: 0.187943 ================
+2021-05-26 23:39:02,589 - Model - INFO - ---- EPOCH 079 EVALUATION ----
+2021-05-26 23:39:02,779 - Model - INFO - =================== Test mean loss: 0.319245 ==============
+2021-05-26 23:39:02,780 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:02,780 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:02,780 - Model - INFO - **** Epoch 80 (80/100) ****
+2021-05-26 23:39:02,780 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:03,276 - Model - INFO - ==========Training mean loss: 0.193598 ================
+2021-05-26 23:39:03,276 - Model - INFO - ---- EPOCH 080 EVALUATION ----
+2021-05-26 23:39:03,436 - Model - INFO - =================== Test mean loss: 0.348488 ==============
+2021-05-26 23:39:03,437 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:03,437 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:03,437 - Model - INFO - **** Epoch 81 (81/100) ****
+2021-05-26 23:39:03,437 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:03,930 - Model - INFO - ==========Training mean loss: 0.174747 ================
+2021-05-26 23:39:03,930 - Model - INFO - ---- EPOCH 081 EVALUATION ----
+2021-05-26 23:39:04,089 - Model - INFO - =================== Test mean loss: 0.325411 ==============
+2021-05-26 23:39:04,090 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:04,090 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:04,090 - Model - INFO - **** Epoch 82 (82/100) ****
+2021-05-26 23:39:04,090 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:04,577 - Model - INFO - ==========Training mean loss: 0.174882 ================
+2021-05-26 23:39:04,577 - Model - INFO - ---- EPOCH 082 EVALUATION ----
+2021-05-26 23:39:04,738 - Model - INFO - =================== Test mean loss: 0.351532 ==============
+2021-05-26 23:39:04,739 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:04,739 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:04,739 - Model - INFO - **** Epoch 83 (83/100) ****
+2021-05-26 23:39:04,740 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:05,235 - Model - INFO - ==========Training mean loss: 0.162725 ================
+2021-05-26 23:39:05,235 - Model - INFO - ---- EPOCH 083 EVALUATION ----
+2021-05-26 23:39:05,396 - Model - INFO - =================== Test mean loss: 0.368287 ==============
+2021-05-26 23:39:05,397 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:05,397 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:05,397 - Model - INFO - **** Epoch 84 (84/100) ****
+2021-05-26 23:39:05,397 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:05,887 - Model - INFO - ==========Training mean loss: 0.169797 ================
+2021-05-26 23:39:05,887 - Model - INFO - ---- EPOCH 084 EVALUATION ----
+2021-05-26 23:39:06,045 - Model - INFO - =================== Test mean loss: 0.399059 ==============
+2021-05-26 23:39:06,046 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:06,046 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:06,046 - Model - INFO - **** Epoch 85 (85/100) ****
+2021-05-26 23:39:06,046 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:06,533 - Model - INFO - ==========Training mean loss: 0.170918 ================
+2021-05-26 23:39:06,534 - Model - INFO - ---- EPOCH 085 EVALUATION ----
+2021-05-26 23:39:06,694 - Model - INFO - =================== Test mean loss: 0.363097 ==============
+2021-05-26 23:39:06,695 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:06,695 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:06,695 - Model - INFO - **** Epoch 86 (86/100) ****
+2021-05-26 23:39:06,695 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:07,188 - Model - INFO - ==========Training mean loss: 0.169386 ================
+2021-05-26 23:39:07,188 - Model - INFO - ---- EPOCH 086 EVALUATION ----
+2021-05-26 23:39:07,350 - Model - INFO - =================== Test mean loss: 0.368830 ==============
+2021-05-26 23:39:07,351 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:07,351 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:07,351 - Model - INFO - **** Epoch 87 (87/100) ****
+2021-05-26 23:39:07,351 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:07,833 - Model - INFO - ==========Training mean loss: 0.154119 ================
+2021-05-26 23:39:07,833 - Model - INFO - ---- EPOCH 087 EVALUATION ----
+2021-05-26 23:39:07,993 - Model - INFO - =================== Test mean loss: 0.370979 ==============
+2021-05-26 23:39:07,993 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:07,994 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:07,994 - Model - INFO - **** Epoch 88 (88/100) ****
+2021-05-26 23:39:07,994 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:08,486 - Model - INFO - ==========Training mean loss: 0.178252 ================
+2021-05-26 23:39:08,487 - Model - INFO - ---- EPOCH 088 EVALUATION ----
+2021-05-26 23:39:08,665 - Model - INFO - =================== Test mean loss: 0.354758 ==============
+2021-05-26 23:39:08,666 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:08,666 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:08,666 - Model - INFO - **** Epoch 89 (89/100) ****
+2021-05-26 23:39:08,666 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:09,152 - Model - INFO - ==========Training mean loss: 0.177325 ================
+2021-05-26 23:39:09,152 - Model - INFO - ---- EPOCH 089 EVALUATION ----
+2021-05-26 23:39:09,337 - Model - INFO - =================== Test mean loss: 0.365306 ==============
+2021-05-26 23:39:09,338 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:09,338 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:09,338 - Model - INFO - **** Epoch 90 (90/100) ****
+2021-05-26 23:39:09,338 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:09,852 - Model - INFO - ==========Training mean loss: 0.177392 ================
+2021-05-26 23:39:09,852 - Model - INFO - ---- EPOCH 090 EVALUATION ----
+2021-05-26 23:39:10,012 - Model - INFO - =================== Test mean loss: 0.377364 ==============
+2021-05-26 23:39:10,012 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:10,013 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:10,013 - Model - INFO - **** Epoch 91 (91/100) ****
+2021-05-26 23:39:10,013 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:10,509 - Model - INFO - ==========Training mean loss: 0.162208 ================
+2021-05-26 23:39:10,509 - Model - INFO - ---- EPOCH 091 EVALUATION ----
+2021-05-26 23:39:10,725 - Model - INFO - =================== Test mean loss: 0.360523 ==============
+2021-05-26 23:39:10,726 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:10,726 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:10,726 - Model - INFO - **** Epoch 92 (92/100) ****
+2021-05-26 23:39:10,726 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:11,217 - Model - INFO - ==========Training mean loss: 0.174335 ================
+2021-05-26 23:39:11,217 - Model - INFO - ---- EPOCH 092 EVALUATION ----
+2021-05-26 23:39:11,402 - Model - INFO - =================== Test mean loss: 0.379647 ==============
+2021-05-26 23:39:11,403 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:11,403 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:11,403 - Model - INFO - **** Epoch 93 (93/100) ****
+2021-05-26 23:39:11,403 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:11,889 - Model - INFO - ==========Training mean loss: 0.154178 ================
+2021-05-26 23:39:11,889 - Model - INFO - ---- EPOCH 093 EVALUATION ----
+2021-05-26 23:39:12,090 - Model - INFO - =================== Test mean loss: 0.393438 ==============
+2021-05-26 23:39:12,091 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:12,091 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:12,091 - Model - INFO - **** Epoch 94 (94/100) ****
+2021-05-26 23:39:12,091 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:12,614 - Model - INFO - ==========Training mean loss: 0.164524 ================
+2021-05-26 23:39:12,615 - Model - INFO - ---- EPOCH 094 EVALUATION ----
+2021-05-26 23:39:12,789 - Model - INFO - =================== Test mean loss: 0.416014 ==============
+2021-05-26 23:39:12,790 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:12,790 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:12,790 - Model - INFO - **** Epoch 95 (95/100) ****
+2021-05-26 23:39:12,790 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:13,296 - Model - INFO - ==========Training mean loss: 0.159940 ================
+2021-05-26 23:39:13,296 - Model - INFO - ---- EPOCH 095 EVALUATION ----
+2021-05-26 23:39:13,503 - Model - INFO - =================== Test mean loss: 0.399863 ==============
+2021-05-26 23:39:13,504 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:13,504 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:13,504 - Model - INFO - **** Epoch 96 (96/100) ****
+2021-05-26 23:39:13,504 - Model - INFO - Learning rate:0.000010
+2021-05-26 23:39:13,992 - Model - INFO - ==========Training mean loss: 0.175215 ================
+2021-05-26 23:39:13,992 - Model - INFO - ---- EPOCH 096 EVALUATION ----
+2021-05-26 23:39:14,173 - Model - INFO - =================== Test mean loss: 0.417601 ==============
+2021-05-26 23:39:14,174 - Model - INFO - Best loss: 0.194533
+2021-05-26 23:39:14,174 - Model - INFO - Best loss epoch: 34.000000
+2021-05-26 23:39:14,174 - Model - INFO - **** Epoch 97 (97/100) ****
+2021-05-26 23:39:14,174 - Model - INFO - Learning rate:0.000010
