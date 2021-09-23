@@ -47,11 +47,12 @@ class BiomassDataset(Dataset):
         y = df.BMbg_ha
 
         # get fixed amount of points (TODO this should not happen later)
-        replace = len(x) < self.n_points
-        p_idx = np.arange(len(x))
-        p_idx = np.random.choice(p_idx, self.n_points, replace=replace)
-        x = x[p_idx]
-        features = features[p_idx]
+        if self.n_points != -1:
+            replace = len(x) < self.n_points
+            p_idx = np.arange(len(x))
+            p_idx = np.random.choice(p_idx, self.n_points, replace=replace)
+            x = x[p_idx]
+            features = features[p_idx]
 
         x = x.astype(np.float32).transpose(1, 0)
         features = features.astype(np.float32).transpose(1, 0)
