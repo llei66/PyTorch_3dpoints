@@ -43,8 +43,8 @@ class BiomassDataset(Dataset):
         x_center = (np.quantile(x, 0.99, axis=0, keepdims=True) + np.quantile(x, 0.01, axis=0, keepdims=True)) / 2
         x = (x - x_center) / self.radius
 
-        # target
-        y = df.BMbg_ha
+        # target maybe below-ground as well
+        y = df.BMag_ha
 
         # get fixed amount of points (TODO this should not happen later)
         replace = len(x) < self.n_points
